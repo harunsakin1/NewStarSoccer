@@ -69,10 +69,11 @@ public class Main {
 	}
 	
 	private static void macOyna(Musabaka musabaka) throws InterruptedException{
+		playWavFile("src/SoccerApp/sounds/MacOnu.wav");
 		String kulupAd1 = kulupler.findByID(musabaka.getKulup1Id()).get().getAd();
 		String kulupAd2 = kulupler.findByID(musabaka.getKulup2Id()).get().getAd();
-		playWavFile("src/SoccerApp/sounds/MacOnu.wav");
-		Thread.sleep(3000);
+		playWavFile("src/SoccerApp/sounds/MacBaslangicDudugu.wav");
+		Thread.sleep(1000);
 		System.out.println("Evet sevgili izleyenler, cekismeli bir mac ile karsinizdayiz!");
 		Thread.sleep(2000);
 		System.out.println( kulupAd1+ " den muthis bir hucum");
@@ -80,18 +81,18 @@ public class Main {
 		System.out.println("Eee, ııı, sey, yani, yüzde 1500");
 		Thread.sleep(2000);
 		System.out.println(kulupAd2 + " mort oldu");
-		Thread.sleep(4000);
-		playWavFile("src/SoccerApp/sounds/GoalEffect.wav");
+		Thread.sleep(2000);
 		System.out.println("TOP AGLARDA!!! " + kulupAd1 + " muthis bir gol atıyor");
-		Thread.sleep(2000);
 		playWavFile("src/SoccerApp/sounds/GoalEffect.wav");
-		System.out.println("VE GOOOOL!!! " + kulupAd1 + " efsane bir gol atıyor");
 		Thread.sleep(2000);
+		System.out.println("VE GOOOOL!!! " + kulupAd1 + " efsane bir gol atıyor");
+		playWavFile("src/SoccerApp/sounds/GoalEffect.wav");
+		Thread.sleep(2000);
+		System.out.println("SIMSEK GIBI!!! " + kulupAd1 + " enfes bir gol atıyor");
 		playWavFile("src/SoccerApp/sounds/GoalEffect.wav");
 		playWavFile("src/SoccerApp/sounds/InanilmazBirMac.wav");
-		System.out.println("SIMSEK GIBI!!! " + kulupAd1 + " enfes bir gol atıyor");
-		playWavFile("src/SoccerApp/sounds/MacBitisDudugu.wav");
 		musabaka.setSkorTablosu(new Integer[]{3, 0});
+		playWavFile("src/SoccerApp/sounds/MacBitisDudugu.wav");
 		System.out.println("macin sonucu: " + kulupAd1 + Arrays.toString(musabaka.getSkorTablosu()) + kulupAd2 +
 				                   "\nElinize " +
 				                   "saglik " +
