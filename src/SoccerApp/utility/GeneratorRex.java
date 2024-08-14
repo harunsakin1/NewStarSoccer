@@ -49,7 +49,7 @@ public class GeneratorRex {
 			kulup.setAd(rastgeleKulupAdi());
 			kulup.setBaskan(rastgeleBaskan());
 			kulup.setKurulusTarihi(rastgeleKurulusTarihi());
-			kulup.setMenajer(rastgeleMenajer());
+			kulup.setVarMiMenajerId(rastgeleMenajer());
 			kulup.setButce(rastgeleButce());
 			//kulup.setStadyumId(rastgeleStadyum());
 			dbManager.save(kulup); // Kulübü DatabaseManager'a kaydediyoruz

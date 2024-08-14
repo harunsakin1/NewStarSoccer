@@ -1,20 +1,14 @@
 package SoccerApp.entities;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class Kulup extends BaseEntity{
 	private String ad;
 	private String kurulusTarihi;
 	private String stadyumId;
-	private Set<String> futbolcuList;
-	private String menajer;
+	private String stadyumAdi;
+	private boolean varMiMenajerId;//TODO Kulübe menajer atandığında true yapılacak
+	// TODO TAM TERSİ DE YAPILACAK
 	private String baskan;
 	private String butce;
-	
-	{
-		futbolcuList = new HashSet<>();
-	}
 	
 	//GETTES
 	public Kulup() {
@@ -30,11 +24,6 @@ public class Kulup extends BaseEntity{
 	
 	public String getStadyumId() {
 		return stadyumId;
-	}
-	
-	
-	public Set<String> getFutbolcuList() {
-		return futbolcuList;
 	}
 	
 	public String getButce() {
@@ -58,16 +47,12 @@ public class Kulup extends BaseEntity{
 		this.kurulusTarihi = kurulusTarihi;
 	}
 	
-	public void setFutbolcuList(Set<String> futbolcuList) {
-		this.futbolcuList = futbolcuList;
+	public boolean getVarMiMenajerId() {
+		return varMiMenajerId;
 	}
 	
-	public String getMenajer() {
-		return menajer;
-	}
-	
-	public void setMenajer(String menajer) {
-		this.menajer = menajer;
+	public void setVarMiMenajerId(boolean varMiMenajerId) {
+		this.varMiMenajerId = varMiMenajerId;
 	}
 	
 	public String getBaskan() {
@@ -78,8 +63,19 @@ public class Kulup extends BaseEntity{
 		this.baskan = baskan;
 	}
 	
+	public String getStadyumAdi() {
+		return stadyumAdi;
+	}
+	
 	@Override
 	public String toString() {
-		return "Kulup{" + "ad='" + getAd() + '\'' + ", kurulusTarihi='" + getKurulusTarihi() + '\'' + ", stadyum=" + getStadyumId() + ", futbolcuList=" + getFutbolcuList() + ", menajer='" + getMenajer() + '\'' + ", baskan='" + getBaskan() + '\'' + ", butce='" + getButce() + '\'' + ", id='" + getId() + '\'' + '}';
+		return "Kulup{" + "id='" + getId() + '\'' +
+				", ad='" + getAd() + '\'' +
+				", kurulusTarihi='" + getKurulusTarihi() + '\'' +
+				", stadyumId='" + getStadyumId() + '\'' +
+				", stadyumAdi='" + getStadyumAdi() + '\'' +
+				", menajer='" + getVarMiMenajerId() + '\'' +
+				", baskan='" + getBaskan() + '\'' +
+				", butce='" + getButce() + '\'' + '}';
 	}
 }

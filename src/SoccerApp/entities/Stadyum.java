@@ -1,8 +1,11 @@
 package SoccerApp.entities;
 
+import java.util.HashMap;
+
 public class Stadyum extends BaseEntity{
 	private Integer kapasite;
 	private String ad;
+	
 	
 	public Integer getKapasite() {
 		return kapasite;

@@ -8,10 +8,7 @@ import SoccerApp.utility.GeneratorRex;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
 	static DatabaseManager<Futbolcu> futbolcular  = new DatabaseManager<>();
@@ -19,6 +16,7 @@ public class Main {
 	static DatabaseManager<Stadyum> stadlar = new DatabaseManager<>();
 	static DatabaseManager<Musabaka> fikstur = new DatabaseManager<>();
 	static DatabaseManager<Hakem> hakemler = new DatabaseManager<>();
+	static Random random = new Random();
 	
 	public static void main(String[] args) throws InterruptedException{
 		yaratHepsi();
@@ -66,9 +64,57 @@ public class Main {
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
 			e.printStackTrace();
 		}
+		
 	}
+	/*private static void gol(String message) {
+		System.out.println(message);
+		playWavFile("src/SoccerApp/sounds/GoalEffect.wav");
+	}*/
 	
 	private static void macOyna(Musabaka musabaka) throws InterruptedException{
+		
+		/*playWavFile("src/SoccerApp/sounds/MacOnu.wav");
+		
+		String kulupAd1 = kulupler.findByID(musabaka.getKulup1Id()).get().getAd();
+		String kulupAd2 = kulupler.findByID(musabaka.getKulup2Id()).get().getAd();
+		
+		playWavFile("src/SoccerApp/sounds/MacBaslangicDudugu.wav");
+		
+		boolean oyunDevam = true;
+		int dakika = 0;
+		
+		while (oyunDevam) {
+			Thread.sleep(1500);
+			dakika += 12;
+			System.out.println(dakika + ". dakika");
+			
+			int olay = random.nextInt(5); // 0 ile 4 arasında rastgele bir tam sayı döner
+			switch (olay) {
+				case 0:
+					gol(kulupAd1 + " harika bir gol attı!");
+					break;
+				case 1:
+					gol(kulupAd2 + " müthiş bir gol attı!");
+					break;
+				case 2:
+					System.out.println(kulupAd1 + " sarı kart gördü.");
+					break;
+				case 3:
+					System.out.println(kulupAd2 + " sarı kart gördü.");
+					break;
+				case 4:
+					System.out.println("Top orta sahada gidip geliyor.");
+					break;
+			}
+			
+			if (dakika >= 90) {
+				playWavFile("src/SoccerApp/sounds/MacBitisDudugu.wav");
+				oyunDevam = false;
+			}
+		}
+		
+		musabaka.setSkorTablosu(new Integer[]{random.nextInt(4), random.nextInt(4)});
+		System.out.println("Maç sonucu: " + kulupAd1 + " " + musabaka.getSkorTablosu()[0] + " - " + musabaka.getSkorTablosu()[1] + " " + kulupAd2);*/
 		playWavFile("src/SoccerApp/sounds/MacOnu.wav");
 		String kulupAd1 = kulupler.findByID(musabaka.getKulup1Id()).get().getAd();
 		String kulupAd2 = kulupler.findByID(musabaka.getKulup2Id()).get().getAd();

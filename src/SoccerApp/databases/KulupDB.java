@@ -4,6 +4,7 @@ import SoccerApp.entities.Futbolcu;
 import SoccerApp.entities.Kulup;
 import SoccerApp.utility.DatabaseManager;
 
+import java.util.List;
 import java.util.Optional;
 
 public class KulupDB extends DatabaseManager<Kulup> {
@@ -17,9 +18,14 @@ public class KulupDB extends DatabaseManager<Kulup> {
 		
 		boolean sahipMiFutbolcuKulube = futbolcu.get().getKulupId().isPresent();
 		if (!sahipMiFutbolcuKulube){
-			kulup.get().getFutbolcuList().add(futbolcuId);
 			futbolcu.get().setKulupId(kulupId);
 		}
 		return !sahipMiFutbolcuKulube;
+	}
+	
+	public List<Kulup> araKulupFiltreIsim(String filtre){
+		return veriListesi.stream()
+				.filter(kulup -> kulup.getAd().toLowerCase().contains(filtre.toLowerCase()))
+				.toList();
 	}
 }

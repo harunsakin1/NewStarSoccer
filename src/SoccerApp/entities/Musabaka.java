@@ -78,6 +78,6 @@ public class Musabaka extends BaseEntity{
 	
 	@Override
 	public String toString() {
-		return "Musabaka{" + "kulup1Id='" + getKulup1Id() + '\'' + ", kulup2Id='" + getKulup2Id() + '\'' + ", stadyumId='" + getStadyumId() + '\'' + ", sure=" + getSure() + ", havaDurumu=" + getHavaDurumu() + ", hakemIds=" + getHakemIds() + ", skorTablosu=" + Arrays.toString(getSkorTablosu()) + ", id='" + getId() + '\'' + '}';
+		return "Musabaka{" + "kulup1Id='" + getKulup1Id() + '\'' + ", kulup2Id='" + getKulup2Id() + '\'' + ", stadyumId='" + getStadyumId() + '\'' + ", sure=" + getSure() + ", havaDurumu=" + getHavaDurumu() + ", hakemIds=" + getHakemIds() + ", skorTablosu=" + Arrays.toString(getSkorTablosu()) + '}';
 	}
 }

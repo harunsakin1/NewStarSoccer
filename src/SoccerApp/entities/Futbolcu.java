@@ -56,6 +56,8 @@ public class Futbolcu extends Insan{
 		this.yetenekPuani = yetenekPuani;
 	}
 	
+	
+	
 	@Override
 	public String toString() {
 		return "Futbolcu{" + "formaNumarasi=" + getFormaNumarasi() + ", bonservis='" + getBonservis() + '\'' + ", mevki=" + getMevki() + ", yetenekPuani=" + getYetenekPuani() + ", kulupId='" + getKulupId() + '\'' + ", ad='" + getAd() + '\'' + ", soyad='" + getSoyad() + '\'' + ", dogumTarihi=" + getDogumTarihi() + ", uyruk=" + getUyruk() + ", maas='" + getMaas() + '\'' + ", id='" + getId() + '\'' + '}';
