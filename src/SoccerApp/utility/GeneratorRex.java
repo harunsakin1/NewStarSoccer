@@ -49,7 +49,7 @@ public class GeneratorRex {
 			kulup.setAd(rastgeleKulupAdi());
 			kulup.setBaskan(rastgeleBaskan());
 			kulup.setKurulusTarihi(rastgeleKurulusTarihi());
-			kulup.setVarMiMenajerId(rastgeleMenajer());
+//			kulup.setVarMiMenajerId(rastgeleMenajer());
 			kulup.setButce(rastgeleButce());
 			//kulup.setStadyumId(rastgeleStadyum());
 			dbManager.save(kulup); // Kulübü DatabaseManager'a kaydediyoruz
@@ -85,6 +85,7 @@ public class GeneratorRex {
 	public static void yaratVeKaydetFutbolcular(DatabaseManager<Futbolcu> dbManager) {
 		for (int i = 0; i < 100; i++) {
 			Futbolcu futbolcu = new Futbolcu();
+			futbolcu.setKulupId("1");
 			futbolcu.setAd(yaratRastgeleAd());
 			futbolcu.setSoyad(yaratRastgeleSoyad());
 			futbolcu.setDogumTarihi(yaratRastgeleDogumTarihi());

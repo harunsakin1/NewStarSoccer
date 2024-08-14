@@ -9,7 +9,7 @@ public class Futbolcu extends Insan{
 	private EMevki mevki;
 	private int yetenekPuani;
 	private String kulupId;
-	
+	//TODO Sözleşme bitiş zamanı eklenebilir
 	//CONSTRUCTORS
 	
 	
@@ -58,7 +58,7 @@ public class Futbolcu extends Insan{
 	
 	
 	
-	@Override
+	@Override //TODO takım id optional print olmasın
 	public String toString() {
 		return "Futbolcu{" + "formaNumarasi=" + getFormaNumarasi() + ", bonservis='" + getBonservis() + '\'' + ", mevki=" + getMevki() + ", yetenekPuani=" + getYetenekPuani() + ", kulupId='" + getKulupId() + '\'' + ", ad='" + getAd() + '\'' + ", soyad='" + getSoyad() + '\'' + ", dogumTarihi=" + getDogumTarihi() + ", uyruk=" + getUyruk() + ", maas='" + getMaas() + '\'' + ", id='" + getId() + '\'' + '}';
 	}

@@ -67,8 +67,7 @@ public class Kulup extends BaseEntity{
 		return stadyumAdi;
 	}
 	
-	@Override
-	public String toString() {
+	public String goruntuleDetayKulup() {
 		return "Kulup{" + "id='" + getId() + '\'' +
 				", ad='" + getAd() + '\'' +
 				", kurulusTarihi='" + getKurulusTarihi() + '\'' +
@@ -77,5 +76,10 @@ public class Kulup extends BaseEntity{
 				", menajer='" + getVarMiMenajerId() + '\'' +
 				", baskan='" + getBaskan() + '\'' +
 				", butce='" + getButce() + '\'' + '}';
+	}
+	
+	@Override
+	public String toString() {
+		return "Kulup{" + "id='" + getId() + '\'' + ", ad='" + getAd() + '\'' + ", baskan='" + getBaskan() + '\'' + '}';
 	}
 }
