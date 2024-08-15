@@ -116,8 +116,8 @@ public class Main {
 		musabaka.setSkorTablosu(new Integer[]{random.nextInt(4), random.nextInt(4)});
 		System.out.println("Maç sonucu: " + kulupAd1 + " " + musabaka.getSkorTablosu()[0] + " - " + musabaka.getSkorTablosu()[1] + " " + kulupAd2);*/
 		playWavFile("src/SoccerApp/sounds/MacOnu.wav");
-		String kulupAd1 = kulupler.findByID(musabaka.getKulup1Id()).get().getAd();
-		String kulupAd2 = kulupler.findByID(musabaka.getKulup2Id()).get().getAd();
+		String kulupAd1 = kulupler.findByID(musabaka.getEvSahibiID()).get().getAd();
+		String kulupAd2 = kulupler.findByID(musabaka.getDeplasmanID()).get().getAd();
 		playWavFile("src/SoccerApp/sounds/MacBaslangicDudugu.wav");
 		Thread.sleep(1000);
 		System.out.println("Evet sevgili izleyenler, cekismeli bir mac ile karsinizdayiz!");
@@ -160,8 +160,8 @@ public class Main {
 		if (stadyum.isEmpty()) return false;
 		
 		musabaka.setHakemIds(Set.of(hakemId));
-		musabaka.setKulup1Id(kulup1Id);
-		musabaka.setKulup2Id(kulup2Id);
+		musabaka.setEvSahibiID(kulup1Id);
+		musabaka.setDeplasmanID(kulup2Id);
 		musabaka.setStadyumId(stadyumId);
 		fikstur.save(musabaka);
 		return true;

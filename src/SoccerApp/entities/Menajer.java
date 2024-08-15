@@ -8,7 +8,7 @@ public class Menajer extends Insan {
 	private String kulupId;
 	private LocalDate sozlesmeBitisTarihi;
 	
-	//TODO ÖNCEDEN ÇALIŞTIRDIĞI KULÜP, ALDIĞI KUPALAR VE MENAJER PUANI
+	
 	
 	public Menajer(){
 		kulupId="";

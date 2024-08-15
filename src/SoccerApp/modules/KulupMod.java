@@ -35,9 +35,9 @@ public class KulupMod {
 		return kulupler;
 	}
 	public static Optional<Kulup>secKulup(List<Kulup> kulupler){
-		System.out.println("Seçmek istediğiniz kulübün id sini giriniz");
+		System.out.println("Seçmek istediğiniz kulübün id'sini giriniz");
 		String kulupId = scanner.nextLine();
-		return kulupDatabase.findByID(kulupId);
+		return kulupler.stream().filter(kulup -> kulup.getId().equals(kulupId)).findFirst();
 	}
 	
 	public static List<Kulup> listeleKulupler() {
@@ -48,16 +48,20 @@ public class KulupMod {
 	
 	
 	public static int menu() {
-		System.out.println("""
+		int secim;
+		do{
+			System.out.println("""
 				           #### NewStarSoccer Uygulamasına Hoşgeldiniz ####
 				                   1- İsme Göre Kulüp Ara
 				                   2- Kulüpleri Listele
 				                   0- Çıkış
 				                   """);
-		System.out.println("Seçim yapınız: ");
-		int secim = scanner.nextInt();
-		scanner.nextLine();
-		return menuSecenekleri(secim);
+			System.out.println("Seçim yapınız: ");
+			secim = scanner.nextInt();
+			scanner.nextLine();
+			 menuSecenekleri(secim);
+		} while (secim != 0);
+		return secim;
 	}
 	
 	public static int menuSecenekleri(int secim){
@@ -75,14 +79,14 @@ public class KulupMod {
 				kulupler = listeleKulupler();
 				break;
 			case 0:
-				System.out.println("Çıkış yapılıyor");
+				System.out.println("Çıkış yapılıyor..");
 				return secim;
 			default:
 				System.err.println("Geçersiz girdi.... ");
 		}
 		Optional<Kulup> kulup = secKulup(kulupler);
 		if(kulup.isEmpty()){
-			System.err.println("Girdiğiniz id'de bir kulup yoktur");
+			System.err.println("Uyguladığınız filtrede bu id'ye sahip bir klüp yoktur.");
 			return secim;
 		}
 		return menuKulup(kulup.get());

@@ -5,6 +5,4 @@ import SoccerApp.utility.DatabaseManager;
 
 public class MusabakaDB extends DatabaseManager<Musabaka> {
 
-
-
 }

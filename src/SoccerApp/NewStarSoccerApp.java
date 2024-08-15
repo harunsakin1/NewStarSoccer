@@ -21,20 +21,26 @@ public class NewStarSoccerApp {
 		
 	}
 	
-	private static int nssMenu(){
-		System.out.println("""
-				           #### NewStarSoccer Uygulamasına Hoşgeldiniz ####
-				                   1- Kulüp Modül
-				                   0- Çıkış
-				                   """);
-		System.out.println("Seçim yapınız: ");
-		int secim = scanner.nextInt();
-		scanner.nextLine();
-		return nssMenuSecenekleri(secim);
+	private static int nssMenu() {
+		int secim;
+		do {
+			System.out.println("""
+					                   #### NewStarSoccer Uygulamasına Hoşgeldiniz ####
+					                           1- Kulüp Modül
+					                           0- Çıkış
+					                           """);
+			System.out.println("Seçim yapınız: ");
+			secim = scanner.nextInt();
+			scanner.nextLine();
+			secim = nssMenuSecenekleri(secim);
+		} while (secim != 0);
+		return secim;
+		
+		
 	}
 	
-	private static int nssMenuSecenekleri(int secim){
-		switch (secim){
+	private static int nssMenuSecenekleri(int secim) {
+		switch (secim) {
 			case 1:
 				return KulupMod.menu();
 			case 0:

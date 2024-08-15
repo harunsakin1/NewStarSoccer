@@ -24,6 +24,12 @@ public class Futbolcu extends Insan{
 	public Futbolcu() {
 	}
 	
+	
+	{
+		kulupId = "-1";
+	}
+	
+	
 	public int getFormaNumarasi() {
 		return formaNumarasi;
 	}
@@ -52,14 +58,19 @@ public class Futbolcu extends Insan{
 		return yetenekPuani;
 	}
 	
-	public void setYetenekPuani(int yetenekPuani) {
-		this.yetenekPuani = yetenekPuani;
+	public boolean setYetenekPuani(int yetenekPuani) {
+		if(yetenekPuani >= 0 && yetenekPuani <= 100 ){
+			this.yetenekPuani = yetenekPuani;
+			return true;
+		} else
+		return false;
+		
 	}
 	
 	
 	
-	@Override //TODO takım id optional print olmasın
+	@Override
 	public String toString() {
-		return "Futbolcu{" + "formaNumarasi=" + getFormaNumarasi() + ", bonservis='" + getBonservis() + '\'' + ", mevki=" + getMevki() + ", yetenekPuani=" + getYetenekPuani() + ", kulupId='" + getKulupId() + '\'' + ", ad='" + getAd() + '\'' + ", soyad='" + getSoyad() + '\'' + ", dogumTarihi=" + getDogumTarihi() + ", uyruk=" + getUyruk() + ", maas='" + getMaas() + '\'' + ", id='" + getId() + '\'' + '}';
+		return "Futbolcu{" + "formaNumarasi=" + getFormaNumarasi() + ", bonservis='" + getBonservis() + '\'' + ", mevki=" + getMevki() + ", yetenekPuani=" + getYetenekPuani() + ", kulupId='" + getKulupId().get() + '\'' + ", ad='" + getAd() + '\'' + ", soyad='" + getSoyad() + '\'' + ", dogumTarihi=" + getDogumTarihi() + ", uyruk=" + getUyruk() + ", maas='" + getMaas() + '\'' + ", id='" + getId() + '\'' + '}';
 	}
 }
