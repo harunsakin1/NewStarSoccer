@@ -1,0 +1,100 @@
+1, Galatasaray, 1905-10-30, 001, Ali Sami Yen, true, Mustafa Cengiz, 300M, 100M
+2, Fenerbahçe, 1907-05-03, 002, Şükrü Saracoğlu, true, Ali Koç, 350M, 120M
+3, Beşiktaş, 1903-03-19, 003, Vodafone Park, true, Ahmet Nur Çebi, 250M, 90M
+4, Trabzonspor, 1967-08-02, 004, Şenol Güneş, true, Ahmet Ağaoğlu, 200M, 80M
+5, Başakşehir, 1990-06-15, 005, Fatih Terim, true, Göksel Gümüşdağ, 180M, 70M
+6, Antalyaspor, 1966-07-02, 006, Antalya Arena, true, Ali Şafak Öztürk, 90M, 40M
+7, Bursaspor, 1963-06-01, 007, Timsah Arena, true, Mesut Mestan, 80M, 35M
+8, Sivasspor, 1967-05-14, 008, Yeni 4 Eylül, true, Mecnun Otyakmaz, 75M, 30M
+9, Göztepe, 1925-06-14, 009, Gürsel Aksel, true, Mehmet Sepil, 70M, 28M
+10, Ankaragücü, 1911-03-31, 010, Eryaman, true, Fatih Mert, 60M, 25M
+11, Kayserispor, 1966-07-01, 011, Kadir Has, true, Berna Gözbaşı, 55M, 22M
+12, Konyaspor, 1922-06-22, 012, Konya Büyükşehir, true, Fatih Yılmaz, 50M, 20M
+13, Gençlerbirliği, 1923-03-14, 013, Ankara 19 Mayıs, true, Murat Cavcav, 45M, 18M
+14, Gaziantep FK, 1988-08-25, 014, Gaziantep Kalyon, true, Mehmet Büyükekşi, 40M, 16M
+15, Karagümrük, 1926-05-15, 015, Atatürk Olimpiyat, true, Süleyman Hurma, 38M, 15M
+16, Adana Demirspor, 1940-10-01, 016, 5 Ocak Fatih Terim, true, Murat Sancak, 35M, 14M
+17, Hatayspor, 1967-06-05, 017, Antakya Atatürk, true, Nihat Tazearslan, 33M, 13M
+18, Kasımpaşa, 1921-04-01, 018, Recep Tayyip Erdoğan, true, Mehmet Fatih Saraç, 30M, 12M
+19, Alanyaspor, 1948-06-10, 019, Bahçeşehir Okulları, true, Hasan Çavuşoğlu, 28M, 11M
+20, Çaykur Rizespor, 1953-05-19, 020, Çaykur Didi, true, Tahir Kıran, 26M, 10M
+21, Altay, 1914-01-16, 021, Alsancak, true, Özgür Ekmekçioğlu, 25M, 9M
+22, Samsunspor, 1965-06-30, 022, 19 Mayıs, true, Yüksel Yıldırım, 24M, 8M
+23, Ümraniyespor, 1938-06-01, 023, Ümraniye Belediyesi, true, Tarık Aksar, 23M, 7M
+24, Boluspor, 1965-05-28, 024, Bolu Atatürk, true, Necip Çarıkçı, 22M, 6M
+25, Giresunspor, 1967-04-09, 025, Çotanak, true, Hakan Karaahmet, 21M, 5M
+26, Eskişehirspor, 1965-07-02, 026, Eskişehir Atatürk, true, Osman Taş, 20M, 4M
+27, Erzurumspor, 1967-07-20, 027, Kazım Karabekir, true, Hüseyin Üneş, 19M, 3M
+28, Altınordu, 1923-12-26, 028, Bornova Aziz Kocaoğlu, true, Seyit Mehmet Özkan, 18M, 3M
+29, Denizlispor, 1966-05-26, 029, Denizli Atatürk, true, Ali Çetin, 17M, 2M
+30, Adanaspor, 1954-01-01, 030, 5 Ocak Fatih Terim, true, Bayram Akgül, 16M, 2M
+31, Menemenspor, 1942-04-20, 031, Menemen İlçe, true, Tahir Şahin, 15M, 2M
+32, Osmanlıspor, 1978-03-21, 032, Osmanlı, true, Ahmet Gökçek, 14M, 1M
+33, İstanbulspor, 1926-06-04, 033, Esenyurt Necmi Kadıoğlu, true, Ecmel Sarıalioğlu, 13M, 1M
+34, Sarıyer, 1940-02-18, 034, Yusuf Ziya Öniş, true, Saffet Akkoyun, 12M, 1M
+35, Eyüpspor, 1919-05-03, 035, Eyüp Stadı, true, Murat Özkaya, 11M, 1M
+36, Bandırmaspor, 1965-09-14, 036, Bandırma 17 Eylül, true, Erhan Elmastaş, 10M, 1M
+37, Akhisarspor, 1970-04-09, 037, Akhisar Belediye, true, Fatih Karabulut, 9M, 1M
+38, Tuzlaspor, 1954-08-20, 038, Tuzla Belediye, true, Burak Gözlükaya, 8M, 1M
+39, Balıkesirspor, 1966-06-06, 039, Balıkesir Atatürk, true, Kadir Dağlı, 7M, 1M
+40, Tarsus İdman Yurdu, 1923-03-20, 040, Tarsus Şehir, true, Harun Şahin Kırbıyık, 6M, 1M
+41, Manisaspor, 1965-06-01, 041, Mümin Özkasap, true, Bülent Baygeldi, 5M, 1M
+42, Sakaryaspor, 1965-07-01, 042, Sakarya Atatürk, true, Cevat Ekşi, 4M, 1M
+43, Afjet Afyonspor, 2013-05-25, 043, Afyon Zafer, true, Salih Sel, 4M, 1M
+44, Vanspor FK, 1982-01-01, 044, Van Atatürk, true, Mehmet Avcı, 3M, 1M
+45, Pendikspor, 1950-03-19, 045, Pendik Stadı, true, Mustafa Şahinyılmaz, 3M, 1M
+46, İnegölspor, 1984-01-01, 046, İnegöl İlçe, true, Kani Ademoğlu, 3M, 1M
+47, Niğde Anadolu FK, 2018-07-01, 047, Niğde Ömer Halisdemir, true, Nuri Üysen, 2M, 1M
+48, Şanlıurfaspor, 1969-06-11, 048, Şanlıurfa GAP, true, Mehmet Yılmaz, 2M, 1M
+49, Zonguldak Kömürspor, 1966-04-26, 049, Karaelmas Kemal Köksal, true, Hakan Hürfikir, 2M, 1M
+50, Karşıyaka, 1912-01-01, 050, İzmir Atatürk, true, Turgay Büyükkarcı,30M,12M
+51, Sancaktepe FK, 2008-05-01, 051, 15 Temmuz, true, Mehmet Genç, 10M, 5M
+52, Ergene Velimeşe, 1974-02-19, 052, Velimeşe, true, Adem Memiş, 9M, 4M
+53, Kahramanmaraşspor, 1969-04-07, 053, 12 Şubat, true, Fatih Mehmet Ceyhan, 8M, 4M
+54, Kırklarelispor, 1968-05-25, 054, Kırklareli Atatürk, true, Volkan Can, 7M, 4M
+55, Amed SK, 1972-08-15, 055, Diyarbakır, true, Metin Kılavuz, 7M, 4M
+56, Elazığspor, 1967-06-01, 056, Elazığ Atatürk, true, Selçuk Öztürk, 6M, 3M
+57, Etimesgut Belediyespor, 1990-09-01, 057, Etimesgut Belediyesi, true, Hasan Kartal, 6M, 3M
+58, Fethiyespor, 1933-05-22, 058, Fethiye Şehir, true, İsmail Öztürk, 6M, 3M
+59, Hekimoğlu Trabzon, 1986-09-10, 059, Vakfıkebir, true, Celil Hekimoğlu, 5M, 2M
+60, Isparta 32 Spor, 1967-06-17, 060, Isparta Atatürk, true, Atakan Yazgan, 5M, 2M
+61, Kırşehir Belediyespor, 1982-01-01, 061, Ahi Stadı, true, Yıldırım Bayezid, 5M, 2M
+62, Kocaelispor, 1966-06-06, 062, İsmetpaşa, true, Bahri Yavuz, 5M, 2M
+63, Orduspor, 1967-02-08, 063, 19 Eylül, true, Nedim Türkmen, 4M, 2M
+64, Pazarspor, 1973-09-02, 064, Pazar İlçe, true, Mustafa Taşkın, 4M, 2M
+65, Sivas Belediyespor, 1995-06-05, 065, Muhsin Yazıcıoğlu, true, Hasan Karaman, 4M, 2M
+66, Uşakspor, 1967-01-15, 066, 1 Eylül, true, Hüseyin Özcan, 4M, 2M
+67, Yomraspor, 1968-07-04, 067, Yomra İlçe, true, Davut Atmaca, 4M, 2M
+68, Ziraat Bankası, 1972-11-01, 068, Ankara 19 Mayıs, true, Ali Aydoğan, 4M, 2M
+69, Bayburt Özel İdarespor, 1972-01-01, 069, Genç Osman, true, Abdurrahman Şeker, 3M, 1M
+70, Büyükçekmece Tepecikspor, 1985-07-01, 070, Tepecik Şenol Güneş, true, Arif Gülen, 3M, 1M
+71, Diyarbekirspor, 1970-06-15, 071, Seyrantepe, true, İhsan Karabulut, 3M, 1M
+72, Karaman Belediyespor, 1986-03-20, 072, Kemal Kaynaş, true, Mehmet Yüksel, 3M, 1M
+73, Körfez SK, 2000-05-25, 073, Alparslan Türkeş, true, Cenk Karaloğlu, 3M, 1M
+74, Mamak FK, 1998-09-17, 074, Mamak Belediyesi, true, Muhammed Ali Aydın, 3M, 1M
+75, Payasspor, 1975-01-30, 075, Payas İlçe, true, Osman Tufan, 3M, 1M
+76, Serik Belediyespor, 1957-04-12, 076, İsmail Oğan, true, Halil Deligöz, 3M, 1M
+77, Sultanbeyli Belediyespor, 1978-11-17, 077, Gölet, true, Nedim Karakaş, 3M, 1M
+78, 1922 Konyaspor, 1992-01-05, 078, Selçuk Üniversitesi, true, Tahir Bayrak, 3M, 1M
+79, 24 Erzincanspor, 1968-05-19, 079, Erzincan 13 Şubat, true, Ahmet Tanoğlu, 3M, 1M
+80, 52 Orduspor FK, 1967-03-15, 080, Yeni Ordu, true, Şükrü Bodur, 3M, 1M
+81, Adıyaman FK, 1984-09-28, 081, Adıyaman Atatürk, true, İrfan Tokur, 2M, 1M
+82, Arnavutköy Belediyespor, 2006-03-27, 082, Bolluca, true, Ercan Çetinkaya, 2M, 1M
+83, Bayrampaşa, 1942-10-29, 083, Bayrampaşa Çetin Emeç, true, Gökhan Çetinsaya, 2M, 1M
+84, Batman Petrolspor, 1960-07-01, 084, Batman Şehir, true, Ekrem Konaç, 2M, 1M
+85, Bucaspor, 1928-04-11, 085, Yeni Buca, true, Cihan Aktaş, 2M, 1M
+86, Cizrespor, 1972-03-10, 086, Cizre Şehir, true, İzzet Ali Tatar, 2M, 1M
+87, Çatalcaspor, 1923-07-15, 087, Ziya Altınoğlu, true, Ayhan Bıçak, 2M, 1M
+88, Düzcespor, 1967-04-14, 088, 18 Temmuz, true, Gökhan Kapoğlu, 2M, 1M
+89, Erbaaspor, 1947-08-01, 089, Erbaa İlçe, true, Bülent Uzun, 2M, 1M
+90, Gebzespor, 1955-06-01, 090, Alaettin Kurt, true, Recep Avcı, 2M, 1M
+91, Gölcükspor, 1984-07-02, 091, Gölcük Şehir, true, Ali Can, 2M, 1M
+92, Halide Edip Adıvar SK, 1958-02-11, 092, Vefa, true, Süleyman Canan, 2M, 1M
+93, Karacabey Belediyespor, 1999-06-21, 093, M. Fehmi Gerçeker, true, İsmail Bayrak, 2M, 1M
+94, Nevşehir Belediyespor, 1969-07-15, 094, Gazi Stadı, true, Ahmet Sin, 2M, 1M
+95, Silivrispor, 1957-10-01, 095, Silivri İlçe, true, Akgün Duru, 2M, 1M
+96, Tekirdağspor, 1967-03-01, 096, Tekirdağ Namık Kemal, true, Ali Rıza Eti, 2M, 1M
+97, Tire 1922, 1922-05-09, 097, Tire İlçe, true, Mehmet Çıvgın, 2M, 1M
+98, Yalovaspor, 1963-05-29, 098, Yalova Atatürk, true, Onur Tokgöz, 2M, 1M
+99, Yeşilyurt Belediyespor, 1980-02-18, 099, Yeşiltepe, true, Ferhat Arıkan, 2M, 1M
+100, Zaferspor, 1977-11-13, 100, Zaferspor Tesisleri, true, Muammer Çetintaş, 2M, 1M

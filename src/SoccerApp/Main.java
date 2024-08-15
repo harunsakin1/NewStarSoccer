@@ -7,7 +7,9 @@ import SoccerApp.utility.GeneratorRex;
 
 import javax.sound.sampled.*;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 public class Main {
@@ -19,7 +21,9 @@ public class Main {
 	static Random random = new Random();
 	
 	public static void main(String[] args) throws InterruptedException{
-		yaratHepsi();
+		
+		
+		/*yaratHepsi();
 		Hakem hakem = new Hakem();
 		hakemler.save(hakem);
 		System.out.println(futbolcular.findAll());
@@ -31,7 +35,7 @@ public class Main {
 		
 		System.out.println(macPlanla("103", "101", "107", hakem.getId()));
 		System.out.println(fikstur.findAll());
-		macOyna(fikstur.findAll().get(0));
+		macOyna(fikstur.findAll().get(0));*/
 		
 		
 		
@@ -71,9 +75,9 @@ public class Main {
 		playWavFile("src/SoccerApp/sounds/GoalEffect.wav");
 	}*/
 	
-	private static void macOyna(Musabaka musabaka) throws InterruptedException{
+	/*private static void macOyna(Musabaka musabaka) throws InterruptedException{
 		
-		/*playWavFile("src/SoccerApp/sounds/MacOnu.wav");
+		*//*playWavFile("src/SoccerApp/sounds/MacOnu.wav");
 		
 		String kulupAd1 = kulupler.findByID(musabaka.getKulup1Id()).get().getAd();
 		String kulupAd2 = kulupler.findByID(musabaka.getKulup2Id()).get().getAd();
@@ -114,7 +118,7 @@ public class Main {
 		}
 		
 		musabaka.setSkorTablosu(new Integer[]{random.nextInt(4), random.nextInt(4)});
-		System.out.println("Maç sonucu: " + kulupAd1 + " " + musabaka.getSkorTablosu()[0] + " - " + musabaka.getSkorTablosu()[1] + " " + kulupAd2);*/
+		System.out.println("Maç sonucu: " + kulupAd1 + " " + musabaka.getSkorTablosu()[0] + " - " + musabaka.getSkorTablosu()[1] + " " + kulupAd2);*//*
 		playWavFile("src/SoccerApp/sounds/MacOnu.wav");
 		String kulupAd1 = kulupler.findByID(musabaka.getEvSahibiID()).get().getAd();
 		String kulupAd2 = kulupler.findByID(musabaka.getDeplasmanID()).get().getAd();
@@ -137,13 +141,12 @@ public class Main {
 		System.out.println("SIMSEK GIBI!!! " + kulupAd1 + " enfes bir gol atıyor");
 		playWavFile("src/SoccerApp/sounds/GoalEffect.wav");
 		playWavFile("src/SoccerApp/sounds/InanilmazBirMac.wav");
-		musabaka.setSkorTablosu(new Integer[]{3, 0});
 		playWavFile("src/SoccerApp/sounds/MacBitisDudugu.wav");
 		System.out.println("macin sonucu: " + kulupAd1 + Arrays.toString(musabaka.getSkorTablosu()) + kulupAd2 +
 				                   "\nElinize " +
 				                   "saglik " +
 				                   "arkadaslar");
-	}
+	}*/
 	
 	private static boolean macPlanla(String kulup1Id, String kulup2Id, String stadyumId, String hakemId) {
 		Musabaka musabaka = new Musabaka();
@@ -167,9 +170,5 @@ public class Main {
 		return true;
 	}
 	
-	public static void yaratHepsi(){
-		GeneratorRex.yaratVeKaydetFutbolcular(futbolcular);
-		GeneratorRex.kulupleriOlusturVeKaydet(kulupler);
-		GeneratorRex.stadyumlariOlusturVeKaydet(stadlar);
-	}
+	
 }
