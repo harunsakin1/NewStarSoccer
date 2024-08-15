@@ -25,6 +25,6 @@ public class Stadyum extends BaseEntity{
 	
 	@Override
 	public String toString() {
-		return "Stadyum{" + "kapasite=" + getKapasite() + ", ad='" + getAd() + '\'' + '}';
+		return "Stadyum{" + "kapasite=" + getKapasite() + ", ad='" + getAd() + '\'' + ", id='" + getId() + '\'' + '}';
 	}
 }
