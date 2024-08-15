@@ -2,6 +2,7 @@ package SoccerApp.modules;
 
 import SoccerApp.databases.FutbolcuDB;
 import SoccerApp.databases.KulupDB;
+import SoccerApp.databases.StadyumDB;
 import SoccerApp.entities.Futbolcu;
 import SoccerApp.entities.Kulup;
 import SoccerApp.utility.GeneratorRex;
@@ -14,6 +15,7 @@ import java.util.Scanner;
 public class KulupMod {
 	private static KulupDB kulupDatabase;
 	private static FutbolcuDB futbolcuDatabese;
+	private static StadyumDB stadyumDatabase;
 	private static Scanner scanner = new Scanner(System.in);
 	
 	public static void setKulupDatabase(KulupDB kulupDB) {
@@ -22,6 +24,10 @@ public class KulupMod {
 	
 	public static void setFutbolcuDatabese(FutbolcuDB futbolcuDB) {
 		futbolcuDatabese = futbolcuDB;
+	}
+	
+	public static void setStadyumDatabase(StadyumDB stadyumDB) {
+		stadyumDatabase = stadyumDB;
 	}
 	
 	public static List<Kulup> araKulupFiltreIsim(){
