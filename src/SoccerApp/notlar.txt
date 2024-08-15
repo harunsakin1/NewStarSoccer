@@ -1,3 +1,9 @@
 Manager sınıfı oluştur
 Manager başlangıçta boş String olsun (Tercihen: Optional)getManager de tut
-kul
+
+
+
+MENULER
+nssMenu
+menu
+menuKulup
