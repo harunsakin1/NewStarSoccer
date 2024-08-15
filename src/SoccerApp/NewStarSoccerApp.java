@@ -1,8 +1,6 @@
 package SoccerApp;
 
-import SoccerApp.databases.FutbolcuDB;
-import SoccerApp.databases.KulupDB;
-import SoccerApp.databases.StadyumDB;
+import SoccerApp.databases.*;
 import SoccerApp.modules.KulupMod;
 import SoccerApp.utility.GeneratorRex;
 
@@ -12,19 +10,37 @@ public class NewStarSoccerApp {
 	private static KulupDB kulupDB = new KulupDB();
 	private static FutbolcuDB futbolcuDB = new FutbolcuDB();
 	private static StadyumDB stadyumDB=new StadyumDB();
+	private static MenajerDB menajerDB=new MenajerDB();
+	private static HakemDB hakemDB=new HakemDB();
 	private static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) {
 		KulupMod.setKulupDatabase(kulupDB);
-		KulupMod.setFutbolcuDatabese(futbolcuDB);
+		KulupMod.setFutbolcuDatabase(futbolcuDB);
 		KulupMod.setStadyumDatabase(stadyumDB);
+		KulupMod.setHakemDatabase(hakemDB);
+		
+
 		getirKulupler();
 		getirStadyumlar();
-		kulupDB.findAll().forEach(System.out::println);
-		stadyumDB.findAll().forEach(System.out::println);
+		getirFutbolcular();
+		getirMenajerler();
+		getirHakemler();
+		//kulupDB.findAll().forEach(System.out::println);
+		//stadyumDB.findAll().forEach(System.out::println);
+		//futbolcuDB.findAll().forEach(System.out::println);
+		//menajerDB.findAll().forEach(System.out::println);
+		hakemDB.findAll().forEach(System.out::println);
 		nssMenu();
-		
-		
+
+	}
+	private static void getirHakemler(){
+		GeneratorRex.setHakemDB(hakemDB);
+		GeneratorRex.getirHakemler();
+	}
+	private static void getirMenajerler(){
+		GeneratorRex.setMenajerDB(menajerDB);
+		GeneratorRex.getirMenajerler();
 	}
 	private static void getirKulupler(){
 		GeneratorRex.setKulupDb(kulupDB);
@@ -33,6 +49,10 @@ public class NewStarSoccerApp {
 	private static void getirStadyumlar(){
 		GeneratorRex.setStadyumDB(stadyumDB);
 		GeneratorRex.getirStadyumlar();
+	}
+	private static void getirFutbolcular(){
+		GeneratorRex.setFutbolcuDB(futbolcuDB);
+		GeneratorRex.getirFutbolcular();
 	}
 	
 	private static int nssMenu() {

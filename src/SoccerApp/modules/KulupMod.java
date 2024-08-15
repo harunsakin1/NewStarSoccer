@@ -1,29 +1,36 @@
 package SoccerApp.modules;
 
-import SoccerApp.databases.FutbolcuDB;
-import SoccerApp.databases.KulupDB;
-import SoccerApp.databases.StadyumDB;
+import SoccerApp.databases.*;
 import SoccerApp.entities.Futbolcu;
 import SoccerApp.entities.Kulup;
-import SoccerApp.utility.GeneratorRex;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
 public class KulupMod {
 	private static KulupDB kulupDatabase;
-	private static FutbolcuDB futbolcuDatabese;
+	private static FutbolcuDB futbolcuDatabase;
 	private static StadyumDB stadyumDatabase;
+	private static MenajerDB menajerDatabase;
+	private static HakemDB hakemDatabase;
+	
+	public static void setHakemDatabase(HakemDB hakemDB) {
+		KulupMod.hakemDatabase = hakemDB;
+	}
+	
 	private static Scanner scanner = new Scanner(System.in);
+	
+	public static void setMenajerDatabase(MenajerDB menajerDB) {
+		menajerDatabase = menajerDB;
+	}
 	
 	public static void setKulupDatabase(KulupDB kulupDB) {
 		kulupDatabase = kulupDB;
 	}
 	
-	public static void setFutbolcuDatabese(FutbolcuDB futbolcuDB) {
-		futbolcuDatabese = futbolcuDB;
+	public static void setFutbolcuDatabase(FutbolcuDB futbolcuDB) {
+		futbolcuDatabase = futbolcuDB;
 	}
 	
 	public static void setStadyumDatabase(StadyumDB stadyumDB) {
@@ -124,7 +131,7 @@ public class KulupMod {
 	private static void yapTeklifFutbolcular() {
 	}
 	private static List<Futbolcu> goruntuleKadroKulup(String kulupId) {
-		List<Futbolcu> futbolcular = futbolcuDatabese.bulFutbolcularKulupId(kulupId);
+		List<Futbolcu> futbolcular = futbolcuDatabase.bulFutbolcularKulupId(kulupId);
 		futbolcular.forEach(System.out::println);
 		return futbolcular;
 	}
