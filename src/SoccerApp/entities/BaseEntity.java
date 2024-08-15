@@ -1,6 +1,8 @@
 package SoccerApp.entities;
 
-public abstract class BaseEntity {
+import java.io.Serializable;
+
+public abstract class BaseEntity implements Serializable {
 	private String uuid;
 	private static int nextId;
 	

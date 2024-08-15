@@ -15,10 +15,14 @@ public class NewStarSoccerApp {
 	public static void main(String[] args) {
 		KulupMod.setKulupDatabase(kulupDB);
 		KulupMod.setFutbolcuDatabese(futbolcuDB);
-		GeneratorRex.kulupleriOlusturVeKaydet(kulupDB);
-		GeneratorRex.yaratVeKaydetFutbolcular(futbolcuDB);
+		getirKulupler();
+		kulupDB.findAll().forEach(System.out::println);
 		nssMenu();
 		
+	}
+	private static void getirKulupler(){
+		GeneratorRex.setKulupDb(kulupDB);
+		GeneratorRex.getirKulupler();
 	}
 	
 	private static int nssMenu() {
