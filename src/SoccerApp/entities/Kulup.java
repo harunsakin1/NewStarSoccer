@@ -88,20 +88,12 @@ public class Kulup extends BaseEntity{
 		return stadyumAdi;
 	}
 	
-	public String goruntuleDetayKulup() {
-		return "Kulup{" + "id='" + getId() + '\'' +
-				", ad='" + getAd() + '\'' +
-				", kurulusTarihi='" + getKurulusTarihi() + '\'' +
-				", stadyumId='" + getStadyumId() + '\'' +
-				", stadyumAdi='" + getStadyumAdi() + '\'' +
-				", menajer='" + getVarMiMenajerId() + '\'' +
-				", baskan='" + getBaskan() + '\'' +
-				", butce='" + getButce() + '\'' + '}';
-	}
-	
-	
 	@Override
 	public String toString() {
-		return "Kulup{" + "ad='" + getAd() + '\'' + ", kurulusTarihi='" + getKurulusTarihi() + '\'' + ", stadyumId='" + getStadyumId() + '\'' + ", stadyumAdi='" + getStadyumAdi() + '\'' + ", varMiMenajerId=" + isVarMiMenajer() + ", baskan='" + getBaskan() + '\'' + ", butce='" + getButce() + '\'' + ", maasButceYillik='" + getMaasButceYillik() + '\'' + ", id='" + getId() + '\'' + '}';
+		return "Kulup{" + "id='" + getId() + '\'' + ", ad='" + getAd() + '\'' + ", baskan='" + getBaskan() + '\'' + '}';
+	}
+	
+	public String goruntuleDetayKulup() {
+		return "Kulup{" + "id='" + getId() + '\'' + ", ad='" + getAd() + '\'' + ", baskan='" + getBaskan() + '\'' + ", kurulusTarihi='" + getKurulusTarihi() + '\'' + ", stadyumId='" + getStadyumId() + '\'' + ", stadyumAdi='" + getStadyumAdi() + '\'' + ", varMiMenajer=" + isVarMiMenajer() + ", butce='" + getButce() + '\'' + ", maasButceYillik='" + getMaasButceYillik() + '\'' + ", varMiMenajerId=" + getVarMiMenajerId() + '}';
 	}
 }

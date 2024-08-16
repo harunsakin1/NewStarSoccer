@@ -20,7 +20,7 @@ public class NewStarSoccerApp {
 		KulupMod.setStadyumDatabase(stadyumDB);
 		KulupMod.setHakemDatabase(hakemDB);
 		
-
+		System.out.println("Program başlatılıyor");
 		getirKulupler();
 		getirStadyumlar();
 		getirFutbolcular();
@@ -30,7 +30,6 @@ public class NewStarSoccerApp {
 		//stadyumDB.findAll().forEach(System.out::println);
 		//futbolcuDB.findAll().forEach(System.out::println);
 		//menajerDB.findAll().forEach(System.out::println);
-		hakemDB.findAll().forEach(System.out::println);
 		nssMenu();
 
 	}
@@ -60,14 +59,17 @@ public class NewStarSoccerApp {
 		do {
 			System.out.println("""
 					                   #### NewStarSoccer Uygulamasına Hoşgeldiniz ####
-					                           1- Kulüp Modül
-					                           0- Çıkış
+					                           1. Kulüp Modül
+					                           0. Geri Dön
+					                          -1. Çıkış
 					                           """);
-			System.out.println("Seçim yapınız: ");
-			secim = scanner.nextInt();
-			scanner.nextLine();
+			secim = yapSecim();
+			if (secim == 0) {
+				System.out.println("Geri dönülüyor");
+				break;
+			}
 			secim = nssMenuSecenekleri(secim);
-		} while (secim != 0);
+		} while (secim != -1);
 		return secim;
 		
 		
@@ -77,11 +79,33 @@ public class NewStarSoccerApp {
 		switch (secim) {
 			case 1:
 				return KulupMod.menu();
-			case 0:
+			case -1:
 				System.out.println("Uygulama sonlandırılıyor....");
 				return secim;
 		}
 		return secim;
+	}
+	
+	public static int yapSecim(String message){
+		int secim;
+		while (true) {
+			System.out.print(message);
+			try {
+				secim = scanner.nextInt();
+				break;
+			}
+			catch (Exception e) {
+				System.out.println("Gecersiz girdi, lütfen integer giriniz");
+			}
+			finally {
+				scanner.nextLine();
+			}
+		}
+		return secim;
+	}
+	
+	public static int yapSecim(){
+		return yapSecim("Secim yapiniz: ");
 	}
 	
 }

@@ -23,8 +23,8 @@ public class KulupDB extends DatabaseManager<Kulup> {
 		return !sahipMiFutbolcuKulube;
 	}
 	
-	public List<Kulup> araKulupFiltreIsim(String filtre){
-		return veriListesi.stream()
+	public List<Kulup> araKulupFiltreIsim(String filtre, List<Kulup> veriList){
+		return veriList.stream()
 				.filter(kulup -> kulup.getAd().toLowerCase().contains(filtre.toLowerCase()))
 				.toList();
 	}

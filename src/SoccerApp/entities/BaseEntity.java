@@ -7,7 +7,6 @@ public abstract class BaseEntity implements Serializable {
 	private static int nextId= 1;
 	
 	{
-		//this.uuid = UUID.randomUUID().toString(); //TODO sistemi kolaylastir burayi etkinlestir
 		this.uuid = String.valueOf(nextId++);
 	}
 	

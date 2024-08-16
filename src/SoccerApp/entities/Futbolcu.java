@@ -21,7 +21,7 @@ public class Futbolcu extends Insan{
 		this.kulupId = kulupId;
 	}
 	
-	public Futbolcu() {
+	public Futbolcu() { //TODO futbolcu üretildiğinde (ve değiştirildiğinde) bin dosyasını güncelle
 	}
 	
 	
