@@ -7,6 +7,7 @@ import SoccerApp.utility.enums.EMevki;
 import SoccerApp.utility.enums.EUyruk;
 
 import java.io.*;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +80,7 @@ public class GeneratorRex {
 			e.printStackTrace();
 		}
 	}
-	public static void getirStadyumlar(){ //TODO stadyumDB açılacak
+	public static void getirStadyumlar(){
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("stadyumlar.bin"))){
 			stadyumDB.saveAll((ArrayList<Stadyum>)ois.readObject());
 		}
@@ -172,27 +173,42 @@ public class GeneratorRex {
 	}
 	public static List<Futbolcu> yaratFutbolcularIO() {
 		List<Futbolcu> futbolcuList = new ArrayList<>();
-		try (BufferedReader fr = new BufferedReader(new FileReader("futbolcular.txt"));ObjectOutputStream oos=
-				new ObjectOutputStream(new FileOutputStream("futbolcular.bin"))) {
-			int count=1;
+		try (BufferedReader fr = new BufferedReader(new FileReader("futbolcular.txt"))) {
+			int count = 1;
 			while (true) {
 				String str = fr.readLine();
 				if (str == null) break;
 				String[] split = str.split(",");
-				Futbolcu tempFutbolcu = new Futbolcu();
-				tempFutbolcu.setAd(split[0].trim());
-				tempFutbolcu.setSoyad(split[1].trim());
-				tempFutbolcu.setDogumTarihi(LocalDate.parse(split[2].trim()));
-				tempFutbolcu.setMaas((split[3].trim()));
-				tempFutbolcu.setUyruk(EUyruk.valueOf((split[4].trim())));
-				tempFutbolcu.setFormaNumarasi((((count)-(count%100))/100)+1);
-				tempFutbolcu.setBonservis((split[6].trim()));
-				tempFutbolcu.setMevki(EMevki.valueOf((split[7].trim())));
-				tempFutbolcu.setYetenekPuani(Integer.parseInt((split[8].trim())));
-				tempFutbolcu.setKulupId(String.valueOf((count%100)+1));
-				count++;
-				futbolcuList.add(tempFutbolcu);
+				
+				String tempAd, tempSoyad, tempMaas, tempBonservis, tempKulupId;
+				EUyruk tempUyruk;
+				EMevki tempMevki;
+				Integer tempFormaNumarasi, tempYetenekPuani;
+				LocalDate tempDogumTarihi;
+				tempAd = split[0].trim();
+				tempSoyad = split[1].trim();
+				tempDogumTarihi = LocalDate.parse(split[2].trim());
+				tempMaas = (split[3].trim());
+				tempUyruk = EUyruk.valueOf((split[4].trim()));
+				tempFormaNumarasi = (((count) - (count % 100)) / 100) + 1;
+				tempBonservis = (split[6].trim());
+				tempMevki = EMevki.valueOf((split[7].trim()));
+				tempYetenekPuani = Integer.parseInt((split[8].trim()));
+				tempKulupId = String.valueOf((count % 100) + 1);
+				futbolcuList.add(new Futbolcu(tempAd, tempSoyad, tempDogumTarihi, tempUyruk, tempMaas,
+				                              tempFormaNumarasi, tempBonservis, tempMevki, tempYetenekPuani,
+				                              tempKulupId, String.valueOf(count++)));
 			}
+			
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("futbolcular.bin"))) {
 			oos.writeObject(futbolcuList);
 		}
 		catch (FileNotFoundException e) {

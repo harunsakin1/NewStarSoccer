@@ -1,6 +1,12 @@
 package SoccerApp.entities;
 
 import SoccerApp.utility.enums.EMevki;
+import SoccerApp.utility.enums.EUyruk;
+
+import java.io.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class Futbolcu extends Insan{
@@ -9,6 +15,7 @@ public class Futbolcu extends Insan{
 	private EMevki mevki;
 	private int yetenekPuani;
 	private String kulupId;
+
 	//TODO Sözleşme bitiş zamanı eklenebilir
 	//CONSTRUCTORS
 	
@@ -21,7 +28,7 @@ public class Futbolcu extends Insan{
 		this.kulupId = kulupId;
 	}
 	
-	public Futbolcu() {
+	public Futbolcu() { //TODO futbolcu üretildiğinde (ve değiştirildiğinde) bin dosyasını güncelle
 	}
 	
 	
@@ -29,8 +36,18 @@ public class Futbolcu extends Insan{
 		kulupId = "-1";
 	}
 	
-	
-	public int getFormaNumarasi() {
+	public Futbolcu(String ad, String soyad, LocalDate dogumTarihi, EUyruk uyruk, String maas, int formaNumarasi,
+	                String bonservis, EMevki mevki, int yetenekPuani, String kulupId, String uuid) {
+		super(ad, soyad, dogumTarihi, uyruk, maas);
+		this.formaNumarasi = formaNumarasi;
+		this.bonservis = bonservis;
+		this.mevki = mevki;
+		this.yetenekPuani = yetenekPuani;
+		this.kulupId = kulupId;
+		setId(uuid);
+		
+	}
+		public int getFormaNumarasi() {
 		return formaNumarasi;
 	}
 	

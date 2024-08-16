@@ -6,7 +6,6 @@ public class Kulup extends BaseEntity{
 	private String stadyumId;
 	private String stadyumAdi;
 	private boolean varMiMenajer;
-	// TODO TAM TERSİ DE YAPILACAK -- MENAJER DB DE YAPILACAK
 	private String baskan;
 	private String butce;
 	private String maasButceYillik;
@@ -88,20 +87,12 @@ public class Kulup extends BaseEntity{
 		return stadyumAdi;
 	}
 	
-	public String goruntuleDetayKulup() {
-		return "Kulup{" + "id='" + getId() + '\'' +
-				", ad='" + getAd() + '\'' +
-				", kurulusTarihi='" + getKurulusTarihi() + '\'' +
-				", stadyumId='" + getStadyumId() + '\'' +
-				", stadyumAdi='" + getStadyumAdi() + '\'' +
-				", menajer='" + getVarMiMenajerId() + '\'' +
-				", baskan='" + getBaskan() + '\'' +
-				", butce='" + getButce() + '\'' + '}';
-	}
-	
-	
 	@Override
 	public String toString() {
-		return "Kulup{" + "ad='" + getAd() + '\'' + ", kurulusTarihi='" + getKurulusTarihi() + '\'' + ", stadyumId='" + getStadyumId() + '\'' + ", stadyumAdi='" + getStadyumAdi() + '\'' + ", varMiMenajerId=" + isVarMiMenajer() + ", baskan='" + getBaskan() + '\'' + ", butce='" + getButce() + '\'' + ", maasButceYillik='" + getMaasButceYillik() + '\'' + ", id='" + getId() + '\'' + '}';
+		return "Kulup{" + "id='" + getId() + '\'' + ", ad='" + getAd() + '\'' + ", baskan='" + getBaskan() + '\'' + '}';
+	}
+	
+	public String goruntuleDetayKulup() {
+		return "Kulup{" + "id='" + getId() + '\'' + ", ad='" + getAd() + '\'' + ", baskan='" + getBaskan() + '\'' + ", kurulusTarihi='" + getKurulusTarihi() + '\'' + ", stadyumId='" + getStadyumId() + '\'' + ", stadyumAdi='" + getStadyumAdi() + '\'' + ", varMiMenajer=" + isVarMiMenajer() + ", butce='" + getButce() + '\'' + ", maasButceYillik='" + getMaasButceYillik() + '\'' + ", varMiMenajerId=" + getVarMiMenajerId() + '}';
 	}
 }
