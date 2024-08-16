@@ -6,7 +6,6 @@ public class Kulup extends BaseEntity{
 	private String stadyumId;
 	private String stadyumAdi;
 	private boolean varMiMenajer;
-	// TODO TAM TERSİ DE YAPILACAK -- MENAJER DB DE YAPILACAK
 	private String baskan;
 	private String butce;
 	private String maasButceYillik;
