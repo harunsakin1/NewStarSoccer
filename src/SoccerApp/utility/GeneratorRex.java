@@ -39,7 +39,7 @@ public class GeneratorRex {
 		GeneratorRex.stadyumDB = stadyumDB;
 	}
 	public static void getirHakemler(){ //
-		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("hakemler.bin"))){
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\build\\hakemler.bin"))){
 			hakemDB.saveAll((ArrayList<Hakem>)ois.readObject());
 		}
 		catch (FileNotFoundException e) {
@@ -53,7 +53,7 @@ public class GeneratorRex {
 		}
 	}
 	public static void getirMenajerler(){ //
-		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("menajerler.bin"))){
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\build\\menajerler.bin"))){
 			menajerDB.saveAll((ArrayList<Menajer>)ois.readObject());
 		}
 		catch (FileNotFoundException e) {
@@ -67,7 +67,7 @@ public class GeneratorRex {
 		}
 	}
 	public static void getirFutbolcular(){ //
-		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("futbolcular.bin"))){
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\build\\futbolcular.bin"))){
 			futbolcuDB.saveAll((ArrayList<Futbolcu>)ois.readObject());
 		}
 		catch (FileNotFoundException e) {
@@ -81,7 +81,7 @@ public class GeneratorRex {
 		}
 	}
 	public static void getirStadyumlar(){
-		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("stadyumlar.bin"))){
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\build\\stadyumlar.bin"))){
 			stadyumDB.saveAll((ArrayList<Stadyum>)ois.readObject());
 		}
 		catch (FileNotFoundException e) {
@@ -96,7 +96,7 @@ public class GeneratorRex {
 	}
 	
 	public static void getirKulupler(){
-		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("kulupler.bin"))){
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\build\\kulupler.bin"))){
 			kulupDb.saveAll((ArrayList<Kulup>)ois.readObject());
 		}
 		catch (FileNotFoundException e) {
@@ -111,14 +111,16 @@ public class GeneratorRex {
 	}
 	public static List<Hakem> yaratHakemlerIO() {
 		List<Hakem> hakemList = new ArrayList<>();
-		try (BufferedReader fr = new BufferedReader(new FileReader("hakemler.txt"));ObjectOutputStream oos=
-				new ObjectOutputStream(new FileOutputStream("hakemler.bin"))) {
+		try (BufferedReader fr = new BufferedReader(new FileReader("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\resources\\hakemler.txt"));ObjectOutputStream oos=
+				new ObjectOutputStream(new FileOutputStream("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\build\\hakemler.bin"))) {
 			int count=1;
 			while (true) {
 				String str = fr.readLine();
 				if (str == null) break;
 				String[] split = str.split(",");
 				Hakem tempHakem = new Hakem();
+				tempHakem.setId(String.valueOf(count));
+				System.out.println(count);
 				tempHakem.setAd(split[0].trim());
 				tempHakem.setSoyad(split[1].trim());
 				tempHakem.setDogumTarihi(LocalDate.parse(split[2].trim()));
@@ -140,8 +142,8 @@ public class GeneratorRex {
 	}
 	public static List<Menajer> yaratMenajerlerIO() {
 		List<Menajer> menajerList = new ArrayList<>();
-		try (BufferedReader fr = new BufferedReader(new FileReader("menajerler.txt"));ObjectOutputStream oos=
-				new ObjectOutputStream(new FileOutputStream("menajerler.bin"))) {
+		try (BufferedReader fr = new BufferedReader(new FileReader("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\resources\\menajerler.txt"));ObjectOutputStream oos=
+				new ObjectOutputStream(new FileOutputStream("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\build\\menajerler.bin"))) {
 			int count=1;
 			while (true) {
 				String str = fr.readLine();
@@ -149,12 +151,10 @@ public class GeneratorRex {
 				String[] split = str.split(",");
 				Menajer tempMenajer = new Menajer();
 				tempMenajer.setKulupId(String.valueOf(count));
-				
+				tempMenajer.setId(String.valueOf(count));
 				tempMenajer.setAd(split[1].trim());
 				tempMenajer.setSoyad(split[2].trim());
-				
 				tempMenajer.setDogumTarihi(LocalDate.parse(split[3].trim()));
-				
 				tempMenajer.setUyruk(EUyruk.valueOf(split[4].trim()));
 				tempMenajer.setMaas(split[5].trim());
 				tempMenajer.setSozlesmeBitisTarihi(LocalDate.parse(split[6].trim()));
@@ -173,7 +173,7 @@ public class GeneratorRex {
 	}
 	public static List<Futbolcu> yaratFutbolcularIO() {
 		List<Futbolcu> futbolcuList = new ArrayList<>();
-		try (BufferedReader fr = new BufferedReader(new FileReader("futbolcular.txt"))) {
+		try (BufferedReader fr = new BufferedReader(new FileReader("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\resources\\futbolcular.txt"))) {
 			int count = 1;
 			while (true) {
 				String str = fr.readLine();
@@ -208,7 +208,7 @@ public class GeneratorRex {
 			e.printStackTrace();
 		}
 		
-		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("futbolcular.bin"))) {
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\build\\futbolcular.bin"))) {
 			oos.writeObject(futbolcuList);
 		}
 		catch (FileNotFoundException e) {
@@ -221,17 +221,19 @@ public class GeneratorRex {
 	}
 	public static List<Stadyum> yaratStadyumIO() {
 		List<Stadyum> stadyumList = new ArrayList<>();
-		try (BufferedReader fr = new BufferedReader(new FileReader("stadyumlar.txt"));ObjectOutputStream oos=
-				new ObjectOutputStream(new FileOutputStream("stadyumlar.bin"))) {
+		try (BufferedReader fr = new BufferedReader(new FileReader("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\resources\\stadyumlar.txt"));ObjectOutputStream oos=
+				new ObjectOutputStream(new FileOutputStream("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\build\\stadyumlar.bin"))) {
 			int count=1;
 			while (true) {
 				String str = fr.readLine();
 				if (str == null) break;
 				String[] split = str.split(",");
 				Stadyum tempStadyum = new Stadyum();
+				tempStadyum.setId(String.valueOf(count));
 				tempStadyum.setAd(split[1].trim());
 				tempStadyum.setKapasite(Integer.valueOf(split[0].trim()));
 				stadyumList.add(tempStadyum);
+				count++;
 			}
 			oos.writeObject(stadyumList);
 		}
@@ -246,14 +248,15 @@ public class GeneratorRex {
 	
 	public static List<Kulup> yaratKulupIO() {
 		List<Kulup> futbolcularList = new ArrayList<>();
-		try (BufferedReader fr = new BufferedReader(new FileReader("kulupler.txt"));ObjectOutputStream oos=
-				new ObjectOutputStream(new FileOutputStream("kulupler.bin"))) {
+		try (BufferedReader fr = new BufferedReader(new FileReader("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\resources\\kulupler.txt"));ObjectOutputStream oos=
+				new ObjectOutputStream(new FileOutputStream("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\build\\kulupler.bin"))) {
 			int count=1;
 			while (true) {
 				String str = fr.readLine();
 				if (str == null) break;
 				String[] split = str.split(",");
 				Kulup tempKulup = new Kulup();
+				tempKulup.setId(String.valueOf(count));
 				tempKulup.setAd(split[1].trim());
 				tempKulup.setKurulusTarihi(split[2].trim());
 				tempKulup.setStadyumId(String.valueOf(count++));

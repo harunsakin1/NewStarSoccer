@@ -18,7 +18,7 @@ public class FutbolcuDB extends DatabaseManager<Futbolcu> {
 	                             int tempYetenekPuani, String tempKulupId){
 		Futbolcu newFutbolcu =
 				new Futbolcu(tempAd, tempSoyad, tempDogumTarihi, tempUyruk, tempMaas, tempFormaNumarasi, tempBonservis, tempMevki, tempYetenekPuani, tempKulupId, getNextId());
-		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("futbolcular.bin"))) {
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\build\\futbolcular.bin"))) {
 			veriListesi.add(newFutbolcu);
 			oos.writeObject(veriListesi);
 		}
@@ -31,9 +31,7 @@ public class FutbolcuDB extends DatabaseManager<Futbolcu> {
 		return true;
 	}
 	
-	private String getNextId() {
-		return String.valueOf(veriListesi.size() + 1);
-	}
+	
 	
 	public List<Futbolcu> bulFutbolcularKulupId(String kulupId){
 		return veriListesi.stream()

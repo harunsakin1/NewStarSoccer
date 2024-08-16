@@ -11,12 +11,21 @@ public class Menajer extends Insan {
 	
 	
 	public Menajer(){
-		kulupId="";
+		kulupId="-1";
 	}
 	
-	public Menajer(String kulupId, int yil){
+	public Menajer(String ad, String soyad, LocalDate dogumTarihi, EUyruk uyruk, String maas, String kulupId,
+	               int yil,String uuid) {
+		super(ad, soyad, dogumTarihi, uyruk, maas);
+		this.kulupId = kulupId;
+		this.sozlesmeBitisTarihi=LocalDate.now().plusYears(yil);
+		setId(uuid);
+	}
+	
+	public Menajer(String kulupId, int yil, String uuid){
 		this.kulupId=kulupId;
 		this.sozlesmeBitisTarihi=LocalDate.now().plusYears(yil);
+		setId(uuid);
 	}
 	
 	public String getKulupId() {

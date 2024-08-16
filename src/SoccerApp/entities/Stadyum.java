@@ -6,6 +6,14 @@ public class Stadyum extends BaseEntity{
 	private Integer kapasite;
 	private String ad;
 	
+	public Stadyum() {
+	}
+	
+	public Stadyum(Integer kapasite, String ad, String uuid) {
+		this.kapasite = kapasite;
+		this.ad = ad;
+		setId(uuid);
+	}
 	
 	public Integer getKapasite() {
 		return kapasite;

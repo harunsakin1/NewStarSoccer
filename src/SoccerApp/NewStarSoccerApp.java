@@ -4,6 +4,7 @@ import SoccerApp.databases.*;
 import SoccerApp.entities.Futbolcu;
 import SoccerApp.modules.KulupMod;
 import SoccerApp.utility.GeneratorRex;
+import SoccerApp.utility.enums.EKokart;
 import SoccerApp.utility.enums.EMevki;
 import SoccerApp.utility.enums.EUyruk;
 
@@ -26,27 +27,20 @@ public class NewStarSoccerApp {
 		KulupMod.setStadyumDatabase(stadyumDB);
 		KulupMod.setHakemDatabase(hakemDB);
 		
-		GeneratorRex.yaratHakemlerIO();
-		GeneratorRex.yaratKulupIO();
-		GeneratorRex.yaratMenajerlerIO();
-		GeneratorRex.yaratFutbolcularIO();
-		
 		System.out.println("Program başlatılıyor");
 		getirKulupler();
 		getirFutbolcular();
 		getirMenajerler();
 		getirHakemler();
+		getirStadyumlar();
+		
 		//kulupDB.findAll().forEach(System.out::println);
 		//stadyumDB.findAll().forEach(System.out::println);
 		//futbolcuDB.findAll().forEach(System.out::println);
 		//menajerDB.findAll().forEach(System.out::println);
 		//nssMenu();
-		futbolcuDB.yaratFutbolcu("Emirhan", "Ergun", LocalDate.of(2001, 06, 27), EUyruk.TURKIYE, "50000", 33, "30M$",
-		                         EMevki.DEFANS,60,"96");
-		futbolcuDB.yaratFutbolcu("Harun", "Sakin", LocalDate.of(2000, 12, 13), EUyruk.TURKIYE, "50000", 32, "30M$",
-		                         EMevki.DEFANS,73,"96");
-		
-		futbolcuDB.findAll().forEach(System.out::println);
+		//TODO yaratIO bazen serialID'den dolayı hata veriyor, bazen vermiyor, neden ?
+		kulupDB.findAll().forEach(System.out::println);
 	}
 		private static void getirHakemler(){
 		GeneratorRex.setHakemDB(hakemDB);
