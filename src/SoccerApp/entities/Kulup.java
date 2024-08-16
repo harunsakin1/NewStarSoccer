@@ -10,6 +10,23 @@ public class Kulup extends BaseEntity{
 	private String butce;
 	private String maasButceYillik;
 	
+	
+	public Kulup(String ad, String kurulusTarihi, String stadyumId, String stadyumAdi, boolean varMiMenajer,
+	             String baskan, String butce, String maasButceYillik, String uuid) {
+		this.ad = ad;
+		this.kurulusTarihi = kurulusTarihi;
+		this.stadyumId = stadyumId;
+		this.stadyumAdi = stadyumAdi;
+		this.varMiMenajer = varMiMenajer;
+		this.baskan = baskan;
+		/**
+		 * Butce ve maasButceYillik sonlarina M koyulacak.
+		 */
+		this.butce = butce;
+		this.maasButceYillik = maasButceYillik;
+		setId(uuid);
+	}
+	
 	{
 		varMiMenajer = false;
 	}
