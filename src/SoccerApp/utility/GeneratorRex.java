@@ -147,17 +147,15 @@ public class GeneratorRex {
 				String str = fr.readLine();
 				if (str == null) break;
 				String[] split = str.split(",");
-				Menajer tempMenajer = new Menajer();
-				tempMenajer.setKulupId(String.valueOf(count));
+				Menajer tempMenajer = new Menajer(String.valueOf(count), new Random().nextInt(3), "a" + count);
 				
 				tempMenajer.setAd(split[1].trim());
 				tempMenajer.setSoyad(split[2].trim());
-				
+				tempMenajer.setId(String.valueOf(count));
 				tempMenajer.setDogumTarihi(LocalDate.parse(split[3].trim()));
 				
 				tempMenajer.setUyruk(EUyruk.valueOf(split[4].trim()));
 				tempMenajer.setMaas(split[5].trim());
-				tempMenajer.setSozlesmeBitisTarihi(LocalDate.parse(split[6].trim()));
 				menajerList.add(tempMenajer);
 				count++;
 			}

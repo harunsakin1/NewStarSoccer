@@ -17,7 +17,7 @@ public class KulupMod {
 	private static HakemDB hakemDatabase;
 	
 	public static void setHakemDatabase(HakemDB hakemDB) {
-		KulupMod.hakemDatabase = hakemDB;
+		hakemDatabase = hakemDB;
 	}
 	
 	private static Scanner scanner = new Scanner(System.in);
