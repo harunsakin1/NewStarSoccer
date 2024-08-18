@@ -3,6 +3,7 @@ package SoccerApp;
 import SoccerApp.databases.*;
 import SoccerApp.entities.Futbolcu;
 import SoccerApp.modules.KulupMod;
+import SoccerApp.modules.MenajerMod;
 import SoccerApp.utility.GeneratorRex;
 import SoccerApp.utility.enums.EKokart;
 import SoccerApp.utility.enums.EMevki;
@@ -22,17 +23,12 @@ public class NewStarSoccerApp {
 	private static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) {
-		KulupMod.setKulupDatabase(kulupDB);
-		KulupMod.setFutbolcuDatabase(futbolcuDB);
-		KulupMod.setStadyumDatabase(stadyumDB);
-		KulupMod.setHakemDatabase(hakemDB);
+		ataModlaraDatabaseleri();
+		
+		//yukleIO();
 		
 		System.out.println("Program başlatılıyor");
-		getirKulupler();
-		getirFutbolcular();
-		getirMenajerler();
-		getirHakemler();
-		getirStadyumlar();
+		getirBinarydenJavaya();
 		
 		//kulupDB.findAll().forEach(System.out::println);
 		//stadyumDB.findAll().forEach(System.out::println);
@@ -40,9 +36,47 @@ public class NewStarSoccerApp {
 		//menajerDB.findAll().forEach(System.out::println);
 		//nssMenu();
 		//TODO yaratIO bazen serialID'den dolayı hata veriyor, bazen vermiyor, neden ?
-		kulupDB.findAll().forEach(System.out::println);
+		nssMenu();
 	}
-		private static void getirHakemler(){
+	
+	private static void yukleIO() {
+		GeneratorRex.yaratStadyumIO();
+		GeneratorRex.yaratMenajerlerIO();
+		GeneratorRex.yaratKulupIO();
+		GeneratorRex.yaratHakemlerIO();
+		GeneratorRex.yaratFutbolcularIO();
+	}
+	
+	private static void getirBinarydenJavaya() {
+		getirKulupler();
+		getirFutbolcular();
+		getirMenajerler();
+		getirHakemler();
+		getirStadyumlar();
+	}
+	
+	private static void ataModlaraDatabaseleri() {
+		ataKulupModaDatabaseleri();
+		ataMenajerModaDatabaseleri();
+	}
+	
+	private static void ataMenajerModaDatabaseleri() {
+		MenajerMod.setKulupDatabase(kulupDB);
+		MenajerMod.setFutbolcuDatabase(futbolcuDB);
+		MenajerMod.setStadyumDatabase(stadyumDB);
+		MenajerMod.setHakemDatabase(hakemDB);
+		MenajerMod.setMenajerDatabase(menajerDB);
+	}
+	
+	private static void ataKulupModaDatabaseleri() {
+		KulupMod.setKulupDatabase(kulupDB);
+		KulupMod.setFutbolcuDatabase(futbolcuDB);
+		KulupMod.setStadyumDatabase(stadyumDB);
+		KulupMod.setHakemDatabase(hakemDB);
+		KulupMod.setMenajerDatabase(menajerDB);
+	}
+	
+	private static void getirHakemler(){
 		GeneratorRex.setHakemDB(hakemDB);
 		GeneratorRex.getirHakemler();
 	}
@@ -69,6 +103,7 @@ public class NewStarSoccerApp {
 			System.out.println("""
 					                   #### NewStarSoccer Uygulamasına Hoşgeldiniz ####
 					                           1. Kulüp Modül
+					                           2. Menajer Modül
 					                           0. Geri Dön
 					                          -1. Çıkış
 					                           """);
@@ -88,6 +123,9 @@ public class NewStarSoccerApp {
 		switch (secim) {
 			case 1:
 				return KulupMod.menu();
+			case 2:
+				MenajerMod.girisYapMenajerMod();
+				return secim;
 			case -1:
 				System.out.println("Uygulama sonlandırılıyor....");
 				return secim;

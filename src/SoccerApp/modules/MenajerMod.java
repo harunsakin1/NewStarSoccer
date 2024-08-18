@@ -54,12 +54,16 @@ public class MenajerMod {
 			Menajer menajer;
 			if (OptionalMenajer.isEmpty()) {
 				System.out.println("Gecersiz id");
+				break;
 			}
 			else if ((menajer = OptionalMenajer.get()).getSifre().equals(tempSifre)) {
 				System.out.println("Giriş başarılı.");
 				secim = menu(menajer);
 			}
-			else System.out.println("Şifre hatalı");
+			else {
+				System.out.println("Şifre hatalı");
+				break;
+			}
 		} while(secim != -1);
 	}
 	
@@ -105,7 +109,7 @@ public class MenajerMod {
 	}
 	
 	private static void futbolculariGoruntuleMenu() {
-		System.out.print("Futbolcularini görüntülemek istediğiniz bir kulüp var mi?\n1. Evet\n2. Hayır\nSeciminiz: ");
+		System.out.println("Futbolcularini görüntülemek istediğiniz bir kulüp var mi?\n1. Evet\n2. Hayır");
 		int secim = yapSecim();
 		futbolculariGoruntuleMenuSecenekleri(secim);
 	}
@@ -120,14 +124,14 @@ public class MenajerMod {
 				break;
 			default:
 				System.out.println("Girdi tanımlanamadı. x_x");
-				
+			
 		}
 	}
 	
 	private static void futbolcuGoruntuleTarafindanKulupId() {
 		System.out.print("Futbolcularını görüntülemek istediğiniz kulübün id'sini giriniz: ");
 		int secim = yapSecim();
-		futbolcuDatabase.findAll().stream().filter(futbolcu -> futbolcu.getKulupId().equals(secim)).forEach(System.out::println);
+		futbolcuDatabase.findAll().stream().filter(futbolcu -> futbolcu.getKulupId().get().equals(String.valueOf(secim))).forEach(System.out::println);
 	}
 	
 	private static void goruntuleDigerKulupler() {
@@ -135,7 +139,7 @@ public class MenajerMod {
 	}
 	
 	private static void goruntuleFutbolcularDetayli(String kulupId) {
-		futbolcuDatabase.bulFutbolcularKulupId(kulupId).forEach(Futbolcu::goruntuleDetayli);
+		futbolcuDatabase.bulFutbolcularKulupId(kulupId).forEach(futbolcu -> System.out.println(futbolcu.goruntuleDetayli()));
 	}
 	
 	private static Kulup bulKulubumu(Menajer menajer) {

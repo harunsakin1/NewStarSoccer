@@ -14,9 +14,10 @@ import java.time.LocalDate;
 public class MenajerDB extends DatabaseManager<Menajer> {
 	public boolean yaratMenajer(String tempAd, String tempSoyad, LocalDate tempDogumTarihi, EUyruk tempUyruk,
 	                            String tempMaas, String tempKulupID,
-	                            int tempYil) {
+	                            int tempYil, String tempSifre) {
+		String nextId = getNextId();
 		Menajer newMenajer = new Menajer(tempAd,tempSoyad,tempDogumTarihi,tempUyruk,tempMaas,tempKulupID, tempYil,
-		                                 getNextId());
+		                                nextId , tempSifre);
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("E:\\JavaDersleri\\NewStarSoccer" +
 				                                                                          "\\src\\SoccerApp\\build" +
 				                                                                          "\\menajerler.bin"))) {
