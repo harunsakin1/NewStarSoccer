@@ -2,10 +2,9 @@ package SoccerApp;
 
 import SoccerApp.databases.*;
 import SoccerApp.entities.Futbolcu;
-import SoccerApp.entities.Kulup;
 import SoccerApp.modules.KulupMod;
-import SoccerApp.modules.MenajerMod;
 import SoccerApp.utility.GeneratorRex;
+import SoccerApp.utility.enums.EKokart;
 import SoccerApp.utility.enums.EMevki;
 import SoccerApp.utility.enums.EUyruk;
 
@@ -23,20 +22,25 @@ public class NewStarSoccerApp {
 	private static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) {
+		KulupMod.setKulupDatabase(kulupDB);
+		KulupMod.setFutbolcuDatabase(futbolcuDB);
+		KulupMod.setStadyumDatabase(stadyumDB);
+		KulupMod.setHakemDatabase(hakemDB);
 		
+		System.out.println("Program başlatılıyor");
+		getirKulupler();
+		getirFutbolcular();
+		getirMenajerler();
+		getirHakemler();
+		getirStadyumlar();
 		
-		/*GeneratorRex.yaratHakemlerIO();
-		GeneratorRex.yaratKulupIO();
-		GeneratorRex.yaratMenajerlerIO();
-		GeneratorRex.yaratFutbolcularIO();*/
-		getirHepsiBinaryDosyalar();
-		
-		ataModlaraDatabaseleri();
 		//kulupDB.findAll().forEach(System.out::println);
 		//stadyumDB.findAll().forEach(System.out::println);
 		//futbolcuDB.findAll().forEach(System.out::println);
-		nssMenu();
-		futbolcuDB.findAll().forEach(System.out::println);
+		//menajerDB.findAll().forEach(System.out::println);
+		//nssMenu();
+		//TODO yaratIO bazen serialID'den dolayı hata veriyor, bazen vermiyor, neden ?
+		kulupDB.findAll().forEach(System.out::println);
 	}
 		private static void getirHakemler(){
 		GeneratorRex.setHakemDB(hakemDB);
@@ -59,42 +63,12 @@ public class NewStarSoccerApp {
 		GeneratorRex.getirFutbolcular();
 	}
 	
-	private static void getirHepsiBinaryDosyalar(){
-		System.out.println(".bin dosyalar yükleniyor...");
-		getirKulupler();
-		getirFutbolcular();
-		getirMenajerler();
-		getirHakemler();
-	}
-	
-	private static void ataModlaraDatabaseleri(){
-		ataKulupModaDatabaseleri();
-		ataMenajerModaDatabaseleri();
-	}
-	
-	private static void ataKulupModaDatabaseleri(){
-		System.out.println("Database'ler oluşturuluyor...");
-		KulupMod.setKulupDatabase(kulupDB);
-		KulupMod.setFutbolcuDatabase(futbolcuDB);
-		KulupMod.setStadyumDatabase(stadyumDB);
-		KulupMod.setHakemDatabase(hakemDB);
-		KulupMod.setMenajerDatabase(menajerDB);
-	}
-	private static void ataMenajerModaDatabaseleri(){
-		MenajerMod.setKulupDatabase(kulupDB);
-		MenajerMod.setFutbolcuDatabase(futbolcuDB);
-		MenajerMod.setStadyumDatabase(stadyumDB);
-		MenajerMod.setHakemDatabase(hakemDB);
-		MenajerMod.setMenajerDatabase(menajerDB);
-	}
 	private static int nssMenu() {
-		System.out.println("Program başlatılıyor");
 		int secim;
 		do {
 			System.out.println("""
 					                   #### NewStarSoccer Uygulamasına Hoşgeldiniz ####
 					                           1. Kulüp Modül
-					                           2. Menajer Modül
 					                           0. Geri Dön
 					                          -1. Çıkış
 					                           """);
@@ -114,9 +88,6 @@ public class NewStarSoccerApp {
 		switch (secim) {
 			case 1:
 				return KulupMod.menu();
-			case 2:
-				MenajerMod.girisYapMenajerMod();
-				return secim;
 			case -1:
 				System.out.println("Uygulama sonlandırılıyor....");
 				return secim;

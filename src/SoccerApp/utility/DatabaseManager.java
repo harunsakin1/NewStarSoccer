@@ -13,6 +13,9 @@ public class DatabaseManager<T extends BaseEntity> implements ICRUD<T> {
 	{
 		veriListesi = new ArrayList<>();
 	}
+	protected String getNextId() {
+		return String.valueOf(veriListesi.size() + 1);
+	}
 	@Override
 	public T save(T t) {
 		if (veriListesi.add(t)) {

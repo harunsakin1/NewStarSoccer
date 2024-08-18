@@ -1,25 +1,31 @@
 package SoccerApp.entities;
 
-import SoccerApp.utility.IHesap;
 import SoccerApp.utility.enums.EUyruk;
 
 import java.time.LocalDate;
 
-public class Menajer extends Insan implements IHesap {
+public class Menajer extends Insan {
 	private String kulupId;
 	private LocalDate sozlesmeBitisTarihi;
-	private String sifre;
+	
 	
 	
 	public Menajer(){
 		kulupId="-1";
-		sifre = "";
 	}
 	
-	public Menajer(String kulupId, int yil, String sifre){
+	public Menajer(String ad, String soyad, LocalDate dogumTarihi, EUyruk uyruk, String maas, String kulupId,
+	               int yil,String uuid) {
+		super(ad, soyad, dogumTarihi, uyruk, maas);
+		this.kulupId = kulupId;
+		this.sozlesmeBitisTarihi=LocalDate.now().plusYears(yil);
+		setId(uuid);
+	}
+	
+	public Menajer(String kulupId, int yil, String uuid){
 		this.kulupId=kulupId;
 		this.sozlesmeBitisTarihi=LocalDate.now().plusYears(yil);
-		this.sifre = sifre;
+		setId(uuid);
 	}
 	
 	public String getKulupId() {
@@ -40,11 +46,6 @@ public class Menajer extends Insan implements IHesap {
 	
 	@Override
 	public String toString() {
-		return "Menajer{" + "id='" + getId() + '\'' + ", kulupId='" + getKulupId() + '\'' + ", sifre='" + getSifre() + '\'' + ", ad='" + getAd() + '\'' + ", soyad='" + getSoyad() + '\'' + ", sozlesmeBitisTarihi=" + getSozlesmeBitisTarihi() + ", dogumTarihi=" + getDogumTarihi() + ", uyruk=" + getUyruk() + ", maas='" + getMaas() + '\'' + '}';
-	}
-	
-	@Override
-	public String getSifre() {
-		return this.sifre;
+		return "Menajer{" + "id='" + getId() + '\'' + ", ad='" + getAd() + '\'' + ", soyad='" + getSoyad() + '\'' + ", kulupId='" + getKulupId() + '\'' + ", sozlesmeBitisTarihi=" + getSozlesmeBitisTarihi() + ", dogumTarihi=" + getDogumTarihi() + ", uyruk=" + getUyruk() + ", maas='" + getMaas() + '\'' + '}';
 	}
 }

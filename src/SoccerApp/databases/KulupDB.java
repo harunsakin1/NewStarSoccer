@@ -2,12 +2,38 @@ package SoccerApp.databases;
 
 import SoccerApp.entities.Futbolcu;
 import SoccerApp.entities.Kulup;
+import SoccerApp.entities.Menajer;
 import SoccerApp.utility.DatabaseManager;
+import SoccerApp.utility.enums.EUyruk;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 public class KulupDB extends DatabaseManager<Kulup> {
+	public boolean yaratKulup(String tempAd, String tempKurulusTarihi, String stadyumId, String tempStadyumAdi,
+	                            boolean tempVarMiMenajer, String tempBaskan,
+	                            String tempButce,String tempMaasButceYillik) {
+		Kulup newKulup = new Kulup(tempAd, tempKurulusTarihi, stadyumId, tempStadyumAdi, tempVarMiMenajer,
+		                               tempBaskan, tempButce,tempMaasButceYillik, getNextId());
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("E:\\JavaDersleri\\NewStarSoccer" +
+				                                                                          "\\src\\SoccerApp\\build" +
+				                                                                          "\\kulupler.bin"))) {
+			veriListesi.add(newKulup);
+			oos.writeObject(veriListesi);
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
 	
 	public boolean ekleFutbolcu(String futbolcuId, String kulupId, DatabaseManager<Futbolcu> futbolcular){ //oyuncu kulupsuz mu, ekle/ hata
 		Optional<Futbolcu> futbolcu = futbolcular.findByID(futbolcuId);
