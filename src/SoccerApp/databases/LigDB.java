@@ -18,6 +18,7 @@ public class LigDB extends DatabaseManager<Lig> {
 	public MusabakaDB musabakaDB=DatabaseModel.musabakaDataBase;
 	public StadyumDB stadyumDB=DatabaseModel.stadyumDataBase;
 	
+	
 	public boolean ekleKulup(String ligID,String kulupID){
 		Optional<Kulup> optionalKulup = kulupDB.findByID(kulupID);
 		if (optionalKulup.isEmpty()){
@@ -28,7 +29,7 @@ public class LigDB extends DatabaseManager<Lig> {
 			return false;
 		}
 		Lig lig = optionalLig.get();
-		if (lig.getTakimlarIDList().size()<20){
+		if (lig.getTakimlarIDList().size()<lig.getMaksLigTakimSayisi()){
 			lig.ekleTakimlarIDListeye(kulupID);
 			return true;
 		}

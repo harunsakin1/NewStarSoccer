@@ -1,5 +1,6 @@
 package SoccerApp.modules;
 
+import SoccerApp.NewStarSoccerApp;
 import SoccerApp.databases.*;
 import SoccerApp.entities.Lig;
 import SoccerApp.models.DatabaseModel;
@@ -20,9 +21,34 @@ public class LigMod {
 	private static StadyumDB stadyumDB=DatabaseModel.stadyumDataBase;
 	private static Scanner scanner=new Scanner(System.in);
 	
+	public static int yapSecim(){
+		return NewStarSoccerApp.yapSecim();
+	}
+	
+	public static int menu() {
+		int secim;
+		do {
+			System.out.println("""
+					                    1. Olustur Lig
+					                    2. Kulup Ekle Lige
+					                    3. Goruntule Lig
+					                    0. Geri Don
+					                   -1. Kapa programi
+					                    
+					                    """);
+			secim = yapSecim();
+			secim = menuSecenekleri(secim);
+			
+		} while(secim != 0);
+		return secim;
+	}
+	
+	public static int menuSecenekleri(int secim){
+		return -1; //TODO NAPTIN?
+	}
 	
 	public static void yaratLig(){
-		Lig lig=new Lig();
+		Lig lig=new Lig(20);
 		System.out.print("Lig adı giriniz : ");
 		String ad= scanner.nextLine();
 		System.out.println("Bolge giriniz : ");
@@ -47,4 +73,6 @@ public class LigMod {
 		String ligID=scanner.nextLine();
 		System.out.println(ligDB.listeleLigdekiKulupleri(ligID));
 	}
+	
+	
 }

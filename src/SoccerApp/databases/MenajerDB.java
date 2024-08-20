@@ -18,18 +18,7 @@ public class MenajerDB extends DatabaseManager<Menajer> {
 		String nextId = getNextId();
 		Menajer newMenajer = new Menajer(tempAd,tempSoyad,tempDogumTarihi,tempUyruk,tempMaas,tempKulupID, tempYil,
 		                                nextId , tempSifre);
-		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("E:\\JavaDersleri\\NewStarSoccer" +
-				                                                                          "\\src\\SoccerApp\\build" +
-				                                                                          "\\menajerler.bin"))) {
-			veriListesi.add(newMenajer);
-			oos.writeObject(veriListesi);
-		}
-		catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 		return true;
 	}
 }

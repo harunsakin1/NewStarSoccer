@@ -18,16 +18,7 @@ public class FutbolcuDB extends DatabaseManager<Futbolcu> {
 	                             int tempYetenekPuani, String tempKulupId){
 		Futbolcu newFutbolcu =
 				new Futbolcu(tempAd, tempSoyad, tempDogumTarihi, tempUyruk, tempMaas, tempFormaNumarasi, tempBonservis, tempMevki, tempYetenekPuani, tempKulupId, getNextId());
-		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("E:\\JavaDersleri\\NewStarSoccer\\src\\SoccerApp\\build\\futbolcular.bin"))) {
-			veriListesi.add(newFutbolcu);
-			oos.writeObject(veriListesi);
-		}
-		catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 		return true;
 	}
 	

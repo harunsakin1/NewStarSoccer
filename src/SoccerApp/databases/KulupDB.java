@@ -20,18 +20,7 @@ public class KulupDB extends DatabaseManager<Kulup> {
 	                            String tempButce,String tempMaasButceYillik) {
 		Kulup newKulup = new Kulup(tempAd, tempKurulusTarihi, stadyumId, tempStadyumAdi, tempVarMiMenajer,
 		                               tempBaskan, tempButce,tempMaasButceYillik, getNextId());
-		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("E:\\JavaDersleri\\NewStarSoccer" +
-				                                                                          "\\src\\SoccerApp\\build" +
-				                                                                          "\\kulupler.bin"))) {
-			veriListesi.add(newKulup);
-			oos.writeObject(veriListesi);
-		}
-		catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 		return true;
 	}
 	

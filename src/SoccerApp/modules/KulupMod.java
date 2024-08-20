@@ -93,7 +93,7 @@ public class KulupMod {
 		return secim;
 	}
 	
-	public static int menuSecenekleri(int secim){
+	private static int menuSecenekleri(int secim){
 		List<Kulup> kulupler = null;
 		switch (secim){
 			case 1:
@@ -108,10 +108,11 @@ public class KulupMod {
 				kulupler = listeleKulupler();
 				break;
 			case -1:
-				System.out.println("Çıkış yapılıyor..");
+				System.out.println("Çıkış yapılıyor...");
 				return secim;
 			default:
 				System.out.println("Geçersiz girdi.... x_x");
+				return secim;
 		}
 		Optional<Kulup> kulup = secKulup(kulupler);
 		if(kulup.isEmpty()){

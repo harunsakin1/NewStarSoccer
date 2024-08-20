@@ -10,29 +10,27 @@ import java.util.List;
 public class Lig extends BaseEntity{
 	private String ad;
 	private List<String> takimlarIDList = new ArrayList<>();
+	private String sezon;
 	private EBolge bolge;
 	private EKume kume;
+	public Integer MAKS_LIG_TAKIM_SAYISI;
 	private LocalDate baslangicTarihi;
 	private LocalDate bitisTarihi;
 	
-	public Lig() {
+	public Integer getMaksLigTakimSayisi(){
+		return MAKS_LIG_TAKIM_SAYISI;
 	}
 	
-	
-	public LocalDate getBaslangicTarihi() {
-		return baslangicTarihi;
+	public Lig(Integer maksLigTakimSayisi){
+		this.MAKS_LIG_TAKIM_SAYISI = maksLigTakimSayisi;
 	}
 	
-	public void setBaslangicTarihi(LocalDate baslangicTarihi) {
-		this.baslangicTarihi = baslangicTarihi;
+	public String getSezon() {
+		return sezon;
 	}
 	
-	public LocalDate getBitisTarihi() {
-		return bitisTarihi;
-	}
-	
-	public void setBitisTarihi(LocalDate bitisTarihi) {
-		this.bitisTarihi = bitisTarihi;
+	public void setSezon(String sezon) {
+		this.sezon = sezon;
 	}
 	
 	public EBolge getBolge() {
@@ -70,6 +68,22 @@ public class Lig extends BaseEntity{
 	
 	@Override
 	public String toString() {
-		return "Lig{" + "ad='" + getAd() + '\'' + ", takimlarIDList=" + getTakimlarIDList() +  '\'' + ", bolge=" + getBolge() + ", kume=" + getKume() + ", id='" + getId() + '\'' + '}';
+		return "Lig{" + "ad='" + getAd() + '\'' + ", takimlarIDList=" + getTakimlarIDList() + ", sezon='" + getSezon() + '\'' + ", bolge=" + getBolge() + ", kume=" + getKume() + ", id='" + getId() + '\'' + '}';
+	}
+	
+	public LocalDate getBaslangicTarihi() {
+		return baslangicTarihi;
+	}
+	
+	public LocalDate getBitisTarihi() {
+		return bitisTarihi;
+	}
+	
+	public void setBitisTarihi(LocalDate bitisTarihi) {
+		this.bitisTarihi = bitisTarihi;
+	}
+	
+	public void setBaslangicTarihi(LocalDate parse) {
+	
 	}
 }

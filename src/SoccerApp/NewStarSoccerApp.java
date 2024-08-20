@@ -1,52 +1,57 @@
 package SoccerApp;
 
 import SoccerApp.databases.*;
-import SoccerApp.entities.Futbolcu;
-import SoccerApp.models.DatabaseModel;
 import SoccerApp.modules.KulupMod;
 import SoccerApp.modules.LigMod;
 import SoccerApp.modules.MenajerMod;
 import SoccerApp.utility.GeneratorRex;
-import SoccerApp.utility.enums.EKokart;
-import SoccerApp.utility.enums.EMevki;
-import SoccerApp.utility.enums.EUyruk;
 
-import java.io.*;
-import java.time.LocalDate;
+import java.lang.invoke.MethodHandles;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Scanner;
-import java.util.Set;
 
 public class NewStarSoccerApp {
-	private static KulupDB kulupDB = DatabaseModel.kulupDataBase;
-	private static FutbolcuDB futbolcuDB = DatabaseModel.futbolcuDataBase;
-	private static StadyumDB stadyumDB=DatabaseModel.stadyumDataBase;
-	private static MenajerDB menajerDB=DatabaseModel.menajerDataBase;
-	private static HakemDB hakemDB=DatabaseModel.hakemDataBase;
-	private static LigDB ligDB=DatabaseModel.ligDataBase;
+	private static KulupDB kulupDB = new KulupDB();
+	private static FutbolcuDB futbolcuDB = new FutbolcuDB();
+	private static StadyumDB stadyumDB=new StadyumDB();
+	private static MenajerDB menajerDB=new MenajerDB();
+	private static HakemDB hakemDB=new HakemDB();
 	private static Scanner scanner = new Scanner(System.in);
-	
+	private static Thread otoKayit;
 	public static void main(String[] args) {
 		
-		ataModlaraDatabaseleri();
-		getirBinarydenJavaya();
-		LigMod.yaratLig();
-		ligDB.ekleKulup("1","1");
-		
-		LigMod.goruntuleLig();
-		//yukleIO();
 		
 		System.out.println("Program başlatılıyor");
-		
-		
-		//kulupDB.findAll().forEach(System.out::println);
-		//stadyumDB.findAll().forEach(System.out::println);
-		//futbolcuDB.findAll().forEach(System.out::println);
-		//menajerDB.findAll().forEach(System.out::println);
-		//nssMenu();
-		//TODO yaratIO bazen serialID'den dolayı hata veriyor, bazen vermiyor, neden ?
+		baslatVeYurutVerileri();
+		otoKayitThread();
+		//TODO menuleri tek bir cati altina topla menu(String menuMsg, Method menuSecenekleri)
 		nssMenu();
 	}
 	
+	private static void otoKayitThread() {
+		otoKayit = new Thread(()->{
+			while(true){
+				try {
+					Thread.sleep(60000);
+					GeneratorRex.kaydetTumVerileri();
+					System.out.println("Basarili otomatik kaydedildi");
+				}
+				catch (InterruptedException e) {
+					break;
+				}
+			}
+		});
+		otoKayit.start();
+	}
+	
+	private static void baslatVeYurutVerileri(){
+		System.out.println("Veriler yukleniyor...");
+		ataModlaraDatabaseleri();
+		getirBinarydenJavaya();
+		System.out.println("Yuklenme tamamlandi");
+	}
 	private static void yukleIO() {
 		GeneratorRex.yaratStadyumIO();
 		GeneratorRex.yaratMenajerlerIO();
@@ -112,6 +117,7 @@ public class NewStarSoccerApp {
 					                   #### NewStarSoccer Uygulamasına Hoşgeldiniz ####
 					                           1. Kulüp Modül
 					                           2. Menajer Modül
+					                           3. Lig Modül
 					                           0. Geri Dön
 					                          -1. Çıkış
 					                           """);
@@ -132,10 +138,13 @@ public class NewStarSoccerApp {
 			case 1:
 				return KulupMod.menu();
 			case 2:
-				MenajerMod.girisYapMenajerMod();
-				return secim;
+				return MenajerMod.girisYapMenajerMod();
+			case 3:
+				return LigMod.menu();
 			case -1:
 				System.out.println("Uygulama sonlandırılıyor....");
+				otoKayit.interrupt();
+				GeneratorRex.kaydetTumVerileri();
 				return secim;
 		}
 		return secim;
