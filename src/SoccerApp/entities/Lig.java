@@ -3,22 +3,36 @@ package SoccerApp.entities;
 import SoccerApp.utility.enums.EBolge;
 import SoccerApp.utility.enums.EKume;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Lig extends BaseEntity{
 	private String ad;
 	private List<String> takimlarIDList = new ArrayList<>();
-	private String sezon;
 	private EBolge bolge;
 	private EKume kume;
+	private LocalDate baslangicTarihi;
+	private LocalDate bitisTarihi;
 	
-	public String getSezon() {
-		return sezon;
+	public Lig() {
 	}
 	
-	public void setSezon(String sezon) {
-		this.sezon = sezon;
+	
+	public LocalDate getBaslangicTarihi() {
+		return baslangicTarihi;
+	}
+	
+	public void setBaslangicTarihi(LocalDate baslangicTarihi) {
+		this.baslangicTarihi = baslangicTarihi;
+	}
+	
+	public LocalDate getBitisTarihi() {
+		return bitisTarihi;
+	}
+	
+	public void setBitisTarihi(LocalDate bitisTarihi) {
+		this.bitisTarihi = bitisTarihi;
 	}
 	
 	public EBolge getBolge() {
@@ -49,13 +63,13 @@ public class Lig extends BaseEntity{
 		return takimlarIDList;
 	}
 	
-	public void setTakimlarIDList(List<String> takimlarIDList) {
-		this.takimlarIDList = takimlarIDList;
+	public void ekleTakimlarIDListeye(String kulupId) {
+		this.takimlarIDList.add(kulupId);
 	}
 	
 	
 	@Override
 	public String toString() {
-		return "Lig{" + "ad='" + getAd() + '\'' + ", takimlarIDList=" + getTakimlarIDList() + ", sezon='" + getSezon() + '\'' + ", bolge=" + getBolge() + ", kume=" + getKume() + ", id='" + getId() + '\'' + '}';
+		return "Lig{" + "ad='" + getAd() + '\'' + ", takimlarIDList=" + getTakimlarIDList() +  '\'' + ", bolge=" + getBolge() + ", kume=" + getKume() + ", id='" + getId() + '\'' + '}';
 	}
 }
