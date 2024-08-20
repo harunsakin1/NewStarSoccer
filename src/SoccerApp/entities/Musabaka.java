@@ -3,6 +3,7 @@ package SoccerApp.entities;
 import SoccerApp.utility.enums.EHavaDurumu;
 import SoccerApp.utility.enums.EMusabakaTuru;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -20,6 +21,15 @@ public class Musabaka extends BaseEntity{
 	private List<String> evSahibiKadro;
 	private List<String> deplasmanKadro;
 	private EMusabakaTuru musabakaTuru;
+	private LocalDateTime musabakaTarihi;
+	
+	public LocalDateTime getMusabakaTarihi() {
+		return musabakaTarihi;
+	}
+	
+	public void setMusabakaTarihi(LocalDateTime musabakaTarihi) {
+		this.musabakaTarihi = musabakaTarihi;
+	}
 	
 	public Integer getEvSahibiSkor() {
 		return evSahibiSkor;

@@ -40,11 +40,12 @@ public class MenajerMod {
 	
 	private static int yapSecim(){
 		return NewStarSoccerApp.yapSecim();
+		
 	}
 	
 	public static void girisYapMenajerMod(){
 		int secim = 0;
-		do {
+		do { // TODO buradan main menu'ye donme islemi eklenebilir
 			System.out.println("Menajer Modül'e giriş yapmak için menajer id'nizi ve şifrenizi girmeniz gerekmektedir.");
 			System.out.print("Menajer id: ");
 			String tempId = scanner.nextLine();

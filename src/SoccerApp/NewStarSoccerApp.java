@@ -2,7 +2,9 @@ package SoccerApp;
 
 import SoccerApp.databases.*;
 import SoccerApp.entities.Futbolcu;
+import SoccerApp.models.DatabaseModel;
 import SoccerApp.modules.KulupMod;
+import SoccerApp.modules.LigMod;
 import SoccerApp.modules.MenajerMod;
 import SoccerApp.utility.GeneratorRex;
 import SoccerApp.utility.enums.EKokart;
@@ -15,20 +17,26 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class NewStarSoccerApp {
-	private static KulupDB kulupDB = new KulupDB();
-	private static FutbolcuDB futbolcuDB = new FutbolcuDB();
-	private static StadyumDB stadyumDB=new StadyumDB();
-	private static MenajerDB menajerDB=new MenajerDB();
-	private static HakemDB hakemDB=new HakemDB();
+	private static KulupDB kulupDB = DatabaseModel.kulupDataBase;
+	private static FutbolcuDB futbolcuDB = DatabaseModel.futbolcuDataBase;
+	private static StadyumDB stadyumDB=DatabaseModel.stadyumDataBase;
+	private static MenajerDB menajerDB=DatabaseModel.menajerDataBase;
+	private static HakemDB hakemDB=DatabaseModel.hakemDataBase;
+	private static LigDB ligDB=DatabaseModel.ligDataBase;
 	private static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) {
-		ataModlaraDatabaseleri();
 		
+		ataModlaraDatabaseleri();
+		getirBinarydenJavaya();
+		LigMod.yaratLig();
+		ligDB.ekleKulup("1","1");
+		
+		LigMod.goruntuleLig();
 		//yukleIO();
 		
 		System.out.println("Program başlatılıyor");
-		getirBinarydenJavaya();
+		
 		
 		//kulupDB.findAll().forEach(System.out::println);
 		//stadyumDB.findAll().forEach(System.out::println);
