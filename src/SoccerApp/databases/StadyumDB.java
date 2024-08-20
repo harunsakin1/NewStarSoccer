@@ -15,18 +15,6 @@ import java.time.LocalDate;
 public class StadyumDB extends DatabaseManager<Stadyum> {
 	public boolean yaratStadyum(int tempKapasite,String tempAd) {
 		Stadyum newStadyum = new Stadyum(tempKapasite, tempAd, getNextId());
-		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("E:\\JavaDersleri\\NewStarSoccer" +
-				                                                                          "\\src\\SoccerApp\\build" +
-				                                                                          "\\stadyumlar.bin"))) {
-			veriListesi.add(newStadyum);
-			oos.writeObject(veriListesi);
-		}
-		catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
 		return true;
 	}
 }

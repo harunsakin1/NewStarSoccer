@@ -43,7 +43,7 @@ public class MenajerMod {
 		
 	}
 	
-	public static void girisYapMenajerMod(){
+	public static int girisYapMenajerMod(){
 		int secim = 0;
 		do { // TODO buradan main menu'ye donme islemi eklenebilir
 			System.out.println("Menajer Modül'e giriş yapmak için menajer id'nizi ve şifrenizi girmeniz gerekmektedir.");
@@ -65,7 +65,8 @@ public class MenajerMod {
 				System.out.println("Şifre hatalı");
 				break;
 			}
-		} while(secim != -1);
+		} while(secim != -1 && secim != 0);
+		return secim;
 	}
 	
 	
