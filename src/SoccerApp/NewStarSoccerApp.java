@@ -1,6 +1,7 @@
 package SoccerApp;
 
 import SoccerApp.databases.*;
+import SoccerApp.models.DatabaseModel;
 import SoccerApp.modules.KulupMod;
 import SoccerApp.modules.LigMod;
 import SoccerApp.modules.MenajerMod;
@@ -13,11 +14,12 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class NewStarSoccerApp {
-	private static KulupDB kulupDB = new KulupDB();
-	private static FutbolcuDB futbolcuDB = new FutbolcuDB();
-	private static StadyumDB stadyumDB=new StadyumDB();
-	private static MenajerDB menajerDB=new MenajerDB();
-	private static HakemDB hakemDB=new HakemDB();
+	private static KulupDB kulupDB = DatabaseModel.kulupDataBase;
+	private static FutbolcuDB futbolcuDB = DatabaseModel.futbolcuDataBase;
+	private static StadyumDB stadyumDB=DatabaseModel.stadyumDataBase;
+	private static MenajerDB menajerDB=DatabaseModel.menajerDataBase;
+	private static HakemDB hakemDB=DatabaseModel.hakemDataBase;
+	private static LigDB ligDB= DatabaseModel.ligDataBase;
 	private static Scanner scanner = new Scanner(System.in);
 	private static Thread otoKayit;
 	public static void main(String[] args) {
@@ -35,8 +37,8 @@ public class NewStarSoccerApp {
 			while(true){
 				try {
 					Thread.sleep(60000);
-					GeneratorRex.kaydetTumVerileri();
-					System.out.println("Basarili otomatik kaydedildi");
+					GeneratorRex.kaydetTumVerileri(); // WIN + .
+					System.out.println("\u001B[32m⚽🏃Basarili otomatik kaydedildi💪✔✅\u001B[0m");
 				}
 				catch (InterruptedException e) {
 					break;

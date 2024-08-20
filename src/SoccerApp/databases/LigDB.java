@@ -19,7 +19,7 @@ public class LigDB extends DatabaseManager<Lig> {
 	public StadyumDB stadyumDB=DatabaseModel.stadyumDataBase;
 	
 	
-	public boolean ekleKulup(String ligID,String kulupID){
+	public boolean ekleKulup(String ligID, String kulupID){
 		Optional<Kulup> optionalKulup = kulupDB.findByID(kulupID);
 		if (optionalKulup.isEmpty()){
 			return false;
