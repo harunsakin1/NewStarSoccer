@@ -55,7 +55,7 @@ public class NewStarSoccerApp {
 				try {
 					Thread.sleep(60000);
 					GeneratorRex.kaydetTumVerileri(); // WIN + .
-					System.out.println("\u001B[32m⚽🏃Basarili otomatik kaydedildi💪✔✅\u001B[0m");
+					System.out.println("\u001B[32m⚽🏃Basarili otomatik kaydedildi👁️👄👁️\u001B[0m");
 				}
 				catch (InterruptedException e) {
 					break;
