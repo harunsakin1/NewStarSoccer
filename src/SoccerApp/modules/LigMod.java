@@ -245,7 +245,7 @@ public class LigMod {
 		List<Integer> haftaNumaralari;
 		for (int i = 0; i < kuluplerList.size() - 1; i++) {
 			haftaNumaralari = new ArrayList<>(IntStream.iterate(0, sayi -> sayi + 1).limit(19).boxed().toList());
-			haftaNumaralari.removeAll(bulHangiHaftaMaciVar(kuluplerList.get(i),musabakaIdlerList,i,kuluplerList));
+			haftaNumaralari.removeAll(bulHangiHaftaMaciVar(kuluplerList.get(i),musabakaIdlerList, lig));
 			List<String> rakipKuluplerID=kuluplerList.subList(i+1,kuluplerList.size());
 			for (int j = i + 1; j < kuluplerList.size(); j++) {
 				String rastgeleRakipID = rakipKuluplerID.get(rnd.nextInt(rakipKuluplerID.size()));
@@ -261,28 +261,24 @@ public class LigMod {
 		fikstur.setFikstur(musabakaIdlerList);
 		lig.setFikstur(fikstur);
 	}
-	public static List<Integer> bulHangiHaftaMaciVar(String kulupID,List<String> musabakaIDlerList, int i,
-	                                           List<String> kuluplerList){
-		List<Integer> macOlanHaftalarList=new ArrayList<>(musabakaIDlerList.stream()
+	public static List<Integer> bulHangiHaftaMaciVar(String kulupID,List<String> musabakaIDlerList, Lig lig){
+		/*List<Integer> macOlanHaftalarList=new ArrayList<>(musabakaIDlerList.stream()
 		                                                                   .filter(musabaka -> musabakaDB.findByID(musabaka).get().getEvSahibiID().equals(kuluplerList.get(i))
 				                                                                   || musabakaDB.findByID(musabaka).get().getDeplasmanID().equals(kuluplerList.get(i)))
 		                                                                   .map(Integer::parseInt)
-		                                                                   .toList());
-		return macOlanHaftalarList;
+		                                                                   .toList());*/
+		return musabakaIDlerList.stream().map(mId -> musabakaDB.findByID(mId).get())
+		                 .filter(mus -> mus.getDeplasmanID().equals(kulupID) || mus.getEvSahibiID().equals(kulupID))
+		                 .map(musabaka -> (int)Duration.between(lig.getBaslangicTarihi(),
+		                                                       musabaka.getMusabakaTarihi()).toDays()/7).toList();
+		//return macOlanHaftalarList;
 	}
 	//TODO refactor islemi yap (sayfadaki butun kodlar)
 	public static List<String> yaratMusabaka(String kulupId1, String kulupId2, LocalDateTime macTarihi) {
 		List<String> musabakaList = new ArrayList<>();
-		switch (rnd.nextInt(1, 3)) {
-			case 1:
-				musabakaList.add(musabakaDB.yaratMusabaka(kulupId1, kulupId2, macTarihi));
-				musabakaList.add(musabakaDB.yaratMusabaka(kulupId2, kulupId1, macTarihi.plusWeeks(19)));
-				break;
-			case 2:
-				musabakaList.add(musabakaDB.yaratMusabaka(kulupId2, kulupId1, macTarihi));
-				musabakaList.add(musabakaDB.yaratMusabaka(kulupId1, kulupId2, macTarihi.plusWeeks(19)));
-				break;
-		}
+		
+		musabakaList.add(musabakaDB.yaratMusabaka(kulupId1, kulupId2, macTarihi));
+		musabakaList.add(musabakaDB.yaratMusabaka(kulupId2, kulupId1, macTarihi.plusWeeks(19)));
 		return musabakaList;
 	}
 	
