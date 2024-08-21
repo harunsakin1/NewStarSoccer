@@ -1,6 +1,7 @@
 package SoccerApp;
 
 import SoccerApp.databases.*;
+import SoccerApp.entities.Musabaka;
 import SoccerApp.models.DatabaseModel;
 import SoccerApp.modules.KulupMod;
 import SoccerApp.modules.LigMod;
@@ -10,8 +11,7 @@ import SoccerApp.utility.GeneratorRex;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class NewStarSoccerApp {
 	private static KulupDB kulupDB = DatabaseModel.kulupDataBase;
@@ -30,6 +30,23 @@ public class NewStarSoccerApp {
 		otoKayitThread();
 		//TODO menuleri tek bir cati altina topla menu(String menuMsg, Method menuSecenekleri)
 		nssMenu();
+		
+		/*List<Integer> takimIdlerListesi = new ArrayList<>(List.of(10, 25, 47, 130, 33, 44));
+		List<Integer> indexes = new ArrayList<>();
+		Collections.shuffle(takimIdlerListesi);
+		
+		for (int i = 0; i < takimIdlerListesi.size(); i++) {
+			indexes.add(i);
+		}
+		
+		List<Musabaka> fikstur = new ArrayList<>();
+		Musabaka musabaka = new Musabaka();
+		
+		musabaka.setEvSahibiID(String.valueOf(takimIdlerListesi.get(0)));
+		musabaka.setDeplasmanID(String.valueOf(takimIdlerListesi.get(1)));
+		
+		System.out.println(musabaka);
+		Map<Integer, List<Musabaka>> fikstur = new HashMap<>();*/
 	}
 	
 	private static void otoKayitThread() {
@@ -45,6 +62,7 @@ public class NewStarSoccerApp {
 				}
 			}
 		});
+		otoKayit.setDaemon(true);
 		otoKayit.start();
 	}
 	

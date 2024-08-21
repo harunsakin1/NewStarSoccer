@@ -194,29 +194,29 @@ public class LigMod {
 	public static List<LocalDateTime> haftaninVakitleri(LocalDate ilkMacGunu, long hafta) {
 		List<LocalDateTime> macTarihleri = new ArrayList<>();
 		
-		macTarihleri.add(LocalDateTime.of(ilkMacGunu, LocalTime.of(rnd.nextInt(18, 22), rnd.nextInt(0, 60))));
-		macTarihleri.add(LocalDateTime.of(ilkMacGunu, LocalTime.of(rnd.nextInt(18, 22), rnd.nextInt(0, 60))));
+		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusWeeks(hafta), LocalTime.of(rnd.nextInt(18, 22), rnd.nextInt(0, 60))));
+		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusWeeks(hafta), LocalTime.of(rnd.nextInt(18, 22), rnd.nextInt(0, 60))));
 		
 		
-		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusDays(1), LocalTime.of(rnd.nextInt(18, 22),
+		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusDays(1).plusWeeks(hafta), LocalTime.of(rnd.nextInt(18, 22),
 		                                                                       rnd.nextInt(0, 60))));
-		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusDays(1), LocalTime.of(rnd.nextInt(18, 22),
+		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusDays(1).plusWeeks(hafta), LocalTime.of(rnd.nextInt(18, 22),
 		                                                                       rnd.nextInt(0, 60))));
-		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusDays(1), LocalTime.of(rnd.nextInt(18, 22),
-		                                                                       rnd.nextInt(0, 60))));
-		
-		
-		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusDays(2), LocalTime.of(rnd.nextInt(18, 22),
-		                                                                       rnd.nextInt(0, 60))));
-		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusDays(2), LocalTime.of(rnd.nextInt(18, 22),
-		                                                                       rnd.nextInt(0, 60))));
-		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusDays(2), LocalTime.of(rnd.nextInt(18, 22),
+		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusDays(1).plusWeeks(hafta), LocalTime.of(rnd.nextInt(18, 22),
 		                                                                       rnd.nextInt(0, 60))));
 		
 		
-		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusDays(3), LocalTime.of(rnd.nextInt(18, 22),
+		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusDays(2).plusWeeks(hafta), LocalTime.of(rnd.nextInt(18, 22),
 		                                                                       rnd.nextInt(0, 60))));
-		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusDays(3), LocalTime.of(rnd.nextInt(18, 22),
+		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusDays(2).plusWeeks(hafta), LocalTime.of(rnd.nextInt(18, 22),
+		                                                                       rnd.nextInt(0, 60))));
+		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusDays(2).plusWeeks(hafta), LocalTime.of(rnd.nextInt(18, 22),
+		                                                                       rnd.nextInt(0, 60))));
+		
+		
+		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusDays(3).plusWeeks(hafta), LocalTime.of(rnd.nextInt(18, 22),
+		                                                                       rnd.nextInt(0, 60))));
+		macTarihleri.add(LocalDateTime.of(ilkMacGunu.plusDays(3).plusWeeks(hafta), LocalTime.of(rnd.nextInt(18, 22),
 		                                                                       rnd.nextInt(0, 60))));
 		return macTarihleri;
 	}
