@@ -243,10 +243,12 @@ public class LigMod {
 		List<String> kuluplerList = lig.getTakimlarIDList();
 		List<String> musabakaIdlerList=new ArrayList<>();
 		List<Integer> haftaNumaralari;
+		List<String> rakipKuluplerID;
 		for (int i = 0; i < kuluplerList.size() - 1; i++) {
 			haftaNumaralari = new ArrayList<>(IntStream.iterate(0, sayi -> sayi + 1).limit(19).boxed().toList());
 			haftaNumaralari.removeAll(bulHangiHaftaMaciVar(kuluplerList.get(i),musabakaIdlerList, lig));
-			List<String> rakipKuluplerID=kuluplerList.subList(i+1,kuluplerList.size());
+			rakipKuluplerID = kuluplerList.subList(i+1,kuluplerList.size());
+			System.out.println(kuluplerList.get(i) + " nin rakipleri: " + rakipKuluplerID);
 			for (int j = i + 1; j < kuluplerList.size(); j++) {
 				String rastgeleRakipID = rakipKuluplerID.get(rnd.nextInt(rakipKuluplerID.size()));
 				rakipKuluplerID.remove(rastgeleRakipID);
