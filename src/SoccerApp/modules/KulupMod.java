@@ -159,6 +159,7 @@ public class KulupMod {
 		return secim;
 	}
 	private static void yapTeklifFutbolcular() {
+		// TODO burası dolduralacak
 	}
 	private static List<Futbolcu> goruntuleKadroKulup(String kulupId) {
 		List<Futbolcu> futbolcular = futbolcuDatabase.bulFutbolcularKulupId(kulupId);
