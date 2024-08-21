@@ -24,7 +24,10 @@ public class NewStarSoccerApp {
 	private static Thread otoKayit;
 	public static void main(String[] args) {
 		
-		
+		/*List<String>stringList=new ArrayList<>(List.of("Harun","Emirhan","Mehmet Can"));
+		List<String> list = stringList.subList(1, 3);
+		list.remove("Emirhan");
+		System.out.println(stringList);*/
 		System.out.println("Program başlatılıyor");
 		baslatVeYurutVerileri();
 		otoKayitThread();
