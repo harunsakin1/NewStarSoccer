@@ -16,6 +16,15 @@ public class Lig extends BaseEntity{
 	public Integer MAKS_LIG_TAKIM_SAYISI;
 	private LocalDate baslangicTarihi;
 	private LocalDate bitisTarihi;
+	private Fikstur fikstur;
+	
+	public Fikstur getFikstur() {
+		return fikstur;
+	}
+	
+	public void setFikstur(Fikstur fikstur) {
+		this.fikstur = fikstur;
+	}
 	
 	public Integer getMaksLigTakimSayisi(){
 		return MAKS_LIG_TAKIM_SAYISI;
@@ -68,11 +77,15 @@ public class Lig extends BaseEntity{
 	
 	@Override
 	public String toString() {
-		return "Lig{" + "ad='" + getAd() + '\'' + ", takimlarIDList=" + getTakimlarIDList() + ", sezon='" + getSezon() + '\'' + ", bolge=" + getBolge() + ", kume=" + getKume() + ", id='" + getId() + '\'' + '}';
+		return "Lig{" + "id='" + getId() + '\'' + ", ad='" + getAd() + '\'' + ", sezon='" + getSezon() + '\'' + ", bolge=" + getBolge() + ", kume=" + getKume() + ", MAKS_LIG_TAKIM_SAYISI=" + MAKS_LIG_TAKIM_SAYISI + ", baslangicTarihi=" + getBaslangicTarihi() + ", bitisTarihi=" + getBitisTarihi() + ", fikstur=" + getFikstur() + '}';
 	}
 	
 	public LocalDate getBaslangicTarihi() {
 		return baslangicTarihi;
+	}
+	
+	public void setBaslangicTarihi(LocalDate baslangicTarihi) {
+		this.baslangicTarihi = baslangicTarihi;
 	}
 	
 	public LocalDate getBitisTarihi() {
@@ -83,7 +96,5 @@ public class Lig extends BaseEntity{
 		this.bitisTarihi = bitisTarihi;
 	}
 	
-	public void setBaslangicTarihi(LocalDate parse) {
 	
-	}
 }

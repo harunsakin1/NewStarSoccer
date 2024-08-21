@@ -8,7 +8,7 @@ public abstract class BaseEntity implements Serializable {
 	private static int nextId= 1;
 	
 	{
-		//this.uuid = String.valueOf(nextId++);
+		this.uuid = String.valueOf(nextId++);
 	}
 	
 	public String getId() {
