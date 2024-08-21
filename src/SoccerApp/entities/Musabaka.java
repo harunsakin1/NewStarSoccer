@@ -134,4 +134,5 @@ public class Musabaka extends BaseEntity{
 	public String toString() {
 		return "Musabaka{" + "evSahibiID='" + getEvSahibiID() + '\'' + ", deplasmanID='" + getDeplasmanID() + '\'' + ", stadyumId='" + getStadyumId() + '\'' + ", sure=" + getSure() + ", havaDurumu=" + getHavaDurumu() + ", hakemIds=" + getHakemIds() + ", evSahibiSkor=" + evSahibiSkor + ", deplasmanSkor=" + deplasmanSkor + ", evSahibiKadro=" + evSahibiKadro + ", deplasmanKadro=" + deplasmanKadro + ", musabakaTuru=" + musabakaTuru + ", id='" + getId() + '\'' + '}';
 	}
+	
 }
