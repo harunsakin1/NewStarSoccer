@@ -133,7 +133,7 @@ public class LigMod {
 		List<String> kulupIdler = new ArrayList<>();
 		System.out.print("Lig id giriniz:");
 		String ligId = scanner.nextLine();
-		boolean ekleKulup;
+		boolean ekleKulup = false;
 		do {
 			System.out.print("Eklemek istediginiz kulubun id'sini giriniz\n(Cikis icin 0 veya negatif deger giriniz):" + " " + " ");
 			kulupId = yapSecim();
@@ -143,7 +143,7 @@ public class LigMod {
 			ekleKulup = ligDB.ekleKulup(ligId, String.valueOf(kulupId));
 		} while (ekleKulup);
 //		kulupIdler.removeLast();
-		return ligDB.ekleKulupler(kulupIdler, ligId);
+		return ekleKulup;
 	}
 	@Deprecated
 	private static boolean ekleLigeKulup() {
