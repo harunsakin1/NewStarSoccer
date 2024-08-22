@@ -269,17 +269,19 @@ public class LigMod {
 		List<List<String>> haftaninEslesmesi = new ArrayList<>();
 		int listeUzunluk = takimlarIdListClone.size();
 		for (int pointer = 0; pointer < takimlarIdListClone.size()/2; pointer++) {
+			Integer problematicIdx = listeUzunluk-1-haftaNumarasi-pointer;
+			problematicIdx = (problematicIdx >= 1)? (problematicIdx: problematicIdx + listeUzunluk -1);
 			if (pointer==0){
 				haftaninEslesmesi.add(List.of(takimlarIdListClone.get(0),
 				                              takimlarIdListClone.get(listeUzunluk-haftaNumarasi-1)));
 			}
 			else if (pointer<=haftaNumarasi) {
 				haftaninEslesmesi.add(List.of(takimlarIdListClone.get(listeUzunluk-1-haftaNumarasi+pointer),
-				                              takimlarIdListClone.get(listeUzunluk-1-haftaNumarasi-pointer)));
+				                              takimlarIdListClone.get(problematicIdx)));
 			}
 			else {
 				haftaninEslesmesi.add(List.of(takimlarIdListClone.get(haftaNumarasi+pointer),
-				                              takimlarIdListClone.get(listeUzunluk-1-haftaNumarasi-pointer)));
+				                              takimlarIdListClone.get(problematicIdx)));
 			}
 		}
 		return haftaninEslesmesi;
