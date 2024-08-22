@@ -6,6 +6,7 @@ import SoccerApp.entities.Kulup;
 import SoccerApp.entities.Lig;
 import SoccerApp.entities.Musabaka;
 import SoccerApp.models.DatabaseModel;
+import SoccerApp.models.LigModel;
 import SoccerApp.utility.enums.EBolge;
 import SoccerApp.utility.enums.EKume;
 
@@ -22,6 +23,7 @@ public class LigMod {
 	private static LigDB ligDB = DatabaseModel.ligDataBase;
 	private static MusabakaDB musabakaDB = DatabaseModel.musabakaDataBase;
 	private static StadyumDB stadyumDB = DatabaseModel.stadyumDataBase;
+	private static LigModel ligModel = new LigModel();
 	private static Scanner scanner = new Scanner(System.in);
 	private static Random rnd = new Random();
 	
@@ -39,7 +41,7 @@ public class LigMod {
 			System.out.println("""
 					                    1. Olustur Lig
 					                    2. Kulup Ekle Lige
-					                    3. Goruntule Lig
+					                    3. Goruntule Ligdeki Katilimci Kulupler
 					                    4. Fikstur Olustur
 					                    5. Goruntule Fikstur
 					                    0. Geri Don
@@ -63,7 +65,7 @@ public class LigMod {
 				}
 				break;
 			case 3:
-				goruntuleLig();
+				yazdirKuluplerLigdeYerAlan();
 				break;
 			case 4:
 				olusturFikstur();
@@ -78,6 +80,14 @@ public class LigMod {
 		return secim;
 	}
 	
+	private static void yazdirKuluplerLigdeYerAlan() {
+		String secim = String.valueOf(yapSecim("Katilimcilarini gormek istediginiz lig'in id'sini giriniz: "));
+		Optional<Lig> optLig = ligDB.findByID(secim);
+		optLig.ifPresentOrElse(lig -> ligModel.yazdirKuluplerLigdeYerAlan(lig, kulupDB), () -> System.out.println(
+				"Girdiginiz lig id'de hata var x_x"));
+		
+	}
+	
 	private static void goruntuleFikstur() {
 		System.out.print("Lig ID giriniz : ");
 		String ligID = scanner.nextLine();
@@ -87,7 +97,13 @@ public class LigMod {
 			return;
 		}
 		
-		Map<Integer,List<String>> fikstur = optionalLig.get().getFikstur();
+		Lig lig = optionalLig.get();
+		if (lig.getFikstur().isEmpty()){
+			System.out.println("Fikstur henuz olusturulmamis.");
+			return;
+		}
+		ligModel.yazdirFikstur(lig, musabakaDB, kulupDB);
+		/*Map<Integer,List<String>> fikstur = optionalLig.get().getFikstur();
 		
 		if (fikstur == null){
 			System.out.println("Fiktür oluşturulmamış☺");
@@ -101,7 +117,7 @@ public class LigMod {
 				System.out.println(evSahibi.getAd()+" vs "+deplasman.getAd()+" Zaman: "+musabaka.getMusabakaTarihi());
 			}
 		}
-		//A takımı vs B takımı Zaman:LocalDateTime
+		//A takımı vs B takımı Zaman:LocalDateTime*/
 	}
 	
 	
@@ -130,7 +146,6 @@ public class LigMod {
 	
 	private static boolean ekleLigeKulupler() {
 		int kulupId;
-		List<String> kulupIdler = new ArrayList<>();
 		System.out.print("Lig id giriniz:");
 		String ligId = scanner.nextLine();
 		boolean ekleKulup = false;
@@ -177,7 +192,7 @@ public class LigMod {
 		lig.setKume(EKume.values()[kume-1]);
 		lig.setBaslangicTarihi(LocalDate.parse(baslangicTarihi));
 		lig.setBitisTarihi(LocalDate.parse(bitisTarihi));
-		lig.setId("1");
+		lig.setId(String.valueOf(ligDB.findAll().size() + 1));
 		ligDB.save(lig);
 		System.out.println("Lig basariyla eklendi!");
 	}
@@ -299,6 +314,7 @@ public class LigMod {
 		}
 		Lig lig = optionalLig.get();
 		List<List<List<String>>> eslesmeler = yaratEslesme(lig);
+		Collections.shuffle(eslesmeler);
 		List<List<LocalDateTime>> fiskturler = fiksturVakitleri(bulIlkCuma(lig.getBaslangicTarihi()));
 		Map<Integer,List<String>> fikstur = new TreeMap<>();
 		for (int haftaNumarasi = 0; haftaNumarasi < lig.getMaksLigTakimSayisi()-1; haftaNumarasi++) {
