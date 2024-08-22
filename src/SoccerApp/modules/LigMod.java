@@ -2,15 +2,12 @@ package SoccerApp.modules;
 
 import SoccerApp.NewStarSoccerApp;
 import SoccerApp.databases.*;
-import SoccerApp.entities.Fikstur;
-import SoccerApp.entities.Kulup;
 import SoccerApp.entities.Lig;
 import SoccerApp.entities.Musabaka;
 import SoccerApp.models.DatabaseModel;
 import SoccerApp.utility.enums.EBolge;
 import SoccerApp.utility.enums.EKume;
 
-import java.io.InterruptedIOException;
 import java.time.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -85,21 +82,24 @@ public class LigMod {
 		String ligID = scanner.nextLine();
 		Optional<Lig> optionalLig = ligDB.findByID(ligID);
 		if (optionalLig.isEmpty()){
+			System.out.println("Lig bulunamadı.");
 			return;
 		}
-		Fikstur fikstur = optionalLig.get().getFikstur();
-		fikstur.getFikstur().stream().sorted(Comparator.comparing(id -> musabakaDB.findByID(id).get()
-		                      .getMusabakaTarihi())).forEach(musabaka->{
-			String evSahibiID = musabakaDB.findByID(musabaka).get().getEvSahibiID();
-			String deplasmanID = musabakaDB.findByID(musabaka).get().getDeplasmanID();
-			LocalDateTime musabakaTarihi = musabakaDB.findByID(musabaka).get().getMusabakaTarihi();
-			String evSahibiAd = kulupDB.findByID(evSahibiID).get().getAd();
-			String deplasmanAd = kulupDB.findByID(deplasmanID).get().getAd();
-			System.out.println(evSahibiAd+" - "+deplasmanAd+" Tarih : "+musabakaTarihi);
-		});
+		
+		Map<Integer,List<String>> fikstur = optionalLig.get().getFikstur();
+		
+		if (fikstur == null){
+			System.out.println("Fiktür oluşturulmamış☺");
+			return;
+		}
+		for (List<String> musabakaIdleri:fikstur.values()){
+			for (String musabakaId:musabakaIdleri){
+				Musabaka musabaka = musabakaDB.findByID(musabakaId).get();
+				System.out.println(musabaka.getEvSahibiID()+" vs "+musabaka.getDeplasmanID()+" Zaman: "+musabaka.getMusabakaTarihi());
+			}
+		}
+		//A takımı vs B takımı Zaman:LocalDateTime
 	}
-	
-	
 	
 	
 	private static void olusturFikstur() {
@@ -115,7 +115,7 @@ public class LigMod {
 			System.out.println("Henuz ligde yeterince katilimci kulup tanimlanmamistir");
 			return;
 		}
-		fiksturOlustur(ligId);
+		yaratFiktur(ligId);
 	}
 	@Deprecated
 	private static boolean ekleLigeKulupMenu() {
@@ -139,7 +139,7 @@ public class LigMod {
 			}
 			ekleKulup = ligDB.ekleKulup(ligId, String.valueOf(kulupId));
 		} while (ekleKulup);
-		kulupIdler.removeLast();
+//		kulupIdler.removeLast();
 		return ligDB.ekleKulupler(kulupIdler, ligId);
 	}
 	@Deprecated
@@ -243,6 +243,79 @@ public class LigMod {
 		return null;
 	}
 	
+	public static List<List<LocalDateTime>> fiksturVakitleri(LocalDate ilkMacGunu){
+		List<List<LocalDateTime>> fiksturVakitleri = new ArrayList<>();
+		for (int haftaNumarasi = 0; haftaNumarasi < 19; haftaNumarasi++) {
+			List<LocalDateTime> haftaninVakitleri = haftaninVakitleri(ilkMacGunu, haftaNumarasi);
+			fiksturVakitleri.add(haftaninVakitleri);
+		}
+		return fiksturVakitleri;
+	}
+	
+	public static List<List<List<String>>> yaratEslesme(Lig lig){
+		List<String> takimlarIDList = lig.getTakimlarIDList();
+		List<String> takimlarIdListClone = new ArrayList<>(takimlarIDList);
+		Collections.shuffle(takimlarIdListClone);
+		List<List<List<String>>> eslesmeList = new ArrayList<>();
+		for (int i = 0; i < takimlarIdListClone.size()-1; i++) {
+			List<List<String>> haftaListe = haftaninEslesmesi(takimlarIdListClone, i, 0);
+			eslesmeList.add(haftaListe);
+		}
+		return eslesmeList;
+	}
+	
+	private static List<List<String>> haftaninEslesmesi(List<String> takimlarIdListClone, int haftaNumarasi,
+	                                                    int sabitIndex) {
+		List<List<String>> haftaninEslesmesi = new ArrayList<>();
+		int listeUzunluk = takimlarIdListClone.size();
+		for (int pointer = 0; pointer < takimlarIdListClone.size()/2; pointer++) {
+			if (pointer==0){
+				haftaninEslesmesi.add(List.of(takimlarIdListClone.get(0),
+				                              takimlarIdListClone.get(listeUzunluk-haftaNumarasi-1)));
+			}
+			else if (pointer<=haftaNumarasi) {
+				haftaninEslesmesi.add(List.of(takimlarIdListClone.get(listeUzunluk-1-haftaNumarasi+pointer),
+				                              takimlarIdListClone.get(listeUzunluk-1-haftaNumarasi-pointer)));
+			}
+			else {
+				haftaninEslesmesi.add(List.of(takimlarIdListClone.get(haftaNumarasi+pointer),
+				                              takimlarIdListClone.get(listeUzunluk-1-haftaNumarasi-pointer)));
+			}
+		}
+		return haftaninEslesmesi;
+	}
+	
+	public static void yaratFiktur(String ligID){
+		
+		Optional<Lig> optionalLig = ligDB.findByID(ligID);
+		
+		if (optionalLig.isEmpty()) {
+			return;
+		}
+		Lig lig = optionalLig.get();
+		List<List<List<String>>> eslesmeler = yaratEslesme(lig);
+		List<List<LocalDateTime>> fiskturler = fiksturVakitleri(bulIlkCuma(lig.getBaslangicTarihi()));
+		Map<Integer,List<String>> fikstur = new TreeMap<>();
+		for (int haftaNumarasi = 0; haftaNumarasi < lig.getMaksLigTakimSayisi()-1; haftaNumarasi++) {
+			List<String>haftaFikturu = new ArrayList<>();
+			List<String>haftaFikturuIkinciYari=new ArrayList<>();
+			for (int eslesmeNo = 0; eslesmeNo < eslesmeler.get(haftaNumarasi).size(); eslesmeNo++) {
+				List<String> musabakalar =
+						yaratMusabaka(eslesmeler.get(haftaNumarasi).get(eslesmeNo).get(0), eslesmeler
+								.get(haftaNumarasi)
+								.get(eslesmeNo)
+								.get(1), fiskturler
+								.get(haftaNumarasi).get(eslesmeNo));
+				haftaFikturu.add(musabakalar.get(0));
+				haftaFikturuIkinciYari.add(musabakalar.get(1));
+			}
+			fikstur.put(haftaNumarasi+1,haftaFikturu);
+			fikstur.put(haftaNumarasi+20,haftaFikturuIkinciYari);
+		}
+		lig.setFikstur(fikstur);
+	}
+	
+	/*@Deprecated
 	public static void fiksturOlustur(String ligID) {
 		Fikstur fikstur=new Fikstur();
 		Optional<Lig> optionalLig = ligDB.findByID(ligID);
@@ -278,7 +351,8 @@ public class LigMod {
 						macVakitleri.get(rastgeleHafta).get(rnd.nextInt(0,macVakitleri.get(rastgeleHafta).size()));
 				macVakitleri.get(rastgeleHafta).remove(belirlenenVakit);
 				musabakaIdlerList.addAll(yaratMusabaka(kuluplerList.get(i),rastgeleRakipID,belirlenenVakit));
-				/*if (!haftaNumaralari.isEmpty()) {
+				*/
+	/*if (!haftaNumaralari.isEmpty()) {
 					Integer rastgeleHafta = haftaNumaralari.get(rnd.nextInt(haftaNumaralari.size()));
 					haftaNumaralari.remove(rastgeleHafta);
 					
@@ -293,12 +367,14 @@ public class LigMod {
 				} else {
 					System.out.println("Hata: Uygun hafta yok.");
 				}*/
+	/*
 			}
 			rakipKuluplerID.clear();
 		}
 		fikstur.setFikstur(musabakaIdlerList);
 		lig.setFikstur(fikstur);
-	}
+	}*/
+	
 	public static List<Integer> bulHangiHaftaMaciVar(String kulupID,List<String> musabakaIDlerList, Lig lig){
 		/*List<Integer> macOlanHaftalarList=new ArrayList<>(musabakaIDlerList.stream()
 		                                                                   .filter(musabaka -> musabakaDB.findByID(musabaka).get().getEvSahibiID().equals(kuluplerList.get(i))
@@ -315,16 +391,9 @@ public class LigMod {
 	//TODO refactor islemi yap (sayfadaki butun kodlar)
 	public static List<String> yaratMusabaka(String kulupId1, String kulupId2, LocalDateTime macTarihi) {
 		List<String> musabakaList = new ArrayList<>();
-		switch (rnd.nextInt(1, 3)) {
-			case 1:
 				musabakaList.add(musabakaDB.yaratMusabaka(kulupId1, kulupId2, macTarihi));
 				musabakaList.add(musabakaDB.yaratMusabaka(kulupId2, kulupId1, macTarihi.plusWeeks(19)));
-				break;
-			case 2:
-				musabakaList.add(musabakaDB.yaratMusabaka(kulupId2, kulupId1, macTarihi));
-				musabakaList.add(musabakaDB.yaratMusabaka(kulupId1, kulupId2, macTarihi.plusWeeks(19)));
-				break;
-		}
+				
 		return musabakaList;
 	}
 	

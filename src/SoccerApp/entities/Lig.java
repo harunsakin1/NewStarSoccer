@@ -6,6 +6,7 @@ import SoccerApp.utility.enums.EKume;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Lig extends BaseEntity{
 	private String ad;
@@ -16,13 +17,13 @@ public class Lig extends BaseEntity{
 	public Integer MAKS_LIG_TAKIM_SAYISI;
 	private LocalDate baslangicTarihi;
 	private LocalDate bitisTarihi;
-	private Fikstur fikstur;
+	private Map<Integer,List<String>> fikstur;
 	
-	public Fikstur getFikstur() {
+	public Map<Integer, List<String>> getFikstur() {
 		return fikstur;
 	}
 	
-	public void setFikstur(Fikstur fikstur) {
+	public void setFikstur(Map<Integer, List<String>> fikstur) {
 		this.fikstur = fikstur;
 	}
 	
