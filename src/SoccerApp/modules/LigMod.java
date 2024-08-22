@@ -2,6 +2,7 @@ package SoccerApp.modules;
 
 import SoccerApp.NewStarSoccerApp;
 import SoccerApp.databases.*;
+import SoccerApp.entities.Kulup;
 import SoccerApp.entities.Lig;
 import SoccerApp.entities.Musabaka;
 import SoccerApp.models.DatabaseModel;
@@ -95,7 +96,9 @@ public class LigMod {
 		for (List<String> musabakaIdleri:fikstur.values()){
 			for (String musabakaId:musabakaIdleri){
 				Musabaka musabaka = musabakaDB.findByID(musabakaId).get();
-				System.out.println(musabaka.getEvSahibiID()+" vs "+musabaka.getDeplasmanID()+" Zaman: "+musabaka.getMusabakaTarihi());
+				Kulup evSahibi = kulupDB.findByID(musabaka.getEvSahibiID()).get();
+				Kulup deplasman = kulupDB.findByID(musabaka.getDeplasmanID()).get();
+				System.out.println(evSahibi.getAd()+" vs "+deplasman.getAd()+" Zaman: "+musabaka.getMusabakaTarihi());
 			}
 		}
 		//A takımı vs B takımı Zaman:LocalDateTime
@@ -270,7 +273,7 @@ public class LigMod {
 		int listeUzunluk = takimlarIdListClone.size();
 		for (int pointer = 0; pointer < takimlarIdListClone.size()/2; pointer++) {
 			Integer problematicIdx = listeUzunluk-1-haftaNumarasi-pointer;
-			problematicIdx = (problematicIdx >= 1)? (problematicIdx: problematicIdx + listeUzunluk -1);
+			problematicIdx = (problematicIdx >= 1)? problematicIdx : problematicIdx + listeUzunluk -1;
 			if (pointer==0){
 				haftaninEslesmesi.add(List.of(takimlarIdListClone.get(0),
 				                              takimlarIdListClone.get(listeUzunluk-haftaNumarasi-1)));
@@ -280,7 +283,7 @@ public class LigMod {
 				                              takimlarIdListClone.get(problematicIdx)));
 			}
 			else {
-				haftaninEslesmesi.add(List.of(takimlarIdListClone.get(haftaNumarasi+pointer),
+				haftaninEslesmesi.add(List.of(takimlarIdListClone.get(pointer-haftaNumarasi),
 				                              takimlarIdListClone.get(problematicIdx)));
 			}
 		}
