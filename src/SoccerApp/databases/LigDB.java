@@ -29,7 +29,7 @@ public class LigDB extends DatabaseManager<Lig> {
 			return false;
 		}
 		Lig lig = optionalLig.get();
-		if (lig.getTakimlarIDList().size() >= lig.getMaksLigTakimSayisi()){
+		if (lig.getTakimlarIDList().size() < lig.getMaksLigTakimSayisi()){
 			return lig.ekleTakimlarIDListeye(kulupID);
 		}
 		return false;
