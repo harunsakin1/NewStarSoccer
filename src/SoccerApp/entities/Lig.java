@@ -71,8 +71,12 @@ public class Lig extends BaseEntity{
 		return takimlarIDList;
 	}
 	
-	public void ekleTakimlarIDListeye(String kulupId) {
-		this.takimlarIDList.add(kulupId);
+	public boolean ekleTakimlarIDListeye(String kulupId) {
+		if (takimlarIDList.stream().anyMatch(id -> id.equals(kulupId))) return false;
+		else {
+			this.takimlarIDList.add(kulupId);
+			return true;
+		}
 	}
 	
 	
