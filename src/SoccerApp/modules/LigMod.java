@@ -16,31 +16,27 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 public class LigMod {
-	private FutbolcuDB futbolcuDB = DatabaseModel.futbolcuDataBase;
-	private HakemDB hakemDB = DatabaseModel.hakemDataBase;
-	private KulupDB kulupDB = DatabaseModel.kulupDataBase;
-	private MenajerDB menajerDB = DatabaseModel.menajerDataBase;
-	private LigDB ligDB = DatabaseModel.ligDataBase;
-	private MusabakaDB musabakaDB = DatabaseModel.musabakaDataBase;
-	private StadyumDB stadyumDB = DatabaseModel.stadyumDataBase;
+	private DatabaseModel databaseModel=DatabaseModel.getInstance();
 	private LigModel ligModel = new LigModel();
-	private NewStarSoccerApp nssApp=NewStarSoccerApp.getInstance();
 	private Scanner scanner = new Scanner(System.in);
 	private Random rnd = new Random();
-	private static LigMod ligMod=new LigMod();
+	private static LigMod ligMod=null;
 	
 	public static LigMod getInstance(){
+		if (ligMod==null) {
+			ligMod=new LigMod();
+		}
 		return ligMod;
 	}
 	public LigMod() {
 	}
 	
 	public int yapSecim() {
-		return nssApp.yapSecim("Secim yapiniz:");
+		return NewStarSoccerApp.yapSecim("Secim yapiniz:");
 	}
 	
 	public int yapSecim(String mesaj) {
-		return nssApp.yapSecim(mesaj);
+		return NewStarSoccerApp.yapSecim(mesaj);
 	}
 	
 	public int menu() {
@@ -52,13 +48,16 @@ public class LigMod {
 					                    3. Goruntule Ligdeki Katilimci Kulupler
 					                    4. Fikstur Olustur
 					                    5. Goruntule Fikstur
+					                    6. Goruntule Kulup Fikstur
 					                    0. Geri Don
 					                   -1. Kapa programi
 					                    """);
 			secim = yapSecim();
+			if (secim==0){
+				break;
+			}
 			secim = menuSecenekleri(secim);
-			
-		} while (secim != 0);
+		} while (secim != -1);
 		return secim;
 	}
 	
@@ -81,6 +80,10 @@ public class LigMod {
 			case 5:
 				goruntuleFikstur();
 				break;
+			case 6:
+				yazdirKulupFikstur();
+			case -1:
+				break;
 			default:
 				System.out.println("Girdi gecersiz x_x");
 		}
@@ -88,10 +91,20 @@ public class LigMod {
 		return secim;
 	}
 	
+	private void yazdirKulupFikstur() {
+		
+		int secim = yapSecim("Fiksturunu goruntulemek istediginiz kulup ID'sini giriniz : ");
+		Optional<Kulup> optKulup = databaseModel.kulupDataBase.findByID(String.valueOf(secim));
+		if (optKulup.isEmpty()) {
+			System.out.println("Lig bulunamadı.");
+		}
+		ligModel.yazdirKulupFikstur(optKulup.get());
+	}
+	
 	private void yazdirKuluplerLigdeYerAlan() {
 		String secim = String.valueOf(yapSecim("Katilimcilarini gormek istediginiz lig'in id'sini giriniz: "));
-		Optional<Lig> optLig = ligDB.findByID(secim);
-		optLig.ifPresentOrElse(lig -> ligModel.yazdirKuluplerLigdeYerAlan(lig, kulupDB), () -> System.out.println(
+		Optional<Lig> optLig = databaseModel.ligDataBase.findByID(secim);
+		optLig.ifPresentOrElse(lig -> ligModel.yazdirKuluplerLigdeYerAlan(lig), () -> System.out.println(
 				"Girdiginiz lig id'de hata var x_x"));
 		
 	}
@@ -99,7 +112,7 @@ public class LigMod {
 	private void goruntuleFikstur() {
 		System.out.print("Lig ID giriniz : ");
 		String ligID = scanner.nextLine();
-		Optional<Lig> optionalLig = ligDB.findByID(ligID);
+		Optional<Lig> optionalLig = databaseModel.ligDataBase.findByID(ligID);
 		if (optionalLig.isEmpty()) {
 			System.out.println("Lig bulunamadı.");
 			return;
@@ -110,14 +123,15 @@ public class LigMod {
 			System.out.println("Fikstur henuz olusturulmamis.");
 			return;
 		}
-		ligModel.yazdirFikstur(lig, musabakaDB, kulupDB);
+		ligModel.yazdirFikstur(lig);
 	}
 	
 	
 	private void olusturFikstur() {
 		System.out.print("Lig id giriniz: ");
 		String ligId = scanner.nextLine();
-		Optional<Lig> optLig = ligDB.findByID(ligId);
+		Optional<Lig> optLig = databaseModel
+				.ligDataBase.findByID(ligId);
 		Lig lig;
 		if (optLig.isEmpty()) {
 			System.out.println("Girdiginiz lig bulunamadi");
@@ -132,16 +146,22 @@ public class LigMod {
 	
 	private boolean ekleLigeKulupler() {
 		int kulupId;
+		
 		System.out.print("Lig id giriniz:");
 		String ligId = scanner.nextLine();
 		boolean ekleKulup = false;
 		do {
+			
 			System.out.print("Eklemek istediginiz kulubun id'sini giriniz\n(Cikis icin 0 veya negatif deger giriniz):" + " " + " ");
 			kulupId = yapSecim();
+			Optional<Kulup> optionalKulup = databaseModel.kulupDataBase.findByID(String.valueOf(kulupId));
 			if (kulupId < 1) {
 				break;
 			}
-			ekleKulup = ligDB.ekleKulup(ligId, String.valueOf(kulupId));
+			else if (optionalKulup.isEmpty()){
+				return false;
+			}
+			ekleKulup = databaseModel.ligDataBase.ekleKulup(ligId, String.valueOf(kulupId));
 		} while (ekleKulup);
 //		kulupIdler.removeLast();
 		return ekleKulup;
@@ -170,20 +190,20 @@ public class LigMod {
 		lig.setKume(EKume.values()[kume - 1]);
 		lig.setBaslangicTarihi(LocalDate.parse(baslangicTarihi));
 		lig.setBitisTarihi(LocalDate.parse(bitisTarihi));
-		lig.setId(String.valueOf(ligDB.findAll().size() + 1));
-		ligDB.save(lig);
+		lig.setId(String.valueOf(databaseModel.ligDataBase.findAll().size() + 1));
+		databaseModel.ligDataBase.save(lig);
 		System.out.println("Lig basariyla eklendi!");
 	}
 	
 	public void goruntuleLig() {
 		System.out.print("Lig ID giriniz : ");
 		String ligID = scanner.nextLine();
-		ligDB.listeleLigdekiKulupleri(ligID)
-		     .forEach(kulupId -> System.out.println(kulupDB.findByID(kulupId).get().getAd()));
+		databaseModel.ligDataBase.listeleLigdekiKulupleri(ligID)
+		     .forEach(kulupId -> System.out.println(databaseModel.kulupDataBase.findByID(kulupId).get().getAd()));
 	}
 	
 	public List<List<LocalDateTime>> belirleMacVakitleri(String ligID) {
-		Optional<Lig> optionalLig = ligDB.findByID(ligID);
+		Optional<Lig> optionalLig = databaseModel.ligDataBase.findByID(ligID);
 		if (optionalLig.isEmpty()) {
 			return null;
 		}
@@ -294,7 +314,7 @@ public class LigMod {
 	
 	public void yaratFiktur(String ligID) {
 		
-		Optional<Lig> optionalLig = ligDB.findByID(ligID);
+		Optional<Lig> optionalLig = databaseModel.ligDataBase.findByID(ligID);
 		
 		if (optionalLig.isEmpty()) {
 			return;
@@ -325,7 +345,7 @@ public class LigMod {
 	}
 	
 	public List<Integer> bulHangiHaftaMaciVar(String kulupID, List<String> musabakaIDlerList, Lig lig) {
-		return musabakaIDlerList.stream().map(mId -> musabakaDB.findByID(mId).get())
+		return musabakaIDlerList.stream().map(mId -> databaseModel.musabakaDataBase.findByID(mId).get())
 		                        .filter(mus -> mus.getDeplasmanID().equals(kulupID) || mus.getEvSahibiID()
 		                                                                                  .equals(kulupID))
 		                        .map(musabaka -> (int) (Duration
@@ -340,12 +360,12 @@ public class LigMod {
 		List<String> musabakaList = new ArrayList<>();
 		switch (hafta % 2) {
 			case 0:
-				musabakaList.add(musabakaDB.yaratMusabaka(kulupId1, kulupId2, macTarihi));
-				musabakaList.add(musabakaDB.yaratMusabaka(kulupId2, kulupId1, macTarihi.plusWeeks(19)));
+				musabakaList.add(databaseModel.musabakaDataBase.yaratMusabaka(kulupId1, kulupId2, macTarihi));
+				musabakaList.add(databaseModel.musabakaDataBase.yaratMusabaka(kulupId2, kulupId1, macTarihi.plusWeeks(19)));
 				break;
 			case 1:
-				musabakaList.add(musabakaDB.yaratMusabaka(kulupId2, kulupId1, macTarihi));
-				musabakaList.add(musabakaDB.yaratMusabaka(kulupId1, kulupId2, macTarihi.plusWeeks(19)));
+				musabakaList.add(databaseModel.musabakaDataBase.yaratMusabaka(kulupId2, kulupId1, macTarihi));
+				musabakaList.add(databaseModel.musabakaDataBase.yaratMusabaka(kulupId1, kulupId2, macTarihi.plusWeeks(19)));
 				break;
 		}
 		

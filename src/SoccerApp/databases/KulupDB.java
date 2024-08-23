@@ -15,6 +15,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class KulupDB extends DatabaseManager<Kulup> {
+	private static KulupDB kulupDB= new KulupDB();
+	private KulupDB(){}
+	public static KulupDB getInstance(){
+		return kulupDB;
+	}
 	public boolean yaratKulup(String tempAd, String tempKurulusTarihi, String stadyumId, String tempStadyumAdi,
 	                            boolean tempVarMiMenajer, String tempBaskan,
 	                            String tempButce,String tempMaasButceYillik) {

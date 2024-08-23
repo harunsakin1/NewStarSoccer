@@ -17,13 +17,8 @@ import java.time.format.TextStyle;
 import java.util.*;
 
 public class NewStarSoccerApp {
-	private KulupDB kulupDB = DatabaseModel.kulupDataBase;
-	private FutbolcuDB futbolcuDB = DatabaseModel.futbolcuDataBase;
-	private StadyumDB stadyumDB = DatabaseModel.stadyumDataBase;
-	private MenajerDB menajerDB = DatabaseModel.menajerDataBase;
-	private HakemDB hakemDB = DatabaseModel.hakemDataBase;
-	private LigDB ligDB = DatabaseModel.ligDataBase;
-	private Scanner scanner = new Scanner(System.in);
+	private DatabaseModel databaseModel = DatabaseModel.getInstance();
+	private static Scanner scanner = new Scanner(System.in);
 	private Thread otoKayit;
 	private static NewStarSoccerApp nssApp = new NewStarSoccerApp();
 	private KulupMod kulupMod = KulupMod.getInstance();
@@ -31,8 +26,9 @@ public class NewStarSoccerApp {
 	private LigMod ligMod = LigMod.getInstance();
 	
 	public static NewStarSoccerApp getInstance() {
-		return nssApp;
+	return nssApp;
 	}
+	
 	private NewStarSoccerApp() {
 	}
 	
@@ -82,7 +78,6 @@ public class NewStarSoccerApp {
 	
 	private void baslatVeYurutVerileri() {
 		System.out.println("Veriler yukleniyor...");
-		ataModlaraDatabaseleri();
 		getirBinarydenJavaya();
 		System.out.println("Yuklenme tamamlandi");
 	}
@@ -103,49 +98,32 @@ public class NewStarSoccerApp {
 		getirStadyumlar();
 	}
 	
-	private void ataModlaraDatabaseleri() {
-		ataKulupModaDatabaseleri();
-		ataMenajerModaDatabaseleri();
-	}
 	
-	private void ataMenajerModaDatabaseleri() {
-		menajerMod.setKulupDatabase(kulupDB);
-		menajerMod.setFutbolcuDatabase(futbolcuDB);
-		menajerMod.setStadyumDatabase(stadyumDB);
-		menajerMod.setHakemDatabase(hakemDB);
-		menajerMod.setMenajerDatabase(menajerDB);
-	}
 	
-	private void ataKulupModaDatabaseleri() {
-		kulupMod.setKulupDatabase(kulupDB);
-		kulupMod.setFutbolcuDatabase(futbolcuDB);
-		kulupMod.setStadyumDatabase(stadyumDB);
-		kulupMod.setHakemDatabase(hakemDB);
-		kulupMod.setMenajerDatabase(menajerDB);
-	}
+	
 	
 	private void getirHakemler() {
-		GeneratorRex.setHakemDB(hakemDB);
+		GeneratorRex.setHakemDB(databaseModel.hakemDataBase);
 		GeneratorRex.getirHakemler();
 	}
 	
 	private void getirMenajerler() {
-		GeneratorRex.setMenajerDB(menajerDB);
+		GeneratorRex.setMenajerDB(databaseModel.menajerDataBase);
 		GeneratorRex.getirMenajerler();
 	}
 	
 	private void getirKulupler() {
-		GeneratorRex.setKulupDb(kulupDB);
+		GeneratorRex.setKulupDb(databaseModel.kulupDataBase);
 		GeneratorRex.getirKulupler();
 	}
 	
 	private void getirStadyumlar() {
-		GeneratorRex.setStadyumDB(stadyumDB);
+		GeneratorRex.setStadyumDB(databaseModel.stadyumDataBase);
 		GeneratorRex.getirStadyumlar();
 	}
 	
 	private void getirFutbolcular() {
-		GeneratorRex.setFutbolcuDB(futbolcuDB);
+		GeneratorRex.setFutbolcuDB(databaseModel.futbolcuDataBase);
 		GeneratorRex.getirFutbolcular();
 	}
 	
@@ -189,7 +167,7 @@ public class NewStarSoccerApp {
 		return secim;
 	}
 	
-	public int yapSecim(String message) {
+	public static int yapSecim(String message) {
 		int secim;
 		while (true) {
 			System.out.print(message);
@@ -207,7 +185,7 @@ public class NewStarSoccerApp {
 		return secim;
 	}
 	
-	public int yapSecim() {
+	public static   int yapSecim() {
 		return yapSecim("Secim yapiniz: ");
 	}
 	

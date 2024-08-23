@@ -13,6 +13,12 @@ import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 
 public class StadyumDB extends DatabaseManager<Stadyum> {
+	private static StadyumDB stadyumDB=new StadyumDB();
+	private StadyumDB() {
+	}
+	public static StadyumDB getInstance() {
+		return stadyumDB;
+	}
 	public boolean yaratStadyum(int tempKapasite,String tempAd) {
 		Stadyum newStadyum = new Stadyum(tempKapasite, tempAd, getNextId());
 		return true;

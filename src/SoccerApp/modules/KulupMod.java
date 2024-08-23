@@ -4,51 +4,32 @@ import SoccerApp.NewStarSoccerApp;
 import SoccerApp.databases.*;
 import SoccerApp.entities.Futbolcu;
 import SoccerApp.entities.Kulup;
+import SoccerApp.models.DatabaseModel;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
 public class KulupMod {
-	private KulupDB kulupDatabase;
-	private FutbolcuDB futbolcuDatabase;
-	private StadyumDB stadyumDatabase;
-	private MenajerDB menajerDatabase;
-	private HakemDB hakemDatabase;
-	private NewStarSoccerApp nssApp=NewStarSoccerApp.getInstance();
-	private static KulupMod kulupMod=new KulupMod();
+	private DatabaseModel databaseModel=DatabaseModel.getInstance();
+	private static KulupMod kulupMod=null;
 	
+	
+	// Lazy
 	public static KulupMod getInstance(){
+		if(kulupMod==null) {
+			kulupMod=new KulupMod();
+		}
 		return kulupMod;
 	}
 	
 	private KulupMod() {
-	}
 	
-	public void setHakemDatabase(HakemDB hakemDB) {
-		hakemDatabase = hakemDB;
 	}
-	
 	private Scanner scanner = new Scanner(System.in);
 	
-	public void setMenajerDatabase(MenajerDB menajerDB) {
-		menajerDatabase = menajerDB;
-	}
-	
-	public void setKulupDatabase(KulupDB kulupDB) {
-		kulupDatabase = kulupDB;
-	}
-	
-	public void setFutbolcuDatabase(FutbolcuDB futbolcuDB) {
-		futbolcuDatabase = futbolcuDB;
-	}
-	
-	public void setStadyumDatabase(StadyumDB stadyumDB) {
-		stadyumDatabase = stadyumDB;
-	}
-	
 	public List<Kulup> araKulupFiltreIsim() {
-		List<Kulup> veriList = kulupDatabase.findAll();
+		List<Kulup> veriList = databaseModel.kulupDataBase.findAll();
 		String filtre = "";
 		while (true) {
 			if (veriList.size() <= 1) break;
@@ -56,7 +37,7 @@ public class KulupMod {
 			System.out.print("Filtre giriniz (Filtreleme tamamsa -1 tuşlayınız): ");
 			filtre = scanner.nextLine();
 			if (filtre.equals("-1")) break;
-			veriList = kulupDatabase.araKulupFiltreIsim(filtre, veriList);
+			veriList = databaseModel.kulupDataBase.araKulupFiltreIsim(filtre, veriList);
 			
 		}
 		return veriList;
@@ -73,13 +54,13 @@ public class KulupMod {
 	}
 	
 	public List<Kulup> listeleKulupler() {
-		List<Kulup> kulupler = kulupDatabase.findAll();
+		List<Kulup> kulupler = databaseModel.kulupDataBase.findAll();
 		kulupler.forEach(System.out::println);
 		return kulupler;
 	}
 	
 	private int yapSecim() {
-		return nssApp.yapSecim();
+		return NewStarSoccerApp.yapSecim();
 	}
 	
 	public int menu() {
@@ -172,7 +153,7 @@ public class KulupMod {
 	}
 	
 	private List<Futbolcu> goruntuleKadroKulup(String kulupId) {
-		List<Futbolcu> futbolcular = futbolcuDatabase.bulFutbolcularKulupId(kulupId);
+		List<Futbolcu> futbolcular = databaseModel.futbolcuDataBase.bulFutbolcularKulupId(kulupId);
 		futbolcular.forEach(System.out::println);
 		return futbolcular;
 	}
