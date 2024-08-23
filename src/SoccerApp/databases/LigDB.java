@@ -35,15 +35,6 @@ public class LigDB extends DatabaseManager<Lig> {
 		return false;
 	}
 	
-	public boolean ekleKulupler(List<String> kulupler,String ligID){
-		for (int i = 0; i < kulupler.size(); i++) {
-			if (!ekleKulup(ligID,kulupler.get(i))){
-				return false;
-			}
-		}
-		return true;
-	}
-	
 	public List<String> listeleLigdekiKulupleri(String ligID){
 		Optional<Lig> optionalLig = findByID(ligID);
 		if (optionalLig.isEmpty()){

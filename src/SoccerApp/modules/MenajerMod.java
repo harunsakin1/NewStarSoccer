@@ -10,43 +10,54 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class MenajerMod {
-	private static KulupDB kulupDatabase;
-	private static FutbolcuDB futbolcuDatabase;
-	private static StadyumDB stadyumDatabase;
-	private static MenajerDB menajerDatabase;
-	private static HakemDB hakemDatabase;
+	private KulupDB kulupDatabase;
+	private FutbolcuDB futbolcuDatabase;
+	private StadyumDB stadyumDatabase;
+	private MenajerDB menajerDatabase;
+	private HakemDB hakemDatabase;
+	private NewStarSoccerApp nssApp=NewStarSoccerApp.getInstance();
+	private static MenajerMod menajerMod=new MenajerMod();
 	
-	public static void setHakemDatabase(HakemDB hakemDB) {
+	public static MenajerMod getInstance(){
+		return menajerMod;
+	}
+	
+	private MenajerMod() {
+	}
+	
+	
+	public void setHakemDatabase(HakemDB hakemDB) {
 		hakemDatabase = hakemDB;
 	}
 	
-	private static Scanner scanner = new Scanner(System.in);
+	private Scanner scanner = new Scanner(System.in);
 	
-	public static void setMenajerDatabase(MenajerDB menajerDB) {
+	public void setMenajerDatabase(MenajerDB menajerDB) {
 		menajerDatabase = menajerDB;
 	}
 	
-	public static void setKulupDatabase(KulupDB kulupDB) {
+	public void setKulupDatabase(KulupDB kulupDB) {
 		kulupDatabase = kulupDB;
 	}
 	
-	public static void setFutbolcuDatabase(FutbolcuDB futbolcuDB) {
+	public void setFutbolcuDatabase(FutbolcuDB futbolcuDB) {
 		futbolcuDatabase = futbolcuDB;
 	}
 	
-	public static void setStadyumDatabase(StadyumDB stadyumDB) {
+	public void setStadyumDatabase(StadyumDB stadyumDB) {
 		stadyumDatabase = stadyumDB;
 	}
 	
-	private static int yapSecim(){
-		return NewStarSoccerApp.yapSecim();
+	private int yapSecim() {
+		return nssApp.yapSecim();
 		
 	}
 	
-	public static int girisYapMenajerMod(){
+	public int girisYapMenajerMod() {
 		int secim = 0;
 		do { // TODO buradan main menu'ye donme islemi eklenebilir
-			System.out.println("Menajer Modül'e giriş yapmak için menajer id'nizi ve şifrenizi girmeniz gerekmektedir.");
+			System.out.println("Menajer Modül'e giriş yapmak için menajer id'nizi ve şifrenizi girmeniz gerekmektedir" +
+					                   ".");
 			System.out.print("Menajer id: ");
 			String tempId = scanner.nextLine();
 			System.out.print("Şifre: ");
@@ -65,34 +76,34 @@ public class MenajerMod {
 				System.out.println("Şifre hatalı");
 				break;
 			}
-		} while(secim != -1 && secim != 0);
+		} while (secim != -1 && secim != 0);
 		return secim;
 	}
 	
 	
-	public static int menu(Menajer menajer){
+	public int menu(Menajer menajer) {
 		int secim;
-		do{
+		do {
 			System.out.println("""
-				           #### NewStarSoccer Menajer Arayüzüne Hoşgeldiniz ####
-				                   1. Kendi kulübümü görüntüle
-				                   2. Diğer kulüpleri görüntüle
-				                   0. Hesaptan Çık
-				                  -1. Çıkış
-				                   """);
+					                   #### NewStarSoccer Menajer Arayüzüne Hoşgeldiniz ####
+					                           1. Kendi kulübümü görüntüle
+					                           2. Diğer kulüpleri görüntüle
+					                           0. Hesaptan Çık
+					                          -1. Çıkış
+					                           """);
 			
 			secim = yapSecim();
-			if (secim == 0){
+			if (secim == 0) {
 				System.out.println("Hesaptan çıkış yapılıyor");
 				break;
 			}
-			secim =menuSecenekleri(secim, menajer);
+			secim = menuSecenekleri(secim, menajer);
 		} while (secim != -1);
 		return secim;
 	}
 	
-	private static int menuSecenekleri(int secim, Menajer menajer) {
-		switch (secim){
+	private int menuSecenekleri(int secim, Menajer menajer) {
+		switch (secim) {
 			case 1:
 				if (!menajer.getKulupId().equals("-1")) {
 					Kulup kulup = bulKulubumu(menajer);
@@ -110,14 +121,14 @@ public class MenajerMod {
 		return secim;
 	}
 	
-	private static void futbolculariGoruntuleMenu() {
+	private void futbolculariGoruntuleMenu() {
 		System.out.println("Futbolcularini görüntülemek istediğiniz bir kulüp var mi?\n1. Evet\n2. Hayır");
 		int secim = yapSecim();
 		futbolculariGoruntuleMenuSecenekleri(secim);
 	}
 	
-	private static void futbolculariGoruntuleMenuSecenekleri(int secim) {
-		switch (secim){
+	private void futbolculariGoruntuleMenuSecenekleri(int secim) {
+		switch (secim) {
 			case 1:
 				futbolcuGoruntuleTarafindanKulupId();
 				break;
@@ -130,21 +141,24 @@ public class MenajerMod {
 		}
 	}
 	
-	private static void futbolcuGoruntuleTarafindanKulupId() {
+	private void futbolcuGoruntuleTarafindanKulupId() {
 		System.out.print("Futbolcularını görüntülemek istediğiniz kulübün id'sini giriniz: ");
 		int secim = yapSecim();
-		futbolcuDatabase.findAll().stream().filter(futbolcu -> futbolcu.getKulupId().get().equals(String.valueOf(secim))).forEach(System.out::println);
+		futbolcuDatabase.findAll().stream()
+		                .filter(futbolcu -> futbolcu.getKulupId().get().equals(String.valueOf(secim)))
+		                .forEach(System.out::println);
 	}
 	
-	private static void goruntuleDigerKulupler() {
+	private void goruntuleDigerKulupler() {
 		kulupDatabase.findAll().forEach(System.out::println);
 	}
 	
-	private static void goruntuleFutbolcularDetayli(String kulupId) {
-		futbolcuDatabase.bulFutbolcularKulupId(kulupId).forEach(futbolcu -> System.out.println(futbolcu.goruntuleDetayli()));
+	private void goruntuleFutbolcularDetayli(String kulupId) {
+		futbolcuDatabase.bulFutbolcularKulupId(kulupId)
+		                .forEach(futbolcu -> System.out.println(futbolcu.goruntuleDetayli()));
 	}
 	
-	private static Kulup bulKulubumu(Menajer menajer) {
+	private Kulup bulKulubumu(Menajer menajer) {
 		return kulupDatabase.findByID(menajer.getKulupId()).get();
 	}
 	

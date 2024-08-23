@@ -16,6 +16,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class LigModel {
+	
+	public void yazdirKulupFikstur(MusabakaDB musabakaDB, Kulup kulup){
+    String kulupId = kulup.getId();
+    musabakaDB.findAll().stream().filter(mid -> mid.getDeplasmanID().equals(kulupId) || mid.getEvSahibiID().equals(kulupId))
+              .forEach(System.out::println);
+}
+	
 	public void yazdirKuluplerLigdeYerAlan(Lig lig, KulupDB kulupDB){
 		Collator coll = Collator.getInstance(Locale.of("tr"));
 		coll.setStrength(Collator.PRIMARY);
@@ -32,7 +39,6 @@ public void yazdirFikstur(Lig lig, MusabakaDB musabakaDB, KulupDB kulupDB) {
 	
 	Comparator<Musabaka> comp = (mus1, mus2) -> (int) Duration.between(mus2.getMusabakaTarihi(),
 	                                                                   mus1.getMusabakaTarihi()).toDays();
-	
 	lig.getFikstur().forEach((k, v) -> {
 		System.out.println(k + ". HAFTA\n" + cizgi + cizgi + "\n" + cizgi + cizgi);
 		Map<DayOfWeek, List<Musabaka>> mapByDay =
@@ -60,13 +66,4 @@ public void yazdirFikstur(Lig lig, MusabakaDB musabakaDB, KulupDB kulupDB) {
 		});
 	});
 }
-	/*
-	hafta1:
-		cuma(localdatetime):
-			Ev sahibi   VS     Deplasman
-			    A        -         B
-			    C        -         D
-	hafta2:
-		fdslfds
-	 */
 }
