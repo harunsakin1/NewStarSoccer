@@ -15,7 +15,7 @@ public class Futbolcu extends Insan{
 	private EMevki mevki;
 	private int yetenekPuani;
 	private String kulupId;
-
+	private LocalDate sozlesmeBitisTarihi;
 	//TODO Sözleşme bitiş zamanı eklenebilir
 	//CONSTRUCTORS
 	
@@ -28,7 +28,7 @@ public class Futbolcu extends Insan{
 		this.kulupId = kulupId;
 	}
 	
-	public Futbolcu() { //TODO futbolcu üretildiğinde (ve değiştirildiğinde) bin dosyasını güncelle
+	public Futbolcu() {
 	}
 	
 	
@@ -45,8 +45,8 @@ public class Futbolcu extends Insan{
 		this.yetenekPuani = yetenekPuani;
 		this.kulupId = kulupId;
 		setId(uuid);
-		
 	}
+	
 		public int getFormaNumarasi() {
 		return formaNumarasi;
 	}

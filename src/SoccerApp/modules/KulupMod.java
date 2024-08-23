@@ -10,39 +10,48 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class KulupMod {
-	private static KulupDB kulupDatabase;
-	private static FutbolcuDB futbolcuDatabase;
-	private static StadyumDB stadyumDatabase;
-	private static MenajerDB menajerDatabase;
-	private static HakemDB hakemDatabase;
+	private KulupDB kulupDatabase;
+	private FutbolcuDB futbolcuDatabase;
+	private StadyumDB stadyumDatabase;
+	private MenajerDB menajerDatabase;
+	private HakemDB hakemDatabase;
+	private NewStarSoccerApp nssApp=NewStarSoccerApp.getInstance();
+	private static KulupMod kulupMod=new KulupMod();
 	
-	public static void setHakemDatabase(HakemDB hakemDB) {
+	public static KulupMod getInstance(){
+		return kulupMod;
+	}
+	
+	private KulupMod() {
+	}
+	
+	public void setHakemDatabase(HakemDB hakemDB) {
 		hakemDatabase = hakemDB;
 	}
 	
-	private static Scanner scanner = new Scanner(System.in);
+	private Scanner scanner = new Scanner(System.in);
 	
-	public static void setMenajerDatabase(MenajerDB menajerDB) {
+	public void setMenajerDatabase(MenajerDB menajerDB) {
 		menajerDatabase = menajerDB;
 	}
 	
-	public static void setKulupDatabase(KulupDB kulupDB) {
+	public void setKulupDatabase(KulupDB kulupDB) {
 		kulupDatabase = kulupDB;
 	}
 	
-	public static void setFutbolcuDatabase(FutbolcuDB futbolcuDB) {
+	public void setFutbolcuDatabase(FutbolcuDB futbolcuDB) {
 		futbolcuDatabase = futbolcuDB;
 	}
 	
-	public static void setStadyumDatabase(StadyumDB stadyumDB) {
+	public void setStadyumDatabase(StadyumDB stadyumDB) {
 		stadyumDatabase = stadyumDB;
 	}
 	
-	public static List<Kulup> araKulupFiltreIsim(){
+	public List<Kulup> araKulupFiltreIsim() {
 		List<Kulup> veriList = kulupDatabase.findAll();
 		String filtre = "";
 		while (true) {
-			if (veriList.size() <=1) break;
+			if (veriList.size() <= 1) break;
 			veriList.forEach(System.out::println);
 			System.out.print("Filtre giriniz (Filtreleme tamamsa -1 tuşlayınız): ");
 			filtre = scanner.nextLine();
@@ -52,7 +61,8 @@ public class KulupMod {
 		}
 		return veriList;
 	}
-	public static Optional<Kulup>secKulup(List<Kulup> kulupler){
+	
+	public Optional<Kulup> secKulup(List<Kulup> kulupler) {
 		if (kulupler.size() == 1) {
 			System.out.println("Aradığınız kriterlere uyan yalnızca bir kulüp vardır");
 			return Optional.ofNullable(kulupler.get(0));
@@ -62,44 +72,43 @@ public class KulupMod {
 		return kulupler.stream().filter(kulup -> kulup.getId().equals(kulupId)).findFirst();
 	}
 	
-	public static List<Kulup> listeleKulupler() {
+	public List<Kulup> listeleKulupler() {
 		List<Kulup> kulupler = kulupDatabase.findAll();
 		kulupler.forEach(System.out::println);
 		return kulupler;
 	}
 	
-	private static int yapSecim(){
-		return NewStarSoccerApp.yapSecim();
+	private int yapSecim() {
+		return nssApp.yapSecim();
 	}
 	
-	public static int menu() {
+	public int menu() {
 		int secim;
-		do{
+		do {
 			System.out.println("""
-				           #### NewStarSoccer Uygulamasına Hoşgeldiniz ####
-				                   1. İsme Göre Kulüp Ara
-				                   2. Kulüpleri Listele
-				                   0. Geri Dön
-				                  -1. Çıkış
-				                   """);
+					                   #### NewStarSoccer Uygulamasına Hoşgeldiniz ####
+					                           1. İsme Göre Kulüp Ara
+					                           2. Kulüpleri Listele
+					                           0. Geri Dön
+					                          -1. Çıkış
+					                           """);
 			
 			secim = yapSecim();
-			if (secim == 0){
+			if (secim == 0) {
 				System.out.println("Geri dönülüyor");
 				break;
 			}
-			secim =menuSecenekleri(secim);
+			secim = menuSecenekleri(secim);
 		} while (secim != -1);
 		return secim;
 	}
 	
-	private static int menuSecenekleri(int secim){
+	private int menuSecenekleri(int secim) {
 		List<Kulup> kulupler = null;
-		switch (secim){
+		switch (secim) {
 			case 1:
 				kulupler = araKulupFiltreIsim();
-				if (kulupler.isEmpty())
-				{
+				if (kulupler.isEmpty()) {
 					System.out.println("Aradığınız kriterlere uygun kulüp bulunamadı x_x");
 					return secim;
 				}
@@ -115,30 +124,29 @@ public class KulupMod {
 				return secim;
 		}
 		Optional<Kulup> kulup = secKulup(kulupler);
-		if(kulup.isEmpty()){
+		if (kulup.isEmpty()) {
 			System.out.println("Uyguladığınız filtrede bu id'ye sahip bir klüp yoktur. x_x");
 			return secim;
 		}
 		return menuKulup(kulup.get());
 	}
 	
-	private static int menuKulup(Kulup kulup) {
+	private int menuKulup(Kulup kulup) {
 		int secim;
 		do {
-			System.out.println(kulup.getAd() + "\n 1. Detayları görüntüle \n 2. Kadroyu görüntüle\n 0. Geri Dön\n-1. " +
-					                   "Çıkış");
+			System.out.println(kulup.getAd() + "\n 1. Detayları görüntüle \n 2. Kadroyu görüntüle\n 0. Geri Dön\n-1. " + "Çıkış");
 			
 			secim = yapSecim();
-			if (secim == 0){
+			if (secim == 0) {
 				System.out.println("Geri dönülüyor");
 				break;
 			}
 			secim = menuKulupSecenekleri(kulup, secim);
-		} while(secim != -1);
+		} while (secim != -1);
 		return secim;
 	}
 	
-	private static int menuKulupSecenekleri(Kulup kulup, int secim){
+	private int menuKulupSecenekleri(Kulup kulup, int secim) {
 		switch (secim) {
 			case 1:
 				goruntuleDetayKulup(kulup);
@@ -158,16 +166,18 @@ public class KulupMod {
 		}
 		return secim;
 	}
-	private static void yapTeklifFutbolcular() {
+	
+	private void yapTeklifFutbolcular() {
 		// TODO burası dolduralacak
 	}
-	private static List<Futbolcu> goruntuleKadroKulup(String kulupId) {
+	
+	private List<Futbolcu> goruntuleKadroKulup(String kulupId) {
 		List<Futbolcu> futbolcular = futbolcuDatabase.bulFutbolcularKulupId(kulupId);
 		futbolcular.forEach(System.out::println);
 		return futbolcular;
 	}
 	
-	private static void goruntuleDetayKulup(Kulup kulup) {
+	private void goruntuleDetayKulup(Kulup kulup) {
 		System.out.println(kulup.goruntuleDetayKulup());
 	}
 }

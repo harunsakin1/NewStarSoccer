@@ -17,25 +17,33 @@ import java.time.format.TextStyle;
 import java.util.*;
 
 public class NewStarSoccerApp {
-	private static KulupDB kulupDB = DatabaseModel.kulupDataBase;
-	private static FutbolcuDB futbolcuDB = DatabaseModel.futbolcuDataBase;
-	private static StadyumDB stadyumDB=DatabaseModel.stadyumDataBase;
-	private static MenajerDB menajerDB=DatabaseModel.menajerDataBase;
-	private static HakemDB hakemDB=DatabaseModel.hakemDataBase;
-	private static LigDB ligDB= DatabaseModel.ligDataBase;
-	private static Scanner scanner = new Scanner(System.in);
-	private static Thread otoKayit;
+	private KulupDB kulupDB = DatabaseModel.kulupDataBase;
+	private FutbolcuDB futbolcuDB = DatabaseModel.futbolcuDataBase;
+	private StadyumDB stadyumDB = DatabaseModel.stadyumDataBase;
+	private MenajerDB menajerDB = DatabaseModel.menajerDataBase;
+	private HakemDB hakemDB = DatabaseModel.hakemDataBase;
+	private LigDB ligDB = DatabaseModel.ligDataBase;
+	private Scanner scanner = new Scanner(System.in);
+	private Thread otoKayit;
+	private static NewStarSoccerApp nssApp = new NewStarSoccerApp();
+	private KulupMod kulupMod = KulupMod.getInstance();
+	private MenajerMod menajerMod = MenajerMod.getInstance();
+	private LigMod ligMod = LigMod.getInstance();
+	
+	public static NewStarSoccerApp getInstance() {
+		return nssApp;
+	}
+	private NewStarSoccerApp() {
+	}
+	
 	public static void main(String[] args) {
 		
-		/*List<String>stringList=new ArrayList<>(List.of("Harun","Emirhan","Mehmet Can"));
-		List<String> list = stringList.subList(1, 3);
-		list.remove("Emirhan");
-		System.out.println(stringList);*/
+		
 		System.out.println("Program başlatılıyor");
-		baslatVeYurutVerileri();
-		otoKayitThread();
+		nssApp.baslatVeYurutVerileri();
+		nssApp.otoKayitThread();
 		//TODO menuleri tek bir cati altina topla menu(String menuMsg, Method menuSecenekleri)
-		nssMenu();
+		nssApp.nssMenu();
 		
 		/*List<Integer> takimIdlerListesi = new ArrayList<>(List.of(10, 25, 47, 130, 33, 44));
 		List<Integer> indexes = new ArrayList<>();
@@ -55,9 +63,9 @@ public class NewStarSoccerApp {
 		Map<Integer, List<Musabaka>> fikstur = new HashMap<>();*/
 	}
 	
-	private static void otoKayitThread() {
-		otoKayit = new Thread(()->{
-			while(true){
+	private void otoKayitThread() {
+		otoKayit = new Thread(() -> {
+			while (true) {
 				try {
 					Thread.sleep(60000);
 					GeneratorRex.kaydetTumVerileri(); // WIN + .
@@ -72,13 +80,14 @@ public class NewStarSoccerApp {
 		otoKayit.start();
 	}
 	
-	private static void baslatVeYurutVerileri(){
+	private void baslatVeYurutVerileri() {
 		System.out.println("Veriler yukleniyor...");
 		ataModlaraDatabaseleri();
 		getirBinarydenJavaya();
 		System.out.println("Yuklenme tamamlandi");
 	}
-	private static void yukleIO() {
+	
+	private void yukleIO() {
 		GeneratorRex.yaratStadyumIO();
 		GeneratorRex.yaratMenajerlerIO();
 		GeneratorRex.yaratKulupIO();
@@ -86,7 +95,7 @@ public class NewStarSoccerApp {
 		GeneratorRex.yaratFutbolcularIO();
 	}
 	
-	private static void getirBinarydenJavaya() {
+	private void getirBinarydenJavaya() {
 		getirKulupler();
 		getirFutbolcular();
 		getirMenajerler();
@@ -94,49 +103,53 @@ public class NewStarSoccerApp {
 		getirStadyumlar();
 	}
 	
-	private static void ataModlaraDatabaseleri() {
+	private void ataModlaraDatabaseleri() {
 		ataKulupModaDatabaseleri();
 		ataMenajerModaDatabaseleri();
 	}
 	
-	private static void ataMenajerModaDatabaseleri() {
-		MenajerMod.setKulupDatabase(kulupDB);
-		MenajerMod.setFutbolcuDatabase(futbolcuDB);
-		MenajerMod.setStadyumDatabase(stadyumDB);
-		MenajerMod.setHakemDatabase(hakemDB);
-		MenajerMod.setMenajerDatabase(menajerDB);
+	private void ataMenajerModaDatabaseleri() {
+		menajerMod.setKulupDatabase(kulupDB);
+		menajerMod.setFutbolcuDatabase(futbolcuDB);
+		menajerMod.setStadyumDatabase(stadyumDB);
+		menajerMod.setHakemDatabase(hakemDB);
+		menajerMod.setMenajerDatabase(menajerDB);
 	}
 	
-	private static void ataKulupModaDatabaseleri() {
-		KulupMod.setKulupDatabase(kulupDB);
-		KulupMod.setFutbolcuDatabase(futbolcuDB);
-		KulupMod.setStadyumDatabase(stadyumDB);
-		KulupMod.setHakemDatabase(hakemDB);
-		KulupMod.setMenajerDatabase(menajerDB);
+	private void ataKulupModaDatabaseleri() {
+		kulupMod.setKulupDatabase(kulupDB);
+		kulupMod.setFutbolcuDatabase(futbolcuDB);
+		kulupMod.setStadyumDatabase(stadyumDB);
+		kulupMod.setHakemDatabase(hakemDB);
+		kulupMod.setMenajerDatabase(menajerDB);
 	}
 	
-	private static void getirHakemler(){
+	private void getirHakemler() {
 		GeneratorRex.setHakemDB(hakemDB);
 		GeneratorRex.getirHakemler();
 	}
-	private static void getirMenajerler(){
+	
+	private void getirMenajerler() {
 		GeneratorRex.setMenajerDB(menajerDB);
 		GeneratorRex.getirMenajerler();
 	}
-	private static void getirKulupler(){
+	
+	private void getirKulupler() {
 		GeneratorRex.setKulupDb(kulupDB);
 		GeneratorRex.getirKulupler();
 	}
-	private static void getirStadyumlar(){
+	
+	private void getirStadyumlar() {
 		GeneratorRex.setStadyumDB(stadyumDB);
 		GeneratorRex.getirStadyumlar();
 	}
-	private static void getirFutbolcular(){
+	
+	private void getirFutbolcular() {
 		GeneratorRex.setFutbolcuDB(futbolcuDB);
 		GeneratorRex.getirFutbolcular();
 	}
 	
-	private static int nssMenu() {
+	private int nssMenu() {
 		int secim;
 		do {
 			System.out.println("""
@@ -152,21 +165,21 @@ public class NewStarSoccerApp {
 				System.out.println("Geri dönülüyor");
 				break;
 			}
-			secim = nssMenuSecenekleri(secim);
+			secim = nssApp.nssMenuSecenekleri(secim);
 		} while (secim != -1);
 		return secim;
 		
 		
 	}
 	
-	private static int nssMenuSecenekleri(int secim) {
+	private int nssMenuSecenekleri(int secim) {
 		switch (secim) {
 			case 1:
-				return KulupMod.menu();
+				return kulupMod.menu();
 			case 2:
-				return MenajerMod.girisYapMenajerMod();
+				return menajerMod.girisYapMenajerMod();
 			case 3:
-				return LigMod.menu();
+				return ligMod.menu();
 			case -1:
 				System.out.println("Uygulama sonlandırılıyor....");
 				otoKayit.interrupt();
@@ -176,7 +189,7 @@ public class NewStarSoccerApp {
 		return secim;
 	}
 	
-	public static int yapSecim(String message){
+	public int yapSecim(String message) {
 		int secim;
 		while (true) {
 			System.out.print(message);
@@ -194,7 +207,7 @@ public class NewStarSoccerApp {
 		return secim;
 	}
 	
-	public static int yapSecim(){
+	public int yapSecim() {
 		return yapSecim("Secim yapiniz: ");
 	}
 	

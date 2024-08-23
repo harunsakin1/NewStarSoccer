@@ -22,6 +22,7 @@ public class Musabaka extends BaseEntity{
 	private List<String> deplasmanKadro;
 	private EMusabakaTuru musabakaTuru;
 	private LocalDateTime musabakaTarihi;
+	//TODO ligId eklenecek
 	
 	public LocalDateTime getMusabakaTarihi() {
 		return musabakaTarihi;
