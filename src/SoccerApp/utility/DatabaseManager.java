@@ -9,7 +9,6 @@ import java.util.Optional;
 public class DatabaseManager<T extends BaseEntity> implements ICRUD<T> {
 	protected ArrayList<T> veriListesi;
 	
-	
 	{
 		veriListesi = new ArrayList<>();
 	}

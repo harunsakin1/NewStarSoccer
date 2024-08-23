@@ -12,6 +12,12 @@ import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 
 public class MenajerDB extends DatabaseManager<Menajer> {
+	private static MenajerDB menajerDB = new MenajerDB();
+	private MenajerDB() {
+	}
+	public static MenajerDB getInstance() {
+		return menajerDB;
+	}
 	public boolean yaratMenajer(String tempAd, String tempSoyad, LocalDate tempDogumTarihi, EUyruk tempUyruk,
 	                            String tempMaas, String tempKulupID,
 	                            int tempYil, String tempSifre) {

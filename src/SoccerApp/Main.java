@@ -1,5 +1,5 @@
 package SoccerApp;
-
+/*
 import SoccerApp.databases.KulupDB;
 import SoccerApp.entities.*;
 import SoccerApp.utility.DatabaseManager;
@@ -36,48 +36,56 @@ public class Main {
 		System.out.println(macPlanla("103", "101", "107", hakem.getId()));
 		System.out.println(fikstur.findAll());
 		macOyna(fikstur.findAll().get(0));*/
+
+/*
+import SoccerApp.entities.Hakem;
+import SoccerApp.entities.Kulup;
+import SoccerApp.entities.Musabaka;
+import SoccerApp.entities.Stadyum;
+
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Optional;
+import java.util.Set;}
+
+private static void playWavFile(String filePath) {
+	try {
+		File soundFile = new File(filePath);
+		AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+		AudioFormat format = audioStream.getFormat();
+		DataLine.Info info = new DataLine.Info(Clip.class, format);
+		Clip audioClip = (Clip) AudioSystem.getLine(info);
+		audioClip.open(audioStream);
+		audioClip.start();
 		
-		
-		
-	}
-	
-	private static void playWavFile(String filePath) {
-		try {
-			File soundFile = new File(filePath);
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
-			AudioFormat format = audioStream.getFormat();
-			DataLine.Info info = new DataLine.Info(Clip.class, format);
-			Clip audioClip = (Clip) AudioSystem.getLine(info);
-			audioClip.open(audioStream);
-			audioClip.start();
-			
-			audioClip.addLineListener(event -> {
-				if (event.getType() == LineEvent.Type.STOP) {
-					audioClip.close();
-				}
-			});
-			
-			// Klip çalınırken programın kapanmaması için bekleme ekledim
-			while (!audioClip.isRunning()) {
-				Thread.sleep(10);
+		audioClip.addLineListener(event -> {
+			if (event.getType() == LineEvent.Type.STOP) {
+				audioClip.close();
 			}
-			while (audioClip.isRunning()) {
-				Thread.sleep(10);
-			}
-			
-		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
-			e.printStackTrace();
+		});
+		
+		// Klip çalınırken programın kapanmaması için bekleme ekledim
+		while (!audioClip.isRunning()) {
+			Thread.sleep(10);
+		}
+		while (audioClip.isRunning()) {
+			Thread.sleep(10);
 		}
 		
+	} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
+		e.printStackTrace();
 	}
+	
+}
 	/*private static void gol(String message) {
 		System.out.println(message);
 		playWavFile("src/SoccerApp/sounds/GoalEffect.wav");
 	}*/
-	
-	/*private static void macOyna(Musabaka musabaka) throws InterruptedException{
-		
-		*//*playWavFile("src/SoccerApp/sounds/MacOnu.wav");
+
+/*private static void macOyna(Musabaka musabaka) throws InterruptedException{
+ 
+ *//*playWavFile("src/SoccerApp/sounds/MacOnu.wav");
 		
 		String kulupAd1 = kulupler.findByID(musabaka.getKulup1Id()).get().getAd();
 		String kulupAd2 = kulupler.findByID(musabaka.getKulup2Id()).get().getAd();
@@ -147,28 +155,37 @@ public class Main {
 				                   "saglik " +
 				                   "arkadaslar");
 	}*/
+/*
+import SoccerApp.entities.Hakem;
+import SoccerApp.entities.Kulup;
+import SoccerApp.entities.Musabaka;
+import SoccerApp.entities.Stadyum;
+
+import java.util.Optional;
+import java.util.Set;
+
+private static boolean macPlanla(String kulup1Id, String kulup2Id, String stadyumId, String hakemId) {
+	Musabaka musabaka = new Musabaka();
+	Optional<Hakem> hakem = hakemler.findByID(hakemId);
+	if (hakem.isEmpty()) return false;
 	
-	private static boolean macPlanla(String kulup1Id, String kulup2Id, String stadyumId, String hakemId) {
-		Musabaka musabaka = new Musabaka();
-		Optional<Hakem> hakem = hakemler.findByID(hakemId);
-		if (hakem.isEmpty()) return false;
-		
-		Optional<Kulup> kulup1 = kulupler.findByID(kulup1Id);
-		if (kulup1.isEmpty()) return false;
-		
-		Optional<Kulup> kulup2 = kulupler.findByID(kulup2Id);
-		if (kulup2.isEmpty()) return false;
-		
-		Optional<Stadyum> stadyum = stadlar.findByID(stadyumId);
-		if (stadyum.isEmpty()) return false;
-		
-		musabaka.setHakemIds(Set.of(hakemId));
-		musabaka.setEvSahibiID(kulup1Id);
-		musabaka.setDeplasmanID(kulup2Id);
-		musabaka.setStadyumId(stadyumId);
-		fikstur.save(musabaka);
-		return true;
-	}
+	Optional<Kulup> kulup1 = kulupler.findByID(kulup1Id);
+	if (kulup1.isEmpty()) return false;
 	
+	Optional<Kulup> kulup2 = kulupler.findByID(kulup2Id);
+	if (kulup2.isEmpty()) return false;
 	
+	Optional<Stadyum> stadyum = stadlar.findByID(stadyumId);
+	if (stadyum.isEmpty()) return false;
+	
+	musabaka.setHakemIds(Set.of(hakemId));
+	musabaka.setEvSahibiID(kulup1Id);
+	musabaka.setDeplasmanID(kulup2Id);
+	musabaka.setStadyumId(stadyumId);
+	fikstur.save(musabaka);
+	return true;
 }
+
+
+}
+ */

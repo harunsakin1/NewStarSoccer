@@ -5,51 +5,31 @@ import SoccerApp.databases.*;
 import SoccerApp.entities.Futbolcu;
 import SoccerApp.entities.Kulup;
 import SoccerApp.entities.Menajer;
+import SoccerApp.models.DatabaseModel;
 
 import java.util.Optional;
 import java.util.Scanner;
 
 public class MenajerMod {
-	private KulupDB kulupDatabase;
-	private FutbolcuDB futbolcuDatabase;
-	private StadyumDB stadyumDatabase;
-	private MenajerDB menajerDatabase;
-	private HakemDB hakemDatabase;
-	private NewStarSoccerApp nssApp=NewStarSoccerApp.getInstance();
-	private static MenajerMod menajerMod=new MenajerMod();
+	private DatabaseModel databaseModel= DatabaseModel.getInstance();
+	private static MenajerMod menajerMod=null;
 	
 	public static MenajerMod getInstance(){
+		if (menajerMod==null) {
+			menajerMod=new MenajerMod();
+		}
 		return menajerMod;
 	}
 	
 	private MenajerMod() {
 	}
-	
-	
-	public void setHakemDatabase(HakemDB hakemDB) {
-		hakemDatabase = hakemDB;
-	}
-	
+
 	private Scanner scanner = new Scanner(System.in);
 	
-	public void setMenajerDatabase(MenajerDB menajerDB) {
-		menajerDatabase = menajerDB;
-	}
 	
-	public void setKulupDatabase(KulupDB kulupDB) {
-		kulupDatabase = kulupDB;
-	}
-	
-	public void setFutbolcuDatabase(FutbolcuDB futbolcuDB) {
-		futbolcuDatabase = futbolcuDB;
-	}
-	
-	public void setStadyumDatabase(StadyumDB stadyumDB) {
-		stadyumDatabase = stadyumDB;
-	}
 	
 	private int yapSecim() {
-		return nssApp.yapSecim();
+		return NewStarSoccerApp.yapSecim();
 		
 	}
 	
@@ -62,7 +42,7 @@ public class MenajerMod {
 			String tempId = scanner.nextLine();
 			System.out.print("Şifre: ");
 			String tempSifre = scanner.nextLine();
-			Optional<Menajer> OptionalMenajer = menajerDatabase.findByID(tempId);
+			Optional<Menajer> OptionalMenajer = databaseModel.menajerDataBase.findByID(tempId);
 			Menajer menajer;
 			if (OptionalMenajer.isEmpty()) {
 				System.out.println("Gecersiz id");
@@ -144,22 +124,22 @@ public class MenajerMod {
 	private void futbolcuGoruntuleTarafindanKulupId() {
 		System.out.print("Futbolcularını görüntülemek istediğiniz kulübün id'sini giriniz: ");
 		int secim = yapSecim();
-		futbolcuDatabase.findAll().stream()
+		databaseModel.futbolcuDataBase.findAll().stream()
 		                .filter(futbolcu -> futbolcu.getKulupId().get().equals(String.valueOf(secim)))
 		                .forEach(System.out::println);
 	}
 	
 	private void goruntuleDigerKulupler() {
-		kulupDatabase.findAll().forEach(System.out::println);
+		databaseModel.kulupDataBase.findAll().forEach(System.out::println);
 	}
 	
 	private void goruntuleFutbolcularDetayli(String kulupId) {
-		futbolcuDatabase.bulFutbolcularKulupId(kulupId)
+		databaseModel.futbolcuDataBase.bulFutbolcularKulupId(kulupId)
 		                .forEach(futbolcu -> System.out.println(futbolcu.goruntuleDetayli()));
 	}
 	
 	private Kulup bulKulubumu(Menajer menajer) {
-		return kulupDatabase.findByID(menajer.getKulupId()).get();
+		return databaseModel.kulupDataBase.findByID(menajer.getKulupId()).get();
 	}
 	
 	

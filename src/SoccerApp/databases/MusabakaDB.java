@@ -7,7 +7,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class MusabakaDB extends DatabaseManager<Musabaka> {
-	
+	private static MusabakaDB musabakaDB = new MusabakaDB();
+	private MusabakaDB() {}
+	public static MusabakaDB getInstance() {
+		return musabakaDB;
+	}
 	public String yaratMusabaka(String kulupId1, String kulupId2, LocalDateTime macTarihi){
 		Musabaka musabaka=new Musabaka();
 		musabaka.setEvSahibiID(kulupId1);

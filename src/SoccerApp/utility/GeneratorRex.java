@@ -262,6 +262,7 @@ public class GeneratorRex {
 				tempFormaNumarasi = (((count) - (count % 100)) / 100) + 1;
 				tempBonservis = (split[6].trim());
 				tempMevki = EMevki.valueOf((split[7].trim()));
+				tempMevki = (count <= 200)? EMevki.KALECI: tempMevki;
 				tempYetenekPuani = Integer.parseInt((split[8].trim()));
 				tempKulupId = String.valueOf((count % 100) + 1);
 				futbolcuList.add(new Futbolcu(tempAd, tempSoyad, tempDogumTarihi, tempUyruk, tempMaas,

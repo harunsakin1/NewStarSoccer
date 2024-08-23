@@ -11,19 +11,16 @@ import java.util.List;
 import java.util.Optional;
 
 public class LigDB extends DatabaseManager<Lig> {
-	public FutbolcuDB futbolcuDB=DatabaseModel.futbolcuDataBase;
-	public HakemDB hakemDB=DatabaseModel.hakemDataBase;
-	public KulupDB kulupDB=DatabaseModel.kulupDataBase;
-	public MenajerDB menajerDB=DatabaseModel.menajerDataBase;
-	public MusabakaDB musabakaDB=DatabaseModel.musabakaDataBase;
-	public StadyumDB stadyumDB=DatabaseModel.stadyumDataBase;
+	private static LigDB ligDB = new LigDB();
+	private LigDB() {}
+	public static LigDB getInstance() {
+		return ligDB;
+	}
+	private DatabaseModel databaseModel = DatabaseModel.getInstance();
 	
 	
 	public boolean ekleKulup(String ligID, String kulupID){
-		Optional<Kulup> optionalKulup = kulupDB.findByID(kulupID);
-		if (optionalKulup.isEmpty()){
-			return false;
-		}
+		
 		Optional<Lig> optionalLig = findByID(ligID);
 		if (optionalLig.isEmpty()){
 			return false;

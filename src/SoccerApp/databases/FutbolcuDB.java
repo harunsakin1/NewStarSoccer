@@ -12,6 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FutbolcuDB extends DatabaseManager<Futbolcu> {
+	private static FutbolcuDB futbolcuDB=new FutbolcuDB();
+
+	public static FutbolcuDB getInstance(){
+		return futbolcuDB;
+	}
+	private FutbolcuDB() {
+	}
 	
 	public boolean yaratFutbolcu(String tempAd, String tempSoyad, LocalDate tempDogumTarihi, EUyruk tempUyruk,
 	                             String tempMaas, int tempFormaNumarasi, String tempBonservis, EMevki tempMevki,
