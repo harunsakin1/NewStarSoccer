@@ -34,7 +34,6 @@ public class NewStarSoccerApp {
 	
 	public static void main(String[] args) {
 		
-		
 		System.out.println("Program başlatılıyor");
 		nssApp.baslatVeYurutVerileri();
 		nssApp.otoKayitThread();

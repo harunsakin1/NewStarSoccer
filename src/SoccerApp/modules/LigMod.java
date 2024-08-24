@@ -49,6 +49,7 @@ public class LigMod {
 					                    4. Fikstur Olustur
 					                    5. Goruntule Fikstur
 					                    6. Goruntule Kulup Fikstur
+					                    7. tempEkleKulup (1-20)
 					                    0. Geri Don
 					                   -1. Kapa programi
 					                    """);
@@ -82,6 +83,10 @@ public class LigMod {
 				break;
 			case 6:
 				yazdirKulupFikstur();
+				break;
+			case 7:
+				tempEkleKulup();
+				break;
 			case -1:
 				break;
 			default:
@@ -89,6 +94,13 @@ public class LigMod {
 		}
 		
 		return secim;
+	}
+	
+	private void tempEkleKulup() {
+		String ligId = String.valueOf(yapSecim("LIG ID>>>"));
+		for (int kulupId = 1; kulupId <= 20; kulupId++) {
+			databaseModel.ligDataBase.ekleKulup(ligId, String.valueOf(kulupId));
+		}
 	}
 	
 	private void yazdirKulupFikstur() {
