@@ -21,9 +21,10 @@ public class MusabakaModel {
 		String deplasmanAd = kulupDB.findByID(musabaka.getDeplasmanID()).get().getAd();
 		LocalDateTime musTarih = musabaka.getMusabakaTarihi();
 		String localDateTimeFormat = "%tb %<2td, %<ta %<tH:%<tm, %<tY %n";
-		
+		String ayrac = "     -     -     -     -     -     -     -     -     -     -     -     -";
 		//System.out.println(evSahibiAd + " " + sonuc + " " + deplasmanAd);
 		System.out.printf("\t\t%15s %3s %-15s \t" + localDateTimeFormat, evSahibiAd, sonuc, deplasmanAd,
 		                  musTarih);
+		System.out.println(ayrac);
 	}
 }
