@@ -19,6 +19,11 @@ public class MusabakaModel {
 		String sonuc = (musabaka.getMusabakaTarihi().isAfter(LocalDateTime.now()))? "X - X": musabaka.getEvSahibiSkor() + " - " + musabaka.getDeplasmanSkor();
 		String evSahibiAd = kulupDB.findByID(musabaka.getEvSahibiID()).get().getAd();
 		String deplasmanAd = kulupDB.findByID(musabaka.getDeplasmanID()).get().getAd();
-		System.out.println(evSahibiAd + " " + sonuc + " " + deplasmanAd);
+		LocalDateTime musTarih = musabaka.getMusabakaTarihi();
+		String localDateTimeFormat = "%tb %<2td, %<ta %<tH:%<tm, %<tY %n";
+		
+		//System.out.println(evSahibiAd + " " + sonuc + " " + deplasmanAd);
+		System.out.printf("\t\t%15s %3s %-15s \t" + localDateTimeFormat, evSahibiAd, sonuc, deplasmanAd,
+		                  musTarih);
 	}
 }
