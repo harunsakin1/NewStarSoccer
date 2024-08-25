@@ -1,19 +1,17 @@
 package SoccerApp.modules;
 
 import SoccerApp.NewStarSoccerApp;
-import SoccerApp.databases.*;
 import SoccerApp.entities.Kulup;
 import SoccerApp.entities.Lig;
-import SoccerApp.entities.Musabaka;
 import SoccerApp.models.DatabaseModel;
 import SoccerApp.models.LigModel;
 import SoccerApp.utility.enums.EBolge;
 import SoccerApp.utility.enums.EKume;
+import SoccerApp.utility.enums.ESkorTablosuElemani;
 
 import java.time.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.IntStream;
 
 public class LigMod {
 	private DatabaseModel databaseModel=DatabaseModel.getInstance();
@@ -49,7 +47,8 @@ public class LigMod {
 					                    4. Fikstur Olustur
 					                    5. Goruntule Fikstur
 					                    6. Goruntule Kulup Fikstur
-					                    7. tempEkleKulup (1-20)
+					                    7. Goruntule Puan Tablosu
+					                    8. tempEkleKulup (1-20)
 					                    0. Geri Don
 					                   -1. Kapa programi
 					                    """);
@@ -85,6 +84,9 @@ public class LigMod {
 				yazdirKulupFikstur();
 				break;
 			case 7:
+				goruntuleLigPuanTablosu();
+				break;
+			case 8:
 				tempEkleKulup();
 				break;
 			case -1:
@@ -94,6 +96,12 @@ public class LigMod {
 		}
 		
 		return secim;
+	}
+	
+	private void goruntuleLigPuanTablosu() {
+		String ligId = String.valueOf(yapSecim("Lig id'si giriniz: "));
+		Optional<Lig> optLig = databaseModel.ligDataBase.findByID(ligId);
+		optLig.ifPresentOrElse(lig -> ligModel.goruntulePuanTablosu(lig), () -> System.out.println("Bulamadik o_o"));
 	}
 	
 	private void tempEkleKulup() {
@@ -116,7 +124,8 @@ public class LigMod {
 	private void yazdirKuluplerLigdeYerAlan() {
 		String secim = String.valueOf(yapSecim("Katilimcilarini gormek istediginiz lig'in id'sini giriniz: "));
 		Optional<Lig> optLig = databaseModel.ligDataBase.findByID(secim);
-		optLig.ifPresentOrElse(lig -> ligModel.yazdirKuluplerLigdeYerAlan(lig), () -> System.out.println(
+		optLig.ifPresentOrElse(lig -> ligModel.getirKulupleriLigdeYerAlan(lig).forEach(klp -> System.out.println(klp.getAd())),
+		                       () -> System.out.println(
 				"Girdiginiz lig id'de hata var x_x"));
 		
 	}
@@ -342,9 +351,7 @@ public class LigMod {
 			for (int eslesmeNo = 0; eslesmeNo < eslesmeler.get(haftaNumarasi).size(); eslesmeNo++) {
 				List<String> musabakalar =
 						yaratMusabaka(eslesmeler.get(haftaNumarasi).get(eslesmeNo).get(0),
-						              eslesmeler.get(haftaNumarasi)
-						                                                                             .get(eslesmeNo)
-						                                                                             .get(1),
+						              eslesmeler.get(haftaNumarasi).get(eslesmeNo).get(1),
 						              fiskturler
 								              .get(haftaNumarasi).get(eslesmeNo), haftaNumarasi);
 				haftaFikturu.add(musabakalar.get(0));
@@ -354,18 +361,22 @@ public class LigMod {
 			fikstur.put(haftaNumarasi + 20, haftaFikturuIkinciYari);
 		}
 		lig.setFikstur(fikstur);
+		
+		baslatPuanTablosu(lig);
 	}
 	
-	public List<Integer> bulHangiHaftaMaciVar(String kulupID, List<String> musabakaIDlerList, Lig lig) {
-		return musabakaIDlerList.stream().map(mId -> databaseModel.musabakaDataBase.findByID(mId).get())
-		                        .filter(mus -> mus.getDeplasmanID().equals(kulupID) || mus.getEvSahibiID()
-		                                                                                  .equals(kulupID))
-		                        .map(musabaka -> (int) (Duration
-				                        .between(LocalDateTime.of(lig.getBaslangicTarihi(), LocalTime.of(18, 15)),
-				                                 musabaka.getMusabakaTarihi())
-				                        .toDays() / 7)).toList();
-		//return macOlanHaftalarList;
+	private void baslatPuanTablosu(Lig lig) {
+		List<Kulup> kulups = ligModel.getirKulupleriLigdeYerAlan(lig);
+		for (int i = 0; i < kulups.size(); i++) {
+			HashMap<ESkorTablosuElemani, Object> tabloElemani =
+					new HashMap<>(Map.of(ESkorTablosuElemani.KULUP_ID, kulups.get(i).getId(),
+					                     ESkorTablosuElemani.ATILAN_GOL, 0, ESkorTablosuElemani.BERABERLIK, 0,
+					                     ESkorTablosuElemani.GALIBIYET, 0, ESkorTablosuElemani.MAGLUBIYET, 0,
+					                     ESkorTablosuElemani.YENEN_GOL, 0));
+			lig.getPuanTablosu().put(i, tabloElemani);
+		}
 	}
+	
 	
 	//TODO refactor islemi yap (sayfadaki butun kodlar)
 	public List<String> yaratMusabaka(String kulupId1, String kulupId2, LocalDateTime macTarihi, int hafta) {

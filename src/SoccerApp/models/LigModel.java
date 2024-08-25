@@ -1,10 +1,9 @@
 package SoccerApp.models;
 
-import SoccerApp.databases.KulupDB;
-import SoccerApp.databases.MusabakaDB;
 import SoccerApp.entities.Kulup;
 import SoccerApp.entities.Lig;
 import SoccerApp.entities.Musabaka;
+import SoccerApp.utility.enums.ESkorTablosuElemani;
 
 import java.text.Collator;
 import java.time.*;
@@ -24,13 +23,14 @@ public class LigModel {
               .forEach(musabaka -> musabakaModel.yazdirKulupFikstur(musabaka,databaseModel.kulupDataBase));
 }
 	
-	public void yazdirKuluplerLigdeYerAlan(Lig lig){
+	public List<Kulup> getirKulupleriLigdeYerAlan(Lig lig){
 		Collator coll = Collator.getInstance(Locale.of("tr"));
 		coll.setStrength(Collator.PRIMARY);
 		
-		lig.getTakimlarIDList().stream().map(id -> databaseModel.kulupDataBase.findByID(id))
-		   .filter(optklp -> optklp.isPresent()).map(klp -> klp.get().getAd()).sorted(coll::compare)
-		   .forEach(System.out::println);
+		/*return lig.getTakimlarIDList().stream().map(id -> databaseModel.kulupDataBase.findByID(id))
+		   .filter(optklp -> optklp.isPresent()).map(klp -> klp.get().getAd()).sorted(coll::compare).toList();*/
+		return lig.getTakimlarIDList().stream().map(id -> databaseModel.kulupDataBase.findByID(id))
+		          .filter(optklp -> optklp.isPresent()).map(optKlp -> optKlp.get()).sorted((klp1, klp2) -> coll.compare(klp1.getAd(), klp2.getAd())).toList();
 	}
 	
 public void yazdirFikstur(Lig lig) {
@@ -68,4 +68,24 @@ public void yazdirFikstur(Lig lig) {
 		});
 	});
 }
+	public void goruntulePuanTablosu(Lig lig){
+		String format = "%-2s. %20s %4s %4s %4s %4s %4s %4s %4s %4s\n";
+		System.out.printf(format, "", "Siralama","O", "G", "B", "M", "A", "Y", "AV", "\033[1mP\033[0m");
+		System.out.println("  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -");
+		lig.getPuanTablosu().forEach((siralama, bilgiler) -> {
+			String kulupAdi =
+					databaseModel.kulupDataBase.findByID(String.valueOf(bilgiler.get(ESkorTablosuElemani.KULUP_ID))).get().getAd();
+			int galibiyet = (int)bilgiler.get(ESkorTablosuElemani.GALIBIYET);
+			int maglubiyet = (int)bilgiler.get(ESkorTablosuElemani.MAGLUBIYET);
+			int beraberlik = (int)bilgiler.get(ESkorTablosuElemani.BERABERLIK);
+			int oynanan = galibiyet + maglubiyet + beraberlik;
+			int atilanGol = (int)bilgiler.get(ESkorTablosuElemani.ATILAN_GOL);
+			int yenenGol = (int)bilgiler.get(ESkorTablosuElemani.YENEN_GOL);
+			int averaj = atilanGol - yenenGol;
+			int puan = galibiyet*3 + beraberlik;
+			
+			System.out.printf(format, siralama, kulupAdi, oynanan, galibiyet, beraberlik, maglubiyet, atilanGol,
+			                  yenenGol, averaj, puan);
+		});
+	}
 }

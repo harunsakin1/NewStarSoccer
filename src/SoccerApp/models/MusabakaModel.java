@@ -5,6 +5,8 @@ import SoccerApp.databases.MusabakaDB;
 import SoccerApp.entities.Musabaka;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class MusabakaModel {
 	private static MusabakaModel musabakaModel = new MusabakaModel();
@@ -20,7 +22,7 @@ public class MusabakaModel {
 		String evSahibiAd = kulupDB.findByID(musabaka.getEvSahibiID()).get().getAd();
 		String deplasmanAd = kulupDB.findByID(musabaka.getDeplasmanID()).get().getAd();
 		LocalDateTime musTarih = musabaka.getMusabakaTarihi();
-		String localDateTimeFormat = "%tb %<2td, %<ta %<tH:%<tm, %<tY %n";
+		String localDateTimeFormat = "%tb %<2td, %<ta %<tH:%<tM, %<tY %n";
 		String ayrac = "     -     -     -     -     -     -     -     -     -     -     -     -";
 		//System.out.println(evSahibiAd + " " + sonuc + " " + deplasmanAd);
 		System.out.printf("\t\t%15s %3s %-15s \t" + localDateTimeFormat, evSahibiAd, sonuc, deplasmanAd,

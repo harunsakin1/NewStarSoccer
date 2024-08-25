@@ -13,6 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.*;
 
@@ -33,6 +34,9 @@ public class NewStarSoccerApp {
 	}
 	
 	public static void main(String[] args) {
+
+		
+		
 		
 		System.out.println("Program başlatılıyor");
 		nssApp.baslatVeYurutVerileri();
