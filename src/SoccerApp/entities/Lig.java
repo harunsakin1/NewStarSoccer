@@ -2,11 +2,13 @@ package SoccerApp.entities;
 
 import SoccerApp.utility.enums.EBolge;
 import SoccerApp.utility.enums.EKume;
+import SoccerApp.utility.enums.ESkorTablosuElemani;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Lig extends BaseEntity{
 	private String ad;
@@ -18,6 +20,15 @@ public class Lig extends BaseEntity{
 	private LocalDate baslangicTarihi;
 	private LocalDate bitisTarihi;
 	private Map<Integer,List<String>> fikstur;
+	private TreeMap<Integer, Map<ESkorTablosuElemani, Object>> puanTablosu;
+	
+	{
+		puanTablosu = new TreeMap<>();
+	}
+	
+	public TreeMap<Integer, Map<ESkorTablosuElemani, Object>> getPuanTablosu() {
+		return puanTablosu;
+	}
 	
 	public Map<Integer, List<String>> getFikstur() {
 		return fikstur;
