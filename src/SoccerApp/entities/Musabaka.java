@@ -10,58 +10,41 @@ import java.util.List;
 import java.util.Set;
 
 public class Musabaka extends BaseEntity{
-	private String evSahibiID;
-	private String deplasmanID;
 	private String stadyumId;
 	private int sure = 90;
 	private EHavaDurumu havaDurumu;
 	private Set<String> hakemIds;
-	private Integer evSahibiSkor;
-	private Integer deplasmanSkor;
-	private List<String> evSahibiKadro;
-	private List<String> deplasmanKadro;
 	private EMusabakaTuru musabakaTuru;
 	private LocalDateTime musabakaTarihi;
+	private Takim evSahibi;
+	private Takim deplasman;
 	//TODO ligId eklenecek
 	
 	public LocalDateTime getMusabakaTarihi() {
 		return musabakaTarihi;
 	}
 	
+	
+	
 	public void setMusabakaTarihi(LocalDateTime musabakaTarihi) {
 		this.musabakaTarihi = musabakaTarihi;
 	}
 	
-	public Integer getEvSahibiSkor() {
-		return evSahibiSkor;
+	
+	public Takim getEvSahibi() {
+		return evSahibi;
 	}
 	
-	public void setEvSahibiSkor(Integer evSahibiSkor) {
-		this.evSahibiSkor = evSahibiSkor;
+	public void setEvSahibi(Takim evSahibi) {
+		this.evSahibi = evSahibi;
 	}
 	
-	public Integer getDeplasmanSkor() {
-		return deplasmanSkor;
+	public Takim getDeplasman() {
+		return deplasman;
 	}
 	
-	public void setDeplasmanSkor(Integer deplasmanSkor) {
-		this.deplasmanSkor = deplasmanSkor;
-	}
-	
-	public List<String> getEvSahibiKadro() {
-		return evSahibiKadro;
-	}
-	
-	public void setEvSahibiKadro(List<String> evSahibiKadro) {
-		this.evSahibiKadro = evSahibiKadro;
-	}
-	
-	public List<String> getDeplasmanKadro() {
-		return deplasmanKadro;
-	}
-	
-	public void setDeplasmanKadro(List<String> deplasmanKadro) {
-		this.deplasmanKadro = deplasmanKadro;
+	public void setDeplasman(Takim deplasman) {
+		this.deplasman = deplasman;
 	}
 	
 	public EMusabakaTuru getMusabakaTuru() {
@@ -78,21 +61,6 @@ public class Musabaka extends BaseEntity{
 		
 	}
 	
-	public String getEvSahibiID() {
-		return evSahibiID;
-	}
-	
-	public void setEvSahibiID(String evSahibiID) {
-		this.evSahibiID = evSahibiID;
-	}
-	
-	public String getDeplasmanID() {
-		return deplasmanID;
-	}
-	
-	public void setDeplasmanID(String deplasmanID) {
-		this.deplasmanID = deplasmanID;
-	}
 	
 	public String getStadyumId() {
 		return stadyumId;
@@ -119,9 +87,6 @@ public class Musabaka extends BaseEntity{
 	}
 	
 	
-	
-	
-	
 	public EHavaDurumu getHavaDurumu() {
 		return havaDurumu;
 	}
@@ -133,7 +98,6 @@ public class Musabaka extends BaseEntity{
 	
 	@Override
 	public String toString() {
-		return "Musabaka{" + "evSahibiID='" + getEvSahibiID() + '\'' + ", deplasmanID='" + getDeplasmanID() + '\'' + ", stadyumId='" + getStadyumId() + '\'' + ", sure=" + getSure() + ", havaDurumu=" + getHavaDurumu() + ", hakemIds=" + getHakemIds() + ", evSahibiSkor=" + evSahibiSkor + ", deplasmanSkor=" + deplasmanSkor + ", evSahibiKadro=" + evSahibiKadro + ", deplasmanKadro=" + deplasmanKadro + ", musabakaTuru=" + musabakaTuru + ", id='" + getId() + '\'' + '}';
+		return "Musabaka{" + "id='" + getId() + '\'' + ", deplasman=" + getDeplasman() + ", evSahibi=" + getEvSahibi() + ", musabakaTarihi=" + getMusabakaTarihi() + ", musabakaTuru=" + getMusabakaTuru() + ", hakemIds=" + getHakemIds() + ", havaDurumu=" + getHavaDurumu() + ", sure=" + getSure() + ", stadyumId='" + getStadyumId() + '\'' + '}';
 	}
-	
 }

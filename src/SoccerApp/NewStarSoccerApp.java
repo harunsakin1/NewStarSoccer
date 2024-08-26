@@ -6,6 +6,7 @@ import SoccerApp.models.DatabaseModel;
 import SoccerApp.modules.KulupMod;
 import SoccerApp.modules.LigMod;
 import SoccerApp.modules.MenajerMod;
+import SoccerApp.modules.MusabakaMod;
 import SoccerApp.utility.GeneratorRex;
 
 import java.lang.invoke.MethodHandles;
@@ -25,6 +26,7 @@ public class NewStarSoccerApp {
 	private KulupMod kulupMod = KulupMod.getInstance();
 	private MenajerMod menajerMod = MenajerMod.getInstance();
 	private LigMod ligMod = LigMod.getInstance();
+	private MusabakaMod musabakaMod = MusabakaMod.getInstance();
 	
 	public static NewStarSoccerApp getInstance() {
 	return nssApp;
@@ -149,6 +151,7 @@ public class NewStarSoccerApp {
 					                           1. Kulüp Modül
 					                           2. Menajer Modül
 					                           3. Lig Modül
+					                           4. Musabaka Modül
 					                           0. Geri Dön
 					                          -1. Çıkış
 					                           """);
@@ -172,6 +175,8 @@ public class NewStarSoccerApp {
 				return menajerMod.girisYapMenajerMod();
 			case 3:
 				return ligMod.menu();
+			case 4:
+				return musabakaMod.menu();
 			case -1:
 				System.out.println("Uygulama sonlandırılıyor....");
 				otoKayit.interrupt();
@@ -199,7 +204,7 @@ public class NewStarSoccerApp {
 		return secim;
 	}
 	
-	public static   int yapSecim() {
+	public static int yapSecim() {
 		return yapSecim("Secim yapiniz: ");
 	}
 	
