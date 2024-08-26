@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class DatabaseManager<T extends BaseEntity> implements ICRUD<T> {
+public abstract class DatabaseManager<T extends BaseEntity> implements ICRUD<T> {
+	//TODO Tüm Database Model sınıflarını Database Manger sınıfında Singleton hale çevirme işlemi yap.
 	protected ArrayList<T> veriListesi;
 	
 	{

@@ -1,6 +1,7 @@
 package SoccerApp.modules;
 
 import SoccerApp.NewStarSoccerApp;
+import SoccerApp.entities.Istatistik;
 import SoccerApp.entities.Kulup;
 import SoccerApp.entities.Lig;
 import SoccerApp.models.DatabaseModel;
@@ -367,13 +368,11 @@ public class LigMod {
 	
 	private void baslatPuanTablosu(Lig lig) {
 		List<Kulup> kulups = ligModel.getirKulupleriLigdeYerAlan(lig);
-		for (int i = 0; i < kulups.size(); i++) {
-			HashMap<ESkorTablosuElemani, Object> tabloElemani =
-					new HashMap<>(Map.of(ESkorTablosuElemani.KULUP_ID, kulups.get(i).getId(),
-					                     ESkorTablosuElemani.ATILAN_GOL, 0, ESkorTablosuElemani.BERABERLIK, 0,
-					                     ESkorTablosuElemani.GALIBIYET, 0, ESkorTablosuElemani.MAGLUBIYET, 0,
-					                     ESkorTablosuElemani.YENEN_GOL, 0));
-			lig.getPuanTablosu().put(i, tabloElemani);
+		for (int i = 1; i <= kulups.size(); i++) {
+			Istatistik istatistik = new Istatistik();
+			istatistik.setKulupId(kulups.get(i).getId());
+			istatistik.setLigId(lig.getId());
+			lig.getPuanTablosu().put(i, istatistik);
 		}
 	}
 	

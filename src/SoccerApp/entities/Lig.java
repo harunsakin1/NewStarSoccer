@@ -20,13 +20,13 @@ public class Lig extends BaseEntity{
 	private LocalDate baslangicTarihi;
 	private LocalDate bitisTarihi;
 	private Map<Integer,List<String>> fikstur;
-	private TreeMap<Integer, Map<ESkorTablosuElemani, Object>> puanTablosu;
+	private TreeMap<Integer, String> puanTablosu;
 	
 	{
 		puanTablosu = new TreeMap<>();
 	}
 	
-	public TreeMap<Integer, Map<ESkorTablosuElemani, Object>> getPuanTablosu() {
+	public TreeMap<Integer, String> getPuanTablosu() {
 		return puanTablosu;
 	}
 	

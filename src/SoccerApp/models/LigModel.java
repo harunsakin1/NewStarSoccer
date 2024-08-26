@@ -74,13 +74,13 @@ public void yazdirFikstur(Lig lig) {
 		System.out.println("  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -");
 		lig.getPuanTablosu().forEach((siralama, bilgiler) -> {
 			String kulupAdi =
-					databaseModel.kulupDataBase.findByID(String.valueOf(bilgiler.get(ESkorTablosuElemani.KULUP_ID))).get().getAd();
-			int galibiyet = (int)bilgiler.get(ESkorTablosuElemani.GALIBIYET);
-			int maglubiyet = (int)bilgiler.get(ESkorTablosuElemani.MAGLUBIYET);
-			int beraberlik = (int)bilgiler.get(ESkorTablosuElemani.BERABERLIK);
+					databaseModel.kulupDataBase.findByID(String.valueOf(bilgiler.getKulupId())).get().getAd();
+			int galibiyet = bilgiler.getGalibiyet();
+			int maglubiyet = bilgiler.getMaglubiyet();
+			int beraberlik = bilgiler.getBeraberlik();
 			int oynanan = galibiyet + maglubiyet + beraberlik;
-			int atilanGol = (int)bilgiler.get(ESkorTablosuElemani.ATILAN_GOL);
-			int yenenGol = (int)bilgiler.get(ESkorTablosuElemani.YENEN_GOL);
+			int atilanGol = bilgiler.getAtilanGol();
+			int yenenGol = bilgiler.getYenilenGol();
 			int averaj = atilanGol - yenenGol;
 			int puan = galibiyet*3 + beraberlik;
 			

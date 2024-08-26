@@ -19,4 +19,5 @@ public class DatabaseModel {
 	public MenajerDB menajerDataBase=MenajerDB.getInstance();
 	public MusabakaDB musabakaDataBase=MusabakaDB.getInstance();
 	public StadyumDB stadyumDataBase=StadyumDB.getInstance();
+	public IstatistikDB istatistikDataBase=IstatistikDB.getInstance();
 }

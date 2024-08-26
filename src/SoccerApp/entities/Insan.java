@@ -4,7 +4,7 @@
 	
 	import java.time.LocalDate;
 	
-	public class Insan extends BaseEntity{
+	public abstract class Insan extends BaseEntity{
 		private String ad;
 		private String soyad;
 		private LocalDate dogumTarihi;
