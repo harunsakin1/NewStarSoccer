@@ -39,4 +39,5 @@ public class LigDB extends DatabaseManager<Lig> {
 		}
 		return optionalLig.get().getTakimlarIDList();
 	}
+	
 }

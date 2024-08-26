@@ -1,5 +1,6 @@
 package SoccerApp.models;
 
+import SoccerApp.entities.Istatistik;
 import SoccerApp.entities.Kulup;
 import SoccerApp.entities.Lig;
 import SoccerApp.entities.Musabaka;
@@ -72,20 +73,29 @@ public void yazdirFikstur(Lig lig) {
 		String format = "%-2s. %20s %4s %4s %4s %4s %4s %4s %4s %4s\n";
 		System.out.printf(format, "", "Siralama","O", "G", "B", "M", "A", "Y", "AV", "\033[1mP\033[0m");
 		System.out.println("  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -");
-		lig.getPuanTablosu().forEach((siralama, bilgiler) -> {
+		lig.getPuanTablosu().forEach((siralama, istatistikId) -> {
+			Istatistik istatistik = databaseModel.istatistikDataBase.findByID(istatistikId).get();
+			
 			String kulupAdi =
-					databaseModel.kulupDataBase.findByID(String.valueOf(bilgiler.getKulupId())).get().getAd();
-			int galibiyet = bilgiler.getGalibiyet();
-			int maglubiyet = bilgiler.getMaglubiyet();
-			int beraberlik = bilgiler.getBeraberlik();
+					databaseModel.kulupDataBase.findByID(String.valueOf(istatistik.getKulupId())).get().getAd();
+			int galibiyet = istatistik.getGalibiyet();
+			int maglubiyet = istatistik.getMaglubiyet();
+			int beraberlik = istatistik.getBeraberlik();
 			int oynanan = galibiyet + maglubiyet + beraberlik;
-			int atilanGol = bilgiler.getAtilanGol();
-			int yenenGol = bilgiler.getYenilenGol();
+			int atilanGol = istatistik.getAtilanGol();
+			int yenenGol = istatistik.getYenilenGol();
 			int averaj = atilanGol - yenenGol;
 			int puan = galibiyet*3 + beraberlik;
 			
 			System.out.printf(format, siralama, kulupAdi, oynanan, galibiyet, beraberlik, maglubiyet, atilanGol,
 			                  yenenGol, averaj, puan);
 		});
+	}
+	
+	public int getirSiralamaVerIstatistikId(Lig lig, String istatistikId){
+		for (Map.Entry<Integer, String> entry: lig.getPuanTablosu().entrySet()){
+			if (entry.getValue().equals(istatistikId)) return entry.getKey();
+		}
+		return -1;
 	}
 }

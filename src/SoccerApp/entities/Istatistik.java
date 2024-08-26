@@ -29,42 +29,60 @@ public class Istatistik extends BaseEntity{
 		return galibiyet;
 	}
 	
-	public void setGalibiyet(int galibiyet) {
-		this.galibiyet = galibiyet;
+	public void artirGalibiyet(){
+		galibiyet++;
+	}
+	
+	public void azaltGalibiyet(){
+		galibiyet--;
 	}
 	
 	public int getBeraberlik() {
 		return beraberlik;
 	}
 	
-	public void setBeraberlik(int beraberlik) {
-		this.beraberlik = beraberlik;
+	public void artirBeraberlik(){
+		beraberlik++;
+	}
+	
+	public void azaltBeraberlik(){
+		beraberlik--;
 	}
 	
 	public int getMaglubiyet() {
 		return maglubiyet;
 	}
 	
-	public void setMaglubiyet(int maglubiyet) {
-		this.maglubiyet = maglubiyet;
+	public void artirMaglubiyet(){
+		maglubiyet++;
+	}
+	
+	public void azaltMaglubiyet(){
+		maglubiyet--;
 	}
 	
 	public int getAtilanGol() {
 		return atilanGol;
 	}
 	
-	public void setAtilanGol(int atilanGol) {
-		this.atilanGol = atilanGol;
+	public void artirAtilanGol() {
+		atilanGol++;
 	}
 	
 	public int getYenilenGol() {
 		return yenilenGol;
 	}
 	
-	public void setYenilenGol(int yenilenGol) {
-		this.yenilenGol = yenilenGol;
+	public void artirYenilenGol() {
+		yenilenGol++;
+	}
+	public int getAveraj(){
+		return atilanGol - yenilenGol;
 	}
 	
+	public int getPuan(){
+		return galibiyet*3 + beraberlik;
+	}
 	public String getLigId() {
 		return ligId;
 	}
