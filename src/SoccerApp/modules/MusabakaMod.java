@@ -5,20 +5,20 @@ import SoccerApp.entities.*;
 import SoccerApp.models.DatabaseModel;
 import SoccerApp.models.LigModel;
 import SoccerApp.utility.enums.EGolAtan;
+import SoccerApp.utility.enums.EMevki;
 import SoccerApp.utility.enums.ESkorTablosuDegisimYonu;
 
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class MusabakaMod {
 	private DatabaseModel databaseModel = DatabaseModel.getInstance();
 	private LigModel ligModel = new LigModel();
 	private static MusabakaMod musabakaMod = new MusabakaMod();
 	private Scanner scanner = new Scanner(System.in);
+	private Random random = new Random();
 	
 	public static MusabakaMod getInstance(){
 		return musabakaMod;
@@ -109,7 +109,7 @@ public class MusabakaMod {
 	private void gol(String message, EGolAtan golAtan, Musabaka musabaka, Lig lig) {
 		System.out.println(message);
 		playWavFile("src/SoccerApp/sounds/GoalEffect.wav");
-		Takim golAtanTakim = null; 
+		Takim golAtanTakim = null;
 		Takim golYiyenTakim = null;
 		switch (golAtan){
 			case EV_SAHIBI -> {
@@ -126,7 +126,7 @@ public class MusabakaMod {
 		var yiyenIst = databaseModel.istatistikDataBase.alKulupAlLigGetirIstatistik(golYiyenTakim.getKulupId(),
 		                                                                            lig.getId());
 		switch (golYiyenTakim.getSkor() - golAtanTakim.getSkor()){
-			case 1: 
+			case 1:
 				atanIst.artirBeraberlik();
 				atanIst.azaltMaglubiyet();
 				
@@ -148,6 +148,57 @@ public class MusabakaMod {
 		guncellePuanTablosu(lig, yiyenIst, ESkorTablosuDegisimYonu.ASAGI);
 	}
 	
+	private void kadroBelirle(Musabaka musabaka,Lig lig){
+		String evSahibiKulupId = musabaka.getEvSahibi().getKulupId();
+		String deplasmanKulupId = musabaka.getDeplasman().getKulupId();
+		
+		List<Futbolcu> futbolcularEvSahibiKulup = databaseModel.futbolcuDataBase.bulFutbolcularKulupId(evSahibiKulupId);
+		List<Futbolcu> futbolcularDeplasmanKulup = databaseModel.futbolcuDataBase.bulFutbolcularKulupId(deplasmanKulupId);
+		Map<EMevki,List<Futbolcu>> evSahibiKadroIlkOnBir = new HashMap<>();
+		Map<EMevki,List<Futbolcu>> deplasmanIlkOnBir = new HashMap<>();
+		
+		List<Futbolcu> kalecilerList =
+				futbolcularEvSahibiKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.KALECI).toList();
+		evSahibiKadroIlkOnBir.put(EMevki.KALECI,List.of(kalecilerList.get(random.nextInt(0, kalecilerList.size()))));
+		List<Futbolcu> deplasmanKalecilerlist =
+				futbolcularDeplasmanKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.KALECI).toList();
+		deplasmanIlkOnBir.put(EMevki.KALECI,List.of(deplasmanKalecilerlist.get(random.nextInt(0, kalecilerList.size()))));
+		
+		List<Futbolcu> evSahibiDefanslistesi =
+				futbolcularEvSahibiKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.DEFANS).toList();
+		Collections.shuffle(evSahibiDefanslistesi);
+		evSahibiKadroIlkOnBir.put(EMevki.DEFANS,evSahibiDefanslistesi.subList(0,3));
+		List<Futbolcu> deplasmanDefansListesi =
+				futbolcularDeplasmanKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.DEFANS).toList();
+		Collections.shuffle(deplasmanDefansListesi);
+		deplasmanIlkOnBir.put(EMevki.DEFANS,deplasmanDefansListesi.subList(0,3));
+		
+		List<Futbolcu> evSahibiOrtaSahaListesi =
+				futbolcularEvSahibiKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.ORTASAHA).toList();
+		Collections.shuffle(evSahibiOrtaSahaListesi);
+		evSahibiKadroIlkOnBir.put(EMevki.ORTASAHA, evSahibiOrtaSahaListesi.subList(0,4));
+		
+		List<Futbolcu> deplasmanOrtaSahaListesi =
+				futbolcularDeplasmanKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.ORTASAHA).toList();
+		Collections.shuffle(deplasmanOrtaSahaListesi);
+		deplasmanIlkOnBir.put(EMevki.ORTASAHA, deplasmanOrtaSahaListesi.subList(0,4));
+		
+		List<Futbolcu> evSahibiForvetListesi =
+				futbolcularEvSahibiKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.FORVET).toList();
+		Collections.shuffle(evSahibiForvetListesi);
+		evSahibiKadroIlkOnBir.put(EMevki.FORVET, evSahibiForvetListesi.subList(0,3));
+		
+		List<Futbolcu> deplasmanForvetListesi =
+				futbolcularDeplasmanKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.FORVET).toList();
+		Collections.shuffle(deplasmanForvetListesi);
+		deplasmanIlkOnBir.put(EMevki.FORVET, deplasmanForvetListesi.subList(0,3));
+	}
+	
+	public void macaBasla(){
+	
+	}
+	
+	@Deprecated
 	public void macOyna(Musabaka musabaka, Lig lig) throws InterruptedException {
 		Random random = new Random();
 		

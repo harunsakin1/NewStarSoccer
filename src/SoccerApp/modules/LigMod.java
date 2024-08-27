@@ -123,7 +123,7 @@ public class LigMod {
 		Optional<Lig> optLig = databaseModel.ligDataBase.findByID(secim);
 		optLig.ifPresentOrElse(lig -> ligModel.getirKulupleriLigdeYerAlan(lig).forEach(klp -> System.out.println(klp.getAd())),
 		                       () -> System.out.println(
-				"Girdiginiz lig id'de hata var x_x"));
+				                       "Girdiginiz lig id'de hata var x_x"));
 		
 	}
 	
@@ -217,7 +217,7 @@ public class LigMod {
 		System.out.print("Lig ID giriniz : ");
 		String ligID = scanner.nextLine();
 		databaseModel.ligDataBase.listeleLigdekiKulupleri(ligID)
-		     .forEach(kulupId -> System.out.println(databaseModel.kulupDataBase.findByID(kulupId).get().getAd()));
+		                         .forEach(kulupId -> System.out.println(databaseModel.kulupDataBase.findByID(kulupId).get().getAd()));
 	}
 	
 	public List<List<LocalDateTime>> belirleMacVakitleri(String ligID) {
