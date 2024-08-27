@@ -3,13 +3,14 @@ package SoccerApp.entities;
 import SoccerApp.utility.enums.EHavaDurumu;
 import SoccerApp.utility.enums.EMusabakaTuru;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Musabaka extends BaseEntity{
+public class Musabaka extends BaseEntity implements Serializable {
 	private String stadyumId;
 	private int sure = 90;
 	private EHavaDurumu havaDurumu;
@@ -19,6 +20,11 @@ public class Musabaka extends BaseEntity{
 	private Takim evSahibi;
 	private Takim deplasman;
 	//TODO ligId eklenecek
+	
+	{
+		evSahibi=new Takim();
+		deplasman=new Takim();
+	}
 	
 	public LocalDateTime getMusabakaTarihi() {
 		return musabakaTarihi;

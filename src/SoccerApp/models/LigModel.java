@@ -19,7 +19,7 @@ public class LigModel {
 		                                                                   mus1.getMusabakaTarihi()).toDays();
 		MusabakaModel musabakaModel = MusabakaModel.getInstance();
     String kulupId = kulup.getId();
-    databaseModel.musabakaDataBase.findAll().stream().filter(mid -> mid.getDeplasmanID().equals(kulupId) || mid.getEvSahibiID().equals(kulupId))
+    databaseModel.musabakaDataBase.findAll().stream().filter(mid -> mid.getDeplasman().getKulupId().equals(kulupId) || mid.getEvSahibi().getKulupId().equals(kulupId))
                                   .sorted(comp)
               .forEach(musabaka -> musabakaModel.yazdirKulupFikstur(musabaka,databaseModel.kulupDataBase));
 }
@@ -57,8 +57,8 @@ public void yazdirFikstur(Lig lig) {
 			                  "Ev Sahibi", "VS", "Deplasman", "Tarih");
 			
 			ml.forEach(m -> {
-				String evSahibiKulupAdi = databaseModel.kulupDataBase.findByID(m.getEvSahibiID()).map(Kulup::getAd).orElse("Bilinmeyen");
-				String deplasmanKulupAdi = databaseModel.kulupDataBase.findByID(m.getDeplasmanID()).map(Kulup::getAd).orElse("Bilinmeyen");
+				String evSahibiKulupAdi = databaseModel.kulupDataBase.findByID(m.getEvSahibi().getKulupId()).map(Kulup::getAd).orElse("Bilinmeyen");
+				String deplasmanKulupAdi = databaseModel.kulupDataBase.findByID(m.getDeplasman().getKulupId()).map(Kulup::getAd).orElse("Bilinmeyen");
 				String musabakaTarihi = m.getMusabakaTarihi().toString();
 				
 				System.out.printf("\t%-" + kulupGenislik + "s %-5s %-" + kulupGenislik + "s %" + tarihGenislik + "s%n",
@@ -70,8 +70,8 @@ public void yazdirFikstur(Lig lig) {
 	});
 }
 	public void goruntulePuanTablosu(Lig lig){
-		String format = "%-2s. %20s %4s %4s %4s %4s %4s %4s %4s %4s\n";
-		System.out.printf(format, "", "Siralama","O", "G", "B", "M", "A", "Y", "AV", "\033[1mP\033[0m");
+		String format = "%-2s. %20s %4s %4s %4s %4s %4s %4s %4s \033[1m %4s \033[0m \n";
+		System.out.printf(format, "", "Siralama","O", "G", "B", "M", "A", "Y", "AV", "P");
 		System.out.println("  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -");
 		lig.getPuanTablosu().forEach((siralama, istatistikId) -> {
 			Istatistik istatistik = databaseModel.istatistikDataBase.findByID(istatistikId).get();

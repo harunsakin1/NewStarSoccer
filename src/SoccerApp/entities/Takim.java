@@ -1,11 +1,12 @@
 package SoccerApp.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Takim {
+public class Takim implements Serializable {
 	private String kulupId;
 	private List<String> kadro;
-	private Integer skor;
+	private Integer skor=0;
 	
 	public String getKulupId() {
 		return kulupId;
@@ -27,8 +28,8 @@ public class Takim {
 		return skor;
 	}
 	
-	public void setSkor(Integer skor) {
-		this.skor = skor;
+	public void arttirSkor() {
+		this.skor++;
 	}
 	
 	

@@ -15,14 +15,14 @@ public class IstatistikDB extends DatabaseManager<Istatistik> {
 	}
 	
 	public Istatistik alKulupAlLigGetirIstatistik(String kulupId, String ligId) {
-		Istatistik istatistik = null;
-		for (Istatistik istatistik1 : veriListesi) {
-			if (istatistik1.getKulupId().equals(kulupId) && istatistik1.getLigId().equals(ligId)){
+		
+		for (Istatistik istatistik : veriListesi) {
+			if (istatistik.getKulupId().equals(kulupId) && istatistik.getLigId().equals(ligId)){
 				return istatistik;
 			}
 		}
 		
-		return istatistik;
+		return null;
 	}
 	
 	

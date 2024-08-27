@@ -4,13 +4,14 @@ import SoccerApp.utility.enums.EBolge;
 import SoccerApp.utility.enums.EKume;
 import SoccerApp.utility.enums.ESkorTablosuElemani;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Lig extends BaseEntity{
+public class Lig extends BaseEntity implements Serializable {
 	private String ad;
 	private List<String> takimlarIDList = new ArrayList<>();
 	private String sezon;

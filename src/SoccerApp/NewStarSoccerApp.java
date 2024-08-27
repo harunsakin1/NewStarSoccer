@@ -12,9 +12,9 @@ import SoccerApp.utility.GeneratorRex;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.TextStyle;
 import java.util.*;
 
@@ -22,6 +22,7 @@ public class NewStarSoccerApp {
 	private DatabaseModel databaseModel = DatabaseModel.getInstance();
 	private static Scanner scanner = new Scanner(System.in);
 	private Thread otoKayit;
+	private Thread zamanGecirThread;
 	private static NewStarSoccerApp nssApp = new NewStarSoccerApp();
 	private KulupMod kulupMod = KulupMod.getInstance();
 	private MenajerMod menajerMod = MenajerMod.getInstance();
@@ -36,12 +37,16 @@ public class NewStarSoccerApp {
 	}
 	
 	public static void main(String[] args) {
-
+		
+		
 		
 		
 		
 		System.out.println("Program başlatılıyor");
 		nssApp.baslatVeYurutVerileri();
+		
+		
+		nssApp.zamanGecir();
 		nssApp.otoKayitThread();
 		//TODO menuleri tek bir cati altina topla menu(String menuMsg, Method menuSecenekleri)
 		nssApp.nssMenu();
@@ -62,6 +67,54 @@ public class NewStarSoccerApp {
 		
 		System.out.println(musabaka);
 		Map<Integer, List<Musabaka>> fikstur = new HashMap<>();*/
+	}
+	private void zamanGecir(){
+		LocalDate ldt = LocalDate.of(2024, 10, 10);
+		zamanGecirThread=new Thread(()->{
+			int i=1;
+			while (true){
+				try {
+					Thread.sleep(2000);
+					
+					LocalDate yeniLdt = ldt.plusDays(i++);
+					System.out.println("Bugün şu gün : "+yeniLdt.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+					if (yeniLdt.getDayOfWeek() == DayOfWeek.MONDAY){
+						
+						System.out.println("Yeni hafta basladi. "+yeniLdt.format( DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+					}
+					oynatBugunkiMac(yeniLdt);
+				}
+				catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			});
+			
+		zamanGecirThread.setDaemon(true);
+		zamanGecirThread.start();
+	}
+	
+	private void oynatBugunkiMac(LocalDate ldt) {
+		DayOfWeek bugun = ldt.getDayOfWeek();
+		switch (bugun){
+			case FRIDAY,SATURDAY,SUNDAY,MONDAY : {
+				databaseModel.ligDataBase.findAll().stream().forEach(lig -> {
+					long fark = Period.between(lig.getBaslangicTarihi(), ldt).getDays();
+					int haftaFarki =(int) fark / 7;
+					lig.getFikstur().get(haftaFarki+1).forEach(musabaka->{
+						Musabaka musabaka1 = databaseModel.musabakaDataBase.findByID(musabaka).get();
+						if (musabaka1.getMusabakaTarihi().getDayOfWeek()==ldt.getDayOfWeek()) {
+							try {
+								musabakaMod.macOyna(musabaka1, lig);
+							}
+							catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				});
+			}
+		}
 	}
 	
 	private void otoKayitThread() {
@@ -101,35 +154,40 @@ public class NewStarSoccerApp {
 		getirMenajerler();
 		getirHakemler();
 		getirStadyumlar();
+		getirLigler();
+		getirMusabakalar();
+		getirIstatistikler();
 	}
 	
 	
 	
-	
-	
+	private void getirIstatistikler(){
+		GeneratorRex.getirIstatistikler();
+	}
+	private void getirMusabakalar(){
+		GeneratorRex.getirMusabakalar();
+	}
 	private void getirHakemler() {
-		GeneratorRex.setHakemDB(databaseModel.hakemDataBase);
 		GeneratorRex.getirHakemler();
 	}
 	
 	private void getirMenajerler() {
-		GeneratorRex.setMenajerDB(databaseModel.menajerDataBase);
 		GeneratorRex.getirMenajerler();
 	}
 	
 	private void getirKulupler() {
-		GeneratorRex.setKulupDb(databaseModel.kulupDataBase);
 		GeneratorRex.getirKulupler();
 	}
 	
 	private void getirStadyumlar() {
-		GeneratorRex.setStadyumDB(databaseModel.stadyumDataBase);
 		GeneratorRex.getirStadyumlar();
 	}
 	
 	private void getirFutbolcular() {
-		GeneratorRex.setFutbolcuDB(databaseModel.futbolcuDataBase);
 		GeneratorRex.getirFutbolcular();
+	}
+	private void getirLigler(){
+		GeneratorRex.getirLigler();
 	}
 	
 	private int nssMenu() {

@@ -53,17 +53,26 @@ public class MusabakaMod {
 		}
 		return secim;
 	}
-	//TODO ligDB'den musabakaId ile lig çekme yazılmalı
-	// macOynat -> macoyna
+	
 	private void macOynat() {
+		// TODO ligID almak yerine database'den arat.
+		System.out.print("Lig id gir : ");
+		String ligId = scanner.nextLine();
+		Optional<Lig> optLig = databaseModel.ligDataBase.findByID(ligId);
+		if (optLig.isEmpty()) return;
 		System.out.print("Musabaka id gir: ");
+		var lig=optLig.get();
 		String musabakaId = scanner.nextLine();
 		Optional<Musabaka> optMus = databaseModel.musabakaDataBase.findByID(musabakaId);
 		if (optMus.isEmpty()) return;
 		var musabaka = optMus.get();
-		// yoruldum @EErgun
-		//databaseModel.ligDataBase.
 		
+		try {
+			macOyna(musabaka, lig);
+		}
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void playWavFile(String filePath) {
@@ -134,12 +143,12 @@ public class MusabakaMod {
 		}
 		atanIst.artirAtilanGol();
 		yiyenIst.artirYenilenGol();
-		
+		golAtanTakim.arttirSkor();
 		guncellePuanTablosu(lig, atanIst, ESkorTablosuDegisimYonu.YUKARI);
 		guncellePuanTablosu(lig, yiyenIst, ESkorTablosuDegisimYonu.ASAGI);
 	}
 	
-	private void macOyna(Musabaka musabaka,Lig lig) throws InterruptedException {
+	public void macOyna(Musabaka musabaka, Lig lig) throws InterruptedException {
 		Random random = new Random();
 		
 		
@@ -154,14 +163,17 @@ public class MusabakaMod {
 		String deplasmanKulupAdi = optDeplasmanKulup.get().getAd();
 		
 		
-		
+		Istatistik evSahibiIst = databaseModel.istatistikDataBase.alKulupAlLigGetirIstatistik(evSahibiID, lig.getId());
+		evSahibiIst.artirBeraberlik();
+		Istatistik deplasmanIst = databaseModel.istatistikDataBase.alKulupAlLigGetirIstatistik(deplasmanID, lig.getId());
+		deplasmanIst.artirBeraberlik();
 		playWavFile("src/SoccerApp/sounds/MacBaslangicDudugu.wav");
 		
 		boolean oyunDevam = true;
 		int dakika = 0;
 		
 		while (oyunDevam) {
-			Thread.sleep(1500);
+			//Thread.sleep(1500);
 			dakika += 12;
 			System.out.println(dakika + ". dakika");
 			
@@ -204,6 +216,9 @@ public class MusabakaMod {
 			}
 		}
 		if (yukariSiralama < 1) return;
+		else if(yukariSiralama == lig.getMaksLigTakimSayisi()) return;
+		
+		
 		
 		yukariId = lig.getPuanTablosu().get(yukariSiralama);
 		String asagiId = lig.getPuanTablosu().get(yukariSiralama + 1);
@@ -214,10 +229,9 @@ public class MusabakaMod {
 		if (yukariIst.getPuan() > asagiIst.getPuan()) return;
 		else if (yukariIst.getPuan() == asagiIst.getPuan() && yukariIst.getAveraj() > asagiIst.getAveraj()) return;
 		else {
-			var tempIst = yukariId;
 			lig.getPuanTablosu().replace(yukariSiralama, asagiId);
 			lig.getPuanTablosu().replace(yukariSiralama + 1, yukariId);
-			
+			guncellePuanTablosu(lig,istatistik,degisim);
 		}
 	}
 }
