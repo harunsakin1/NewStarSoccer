@@ -2,6 +2,7 @@ package SoccerApp.utility;
 
 import SoccerApp.databases.*;
 import SoccerApp.entities.*;
+import SoccerApp.models.DatabaseModel;
 import SoccerApp.utility.enums.EKokart;
 import SoccerApp.utility.enums.EMevki;
 import SoccerApp.utility.enums.EUyruk;
@@ -14,30 +15,11 @@ import java.util.List;
 import java.util.Random;
 
 public class GeneratorRex {
-	private static KulupDB kulupDb;
-	private static StadyumDB stadyumDB;
-	private static FutbolcuDB futbolcuDB;
-	private static MenajerDB menajerDB;
-	private static HakemDB hakemDB;
 	
-	public static void setHakemDB(HakemDB hakemDB) {
-		GeneratorRex.hakemDB = hakemDB;
-	}
+	private static DatabaseModel databaseModel=DatabaseModel.getInstance();
 	
-	public static void setMenajerDB(MenajerDB menajerDB) {
-		GeneratorRex.menajerDB = menajerDB;
-	}
 	
-	public static void setFutbolcuDB(FutbolcuDB futbolcuDB) {
-		GeneratorRex.futbolcuDB = futbolcuDB;
-	}
 	
-	public static void setKulupDb(KulupDB kulupDb) {
-		GeneratorRex.kulupDb = kulupDb;
-	}
-	public static void setStadyumDB(StadyumDB stadyumDB) {
-		GeneratorRex.stadyumDB = stadyumDB;
-	}
 	
 	public static void kaydetTumVerileri(){
 		kaydetFutbolcularVerileri();
@@ -45,11 +27,25 @@ public class GeneratorRex {
 		kaydetHakemlerVerileri();
 		kaydetKuluplerVerileri();
 		kaydetStadyumlarVerileri();
+		kaydetLigVerileri();
+		kaydetMusabakaVerileri();
+		kaydetIstatistiklerVeriler();
 	}
 	
 	public static void kaydetHakemlerVerileri(){
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\SoccerApp\\build\\hakemler.bin"))){
-			oos.writeObject(hakemDB.veriListesi);
+			oos.writeObject(databaseModel.hakemDataBase.veriListesi);
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void kaydetIstatistiklerVeriler(){
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\SoccerApp\\build\\istatistikler.bin"))){
+			oos.writeObject(databaseModel.istatistikDataBase.veriListesi);
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -61,7 +57,7 @@ public class GeneratorRex {
 	public static void kaydetKuluplerVerileri(){
 		try(ObjectOutputStream oos =
 				    new ObjectOutputStream(new FileOutputStream("src\\SoccerApp\\build\\kulupler.bin"))){
-			oos.writeObject(kulupDb.veriListesi);
+			oos.writeObject(databaseModel.kulupDataBase.veriListesi);
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -73,7 +69,7 @@ public class GeneratorRex {
 	public static void kaydetFutbolcularVerileri(){
 		try(ObjectOutputStream oos =
 				    new ObjectOutputStream(new FileOutputStream("src\\SoccerApp\\build\\futbolcular.bin"))){
-			oos.writeObject(futbolcuDB.veriListesi);
+			oos.writeObject(databaseModel.futbolcuDataBase.veriListesi);
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -85,7 +81,31 @@ public class GeneratorRex {
 	public static void kaydetStadyumlarVerileri(){
 		try(ObjectOutputStream oos=
 				    new ObjectOutputStream(new FileOutputStream("src\\SoccerApp\\build\\stadyumlar.bin"))){
-			oos.writeObject(stadyumDB.veriListesi);
+			oos.writeObject(databaseModel.stadyumDataBase.veriListesi);
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void kaydetLigVerileri(){
+		try(ObjectOutputStream oos=
+				    new ObjectOutputStream(new FileOutputStream("src\\SoccerApp\\build\\ligler.bin"))){
+			oos.writeObject(databaseModel.ligDataBase.veriListesi);
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void kaydetMusabakaVerileri(){
+		try(ObjectOutputStream oos=
+				    new ObjectOutputStream(new FileOutputStream("src\\SoccerApp\\build\\musabakalar.bin"))){
+			oos.writeObject(databaseModel.musabakaDataBase.veriListesi);
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -97,7 +117,7 @@ public class GeneratorRex {
 	public static void kaydetMenajerlerVerileri(){
 		try(ObjectOutputStream oos=
 				    new ObjectOutputStream(new FileOutputStream("src\\SoccerApp\\build\\menajerler.bin"))){
-			oos.writeObject(menajerDB.veriListesi);
+			oos.writeObject(databaseModel.menajerDataBase.veriListesi);
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -106,9 +126,37 @@ public class GeneratorRex {
 			e.printStackTrace();
 		}
 	}
+	public static void getirLigler(){ //
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\SoccerApp\\build\\ligler.bin"))){
+			databaseModel.ligDataBase.saveAll((ArrayList<Lig>)ois.readObject());
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void getirIstatistikler(){ //
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\SoccerApp\\build\\istatistikler.bin"))){
+			databaseModel.istatistikDataBase.saveAll((ArrayList<Istatistik>)ois.readObject());
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 	public static void getirHakemler(){ //
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\SoccerApp\\build\\hakemler.bin"))){
-			hakemDB.saveAll((ArrayList<Hakem>)ois.readObject());
+			databaseModel.hakemDataBase.saveAll((ArrayList<Hakem>)ois.readObject());
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -122,7 +170,7 @@ public class GeneratorRex {
 	}
 	public static void getirMenajerler(){ //
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\SoccerApp\\build\\menajerler.bin"))){
-			menajerDB.saveAll((ArrayList<Menajer>)ois.readObject());
+			databaseModel.menajerDataBase.saveAll((ArrayList<Menajer>)ois.readObject());
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -136,7 +184,7 @@ public class GeneratorRex {
 	}
 	public static void getirFutbolcular(){ //
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\SoccerApp\\build\\futbolcular.bin"))){
-			futbolcuDB.saveAll((ArrayList<Futbolcu>)ois.readObject());
+			databaseModel.futbolcuDataBase.saveAll((ArrayList<Futbolcu>)ois.readObject());
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -150,7 +198,7 @@ public class GeneratorRex {
 	}
 	public static void getirStadyumlar(){
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\SoccerApp\\build\\stadyumlar.bin"))){
-			stadyumDB.saveAll((ArrayList<Stadyum>)ois.readObject());
+			databaseModel.stadyumDataBase.saveAll((ArrayList<Stadyum>)ois.readObject());
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -162,10 +210,23 @@ public class GeneratorRex {
 			e.printStackTrace();
 		}
 	}
-	
+	public static void getirMusabakalar(){
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\SoccerApp\\build\\musabakalar.bin"))){
+			databaseModel.musabakaDataBase.saveAll((ArrayList<Musabaka>)ois.readObject());
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 	public static void getirKulupler(){
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\SoccerApp\\build\\kulupler.bin"))){
-			kulupDb.saveAll((ArrayList<Kulup>)ois.readObject());
+			databaseModel.kulupDataBase.saveAll((ArrayList<Kulup>)ois.readObject());
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();

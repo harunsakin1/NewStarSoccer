@@ -18,9 +18,9 @@ public class MusabakaModel {
 	}
 	
 	public void yazdirKulupFikstur(Musabaka musabaka, KulupDB kulupDB){
-		String sonuc = (musabaka.getMusabakaTarihi().isAfter(LocalDateTime.now()))? "X - X": musabaka.getEvSahibiSkor() + " - " + musabaka.getDeplasmanSkor();
-		String evSahibiAd = kulupDB.findByID(musabaka.getEvSahibiID()).get().getAd();
-		String deplasmanAd = kulupDB.findByID(musabaka.getDeplasmanID()).get().getAd();
+		String sonuc = (musabaka.getMusabakaTarihi().isAfter(LocalDateTime.now()))? "X - X": musabaka.getEvSahibi().getSkor() + " - " + musabaka.getDeplasman().getSkor();
+		String evSahibiAd = kulupDB.findByID(musabaka.getEvSahibi().getKulupId()).get().getAd();
+		String deplasmanAd = kulupDB.findByID(musabaka.getDeplasman().getKulupId()).get().getAd();
 		LocalDateTime musTarih = musabaka.getMusabakaTarihi();
 		String localDateTimeFormat = "%tb %<2td, %<ta %<tH:%<tM, %<tY %n";
 		String ayrac = "     -     -     -     -     -     -     -     -     -     -     -     -";

@@ -49,7 +49,6 @@ public class LigMod {
 					                    5. Goruntule Fikstur
 					                    6. Goruntule Kulup Fikstur
 					                    7. Goruntule Puan Tablosu
-					                    8. tempEkleKulup (1-20)
 					                    0. Geri Don
 					                   -1. Kapa programi
 					                    """);
@@ -87,9 +86,6 @@ public class LigMod {
 			case 7:
 				goruntuleLigPuanTablosu();
 				break;
-			case 8:
-				tempEkleKulup();
-				break;
 			case -1:
 				break;
 			default:
@@ -104,7 +100,7 @@ public class LigMod {
 		Optional<Lig> optLig = databaseModel.ligDataBase.findByID(ligId);
 		optLig.ifPresentOrElse(lig -> ligModel.goruntulePuanTablosu(lig), () -> System.out.println("Bulamadik o_o"));
 	}
-	
+	@Deprecated
 	private void tempEkleKulup() {
 		String ligId = String.valueOf(yapSecim("LIG ID>>>"));
 		for (int kulupId = 1; kulupId <= 20; kulupId++) {
@@ -370,9 +366,10 @@ public class LigMod {
 		List<Kulup> kulups = ligModel.getirKulupleriLigdeYerAlan(lig);
 		for (int i = 1; i <= kulups.size(); i++) {
 			Istatistik istatistik = new Istatistik();
-			istatistik.setKulupId(kulups.get(i).getId());
+			istatistik.setKulupId(kulups.get(i-1).getId());
 			istatistik.setLigId(lig.getId());
-			lig.getPuanTablosu().put(i, istatistik);
+			lig.getPuanTablosu().put(i, istatistik.getId());
+			databaseModel.istatistikDataBase.save(istatistik);
 		}
 	}
 	

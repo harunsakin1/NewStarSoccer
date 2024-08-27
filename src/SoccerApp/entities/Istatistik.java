@@ -1,6 +1,8 @@
 package SoccerApp.entities;
 
-public class Istatistik extends BaseEntity{
+import java.io.Serializable;
+
+public class Istatistik extends BaseEntity implements Serializable {
 	private String kulupId;
 	private int galibiyet;
 	private int beraberlik;
