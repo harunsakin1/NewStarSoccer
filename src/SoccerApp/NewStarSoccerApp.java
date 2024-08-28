@@ -41,7 +41,6 @@ public class NewStarSoccerApp {
 		
 		
 		
-		
 		System.out.println("Program başlatılıyor");
 		nssApp.baslatVeYurutVerileri();
 		
@@ -104,12 +103,7 @@ public class NewStarSoccerApp {
 					lig.getFikstur().get(haftaFarki+1).forEach(musabaka->{
 						Musabaka musabaka1 = databaseModel.musabakaDataBase.findByID(musabaka).get();
 						if (musabaka1.getMusabakaTarihi().getDayOfWeek()==ldt.getDayOfWeek()) {
-							try {
-								musabakaMod.macOyna(musabaka1, lig);
-							}
-							catch (InterruptedException e) {
-								e.printStackTrace();
-							}
+							musabakaMod.kadroBelirle(musabaka1, lig);
 						}
 					});
 				});
@@ -220,6 +214,9 @@ public class NewStarSoccerApp {
 			}
 			secim = nssApp.nssMenuSecenekleri(secim);
 		} while (secim != -1);
+		System.out.println("Uygulama sonlandırılıyor....");
+		otoKayit.interrupt();
+		GeneratorRex.kaydetTumVerileri();
 		return secim;
 		
 		
@@ -236,9 +233,6 @@ public class NewStarSoccerApp {
 			case 4:
 				return musabakaMod.menu();
 			case -1:
-				System.out.println("Uygulama sonlandırılıyor....");
-				otoKayit.interrupt();
-				GeneratorRex.kaydetTumVerileri();
 				return secim;
 		}
 		return secim;

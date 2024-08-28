@@ -25,7 +25,7 @@ public class MusabakaModel {
 		String localDateTimeFormat = "%tb %<2td, %<ta %<tH:%<tM, %<tY %n";
 		String ayrac = "     -     -     -     -     -     -     -     -     -     -     -     -";
 		//System.out.println(evSahibiAd + " " + sonuc + " " + deplasmanAd);
-		System.out.printf("\t\t%15s %3s %-15s \t" + localDateTimeFormat, evSahibiAd, sonuc, deplasmanAd,
+		System.out.printf("\t\t%25s %3s %-15s \t" + localDateTimeFormat, evSahibiAd, sonuc, deplasmanAd,
 		                  musTarih);
 		System.out.println(ayrac);
 	}

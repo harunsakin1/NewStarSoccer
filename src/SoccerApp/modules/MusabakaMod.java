@@ -4,9 +4,7 @@ import SoccerApp.NewStarSoccerApp;
 import SoccerApp.entities.*;
 import SoccerApp.models.DatabaseModel;
 import SoccerApp.models.LigModel;
-import SoccerApp.utility.enums.EGolAtan;
-import SoccerApp.utility.enums.EMevki;
-import SoccerApp.utility.enums.ESkorTablosuDegisimYonu;
+import SoccerApp.utility.enums.*;
 
 import javax.sound.sampled.*;
 import java.io.File;
@@ -148,7 +146,7 @@ public class MusabakaMod {
 		guncellePuanTablosu(lig, yiyenIst, ESkorTablosuDegisimYonu.ASAGI);
 	}
 	
-	private void kadroBelirle(Musabaka musabaka,Lig lig){
+	public void kadroBelirle(Musabaka musabaka,Lig lig){
 		String evSahibiKulupId = musabaka.getEvSahibi().getKulupId();
 		String deplasmanKulupId = musabaka.getDeplasman().getKulupId();
 		
@@ -159,44 +157,236 @@ public class MusabakaMod {
 		
 		List<Futbolcu> kalecilerList =
 				futbolcularEvSahibiKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.KALECI).toList();
-		evSahibiKadroIlkOnBir.put(EMevki.KALECI,List.of(kalecilerList.get(random.nextInt(0, kalecilerList.size()))));
+		evSahibiKadroIlkOnBir.put(EMevki.KALECI,new ArrayList<>(List.of(kalecilerList.get(random.nextInt(0, kalecilerList.size())))));
 		List<Futbolcu> deplasmanKalecilerlist =
 				futbolcularDeplasmanKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.KALECI).toList();
-		deplasmanIlkOnBir.put(EMevki.KALECI,List.of(deplasmanKalecilerlist.get(random.nextInt(0, kalecilerList.size()))));
+		deplasmanIlkOnBir.put(EMevki.KALECI,new ArrayList<>(List.of(deplasmanKalecilerlist.get(random.nextInt(0, kalecilerList.size())))));
 		
 		List<Futbolcu> evSahibiDefanslistesi =
-				futbolcularEvSahibiKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.DEFANS).toList();
+				new ArrayList<>(futbolcularEvSahibiKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.DEFANS).toList());
 		Collections.shuffle(evSahibiDefanslistesi);
 		evSahibiKadroIlkOnBir.put(EMevki.DEFANS,evSahibiDefanslistesi.subList(0,3));
 		List<Futbolcu> deplasmanDefansListesi =
-				futbolcularDeplasmanKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.DEFANS).toList();
+				new ArrayList<>(futbolcularDeplasmanKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.DEFANS).toList());
 		Collections.shuffle(deplasmanDefansListesi);
 		deplasmanIlkOnBir.put(EMevki.DEFANS,deplasmanDefansListesi.subList(0,3));
 		
 		List<Futbolcu> evSahibiOrtaSahaListesi =
-				futbolcularEvSahibiKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.ORTASAHA).toList();
+				new ArrayList<>(futbolcularEvSahibiKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.ORTASAHA).toList());
 		Collections.shuffle(evSahibiOrtaSahaListesi);
 		evSahibiKadroIlkOnBir.put(EMevki.ORTASAHA, evSahibiOrtaSahaListesi.subList(0,4));
 		
 		List<Futbolcu> deplasmanOrtaSahaListesi =
-				futbolcularDeplasmanKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.ORTASAHA).toList();
+				new ArrayList<>(futbolcularDeplasmanKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.ORTASAHA).toList());
 		Collections.shuffle(deplasmanOrtaSahaListesi);
 		deplasmanIlkOnBir.put(EMevki.ORTASAHA, deplasmanOrtaSahaListesi.subList(0,4));
 		
 		List<Futbolcu> evSahibiForvetListesi =
-				futbolcularEvSahibiKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.FORVET).toList();
+				new ArrayList<>(futbolcularEvSahibiKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.FORVET).toList());
 		Collections.shuffle(evSahibiForvetListesi);
 		evSahibiKadroIlkOnBir.put(EMevki.FORVET, evSahibiForvetListesi.subList(0,3));
 		
 		List<Futbolcu> deplasmanForvetListesi =
-				futbolcularDeplasmanKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.FORVET).toList();
+				new ArrayList<>(futbolcularDeplasmanKulup.stream().filter(futbolcu -> futbolcu.getMevki() == EMevki.FORVET).toList());
 		Collections.shuffle(deplasmanForvetListesi);
 		deplasmanIlkOnBir.put(EMevki.FORVET, deplasmanForvetListesi.subList(0,3));
+	
+		evSahibiKadroIlkOnBir.forEach((k, v) -> v.forEach(futbolcu -> musabaka.getEvSahibi().getKadro().add(futbolcu.getId())));
+		deplasmanIlkOnBir.forEach((k, v) -> v.forEach(futbolcu -> musabaka.getDeplasman().getKadro().add(futbolcu.getId())));
+		
+		macaBasla(evSahibiKadroIlkOnBir, deplasmanIlkOnBir, musabaka, lig);
 	}
 	
-	public void macaBasla(){
-	
+	private void macaBasla(Map<EMevki, List<Futbolcu>> evSahibiKadroIlkOnBir, Map<EMevki, List<Futbolcu>> deplasmanIlkOnBir, Musabaka musabaka, Lig lig) {
+		var evSahibiMevkiPuanlari = new HashMap<EMevki, Integer>();
+		var deplasmanMevkiPuanlari = new HashMap<EMevki, Integer>();
+		playWavFile("src/SoccerApp/sounds/MacOnu.wav");
+		
+		String evSahibiID = musabaka.getEvSahibi().getKulupId();
+		Optional<Kulup> optEvSahibiKulup = databaseModel.kulupDataBase.findByID(evSahibiID);
+		String evSahibiKulupAdi = optEvSahibiKulup.get().getAd();
+		
+		String deplasmanID = musabaka.getDeplasman().getKulupId();
+		Optional<Kulup> optDeplasmanKulup = databaseModel.kulupDataBase.findByID(deplasmanID);
+		String deplasmanKulupAdi = optDeplasmanKulup.get().getAd();
+		Istatistik evSahibiIst = databaseModel.istatistikDataBase.alKulupAlLigGetirIstatistik(evSahibiID, lig.getId());
+		Istatistik deplasmanIst = databaseModel.istatistikDataBase.alKulupAlLigGetirIstatistik(deplasmanID, lig.getId());
+		
+		deplasmanIst.artirBeraberlik();
+		evSahibiIst.artirBeraberlik();
+		
+		evSahibiKadroIlkOnBir.forEach((k, v) -> evSahibiMevkiPuanlari.put(k, v.stream().map(fut -> fut.getYetenekPuani()).reduce(0, (p1, p2) -> p1 + p2)));
+		deplasmanIlkOnBir.forEach((k, v) -> deplasmanMevkiPuanlari.put(k, v.stream().map(fut -> fut.getYetenekPuani()).reduce(0, (p1, p2) -> p1 + p2)));
+		
+		kadroYazdir(evSahibiKulupAdi, deplasmanKulupAdi, evSahibiKadroIlkOnBir, deplasmanIlkOnBir);
+		
+		int maxSure = musabaka.getSure();
+		int sure;
+		EMacStatu status; // ilkStatus
+		for (int i = 0; i < 2; i++) {
+			sure = 0;
+			status = EMacStatu.values()[((random.nextInt(2) + i) % 2) + 4];
+			while (sure < maxSure/2){
+				try {
+					Thread.sleep(100);
+					sure += random.nextInt(3, 6);
+					status = nextStatus(status, evSahibiMevkiPuanlari, deplasmanMevkiPuanlari, evSahibiKadroIlkOnBir, deplasmanIlkOnBir, musabaka, lig);
+				}
+				catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 	}
+	
+	private void kadroYazdir(String evSahibiKulupAdi, String deplasmanKulupAdi, Map<EMevki, List<Futbolcu>> evSahibiKadroIlkOnBir, Map<EMevki, List<Futbolcu>> deplasmanIlkOnBir) {
+		System.out.println(evSahibiKulupAdi);
+		for (Map.Entry<EMevki, List<Futbolcu>> futList: evSahibiKadroIlkOnBir.entrySet()){
+			System.out.println(futList.getKey());
+			for (Futbolcu fut: futList.getValue()){
+				System.out.println(fut.getAd() + " " + fut.getSoyad() + " " + fut.getFormaNumarasi());
+			}
+		}
+		
+		System.out.println(deplasmanKulupAdi);
+		for (Map.Entry<EMevki, List<Futbolcu>> futList: deplasmanIlkOnBir.entrySet()){
+			System.out.println(futList.getKey());
+			for (Futbolcu fut: futList.getValue()){
+				System.out.println(fut.getAd() + " " + fut.getSoyad() + " " + fut.getFormaNumarasi());
+			}
+		}
+	}
+	
+	private EMacStatu nextStatus(EMacStatu status, HashMap<EMevki, Integer> evSahibiMevkiPuanlari, HashMap<EMevki, Integer> deplasmanMevkiPuanlari, Map<EMevki, List<Futbolcu>> evSahibiKadroIlkOnBir, Map<EMevki, List<Futbolcu>> deplasmanIlkOnBir, Musabaka musabaka, Lig lig) {
+		Integer ATILAN_GOL_GUC_ORANI = 250;
+		Double EV_SAHIPLIGI_GUC_ORANI = 1.5;
+		Double TOP_SAHIPLIGI_GUC_ORANI = 1.5;
+		Double KALECI_ISABET_KATSAYISI = 3.;
+		Double RAKIP_FORVET_GUC_KATSAYISI = 0.1;
+		Integer toplamGolGuc = musabaka.getEvSahibi().getSkor() + musabaka.getDeplasman().getSkor()*ATILAN_GOL_GUC_ORANI;
+		
+		return switch (status){
+			case KALE_DEPLASMAN -> {
+				Integer evSahibiGuc = (int)((evSahibiMevkiPuanlari.get(EMevki.KALECI)*EV_SAHIPLIGI_GUC_ORANI+toplamGolGuc)*3);
+				Integer deplasmanGuc = (int)(deplasmanMevkiPuanlari.get(EMevki.FORVET)*TOP_SAHIPLIGI_GUC_ORANI);
+				int nextStatus = random.nextInt(evSahibiGuc + deplasmanGuc + toplamGolGuc + 50);
+				
+				System.out.println(deplasmanIlkOnBir.get(EMevki.FORVET).get(random.nextInt(deplasmanIlkOnBir.get(EMevki.FORVET).size())).getSoyad() + " 'den şut");
+				
+				
+				if (nextStatus < 50) yield EMacStatu.DEFANS_DEPLASMAN;
+				else if (nextStatus < 50 + toplamGolGuc) yield status;
+				else if (nextStatus < 50 + toplamGolGuc + evSahibiGuc) {
+					gol("nefis bir gol!", EGolAtan.DEPLASMAN, musabaka, lig);
+					yield EMacStatu.ORTASAHA_EVSAHIBI;
+				}
+				else {
+					System.out.println(deplasmanIlkOnBir.get(EMevki.KALECI).get(0).getSoyad()  + " kurtardı.");
+					yield EMacStatu.KALE_EVSAHIBI;
+				}
+			}
+			
+			case KALE_EVSAHIBI -> {
+				Integer evSahibiDefGuc =  (int)(evSahibiMevkiPuanlari.get(EMevki.DEFANS)*EV_SAHIPLIGI_GUC_ORANI*TOP_SAHIPLIGI_GUC_ORANI*KALECI_ISABET_KATSAYISI);
+				Integer evSahibiOrtGuc =  (int)(evSahibiMevkiPuanlari.get(EMevki.ORTASAHA)*EV_SAHIPLIGI_GUC_ORANI*TOP_SAHIPLIGI_GUC_ORANI*KALECI_ISABET_KATSAYISI);
+				Integer deplasmanForvetGuc = (int)(deplasmanMevkiPuanlari.get(EMevki.FORVET)*RAKIP_FORVET_GUC_KATSAYISI);
+				Integer deplasmanOrtGuc = (int)(deplasmanMevkiPuanlari.get(EMevki.ORTASAHA));
+				int nextStatus = random.nextInt(evSahibiDefGuc + evSahibiOrtGuc + deplasmanOrtGuc + deplasmanForvetGuc);
+				if (nextStatus < evSahibiDefGuc) yield EMacStatu.DEFANS_EVSAHIBI;
+				else if (nextStatus < evSahibiDefGuc + evSahibiOrtGuc) yield EMacStatu.ORTASAHA_EVSAHIBI;
+				else if (nextStatus < evSahibiDefGuc + evSahibiOrtGuc + deplasmanForvetGuc) yield EMacStatu.DEFANS_DEPLASMAN;
+				else yield EMacStatu.ORTASAHA_DEPLASMAN;
+			}
+			
+			case DEFANS_DEPLASMAN -> {Integer evSahibiGuc = (int)(evSahibiMevkiPuanlari.get(EMevki.DEFANS)*EV_SAHIPLIGI_GUC_ORANI);
+				Integer deplasmanGuc = (int)(deplasmanMevkiPuanlari.get(EMevki.FORVET)*TOP_SAHIPLIGI_GUC_ORANI);
+				int nextStatus = random.nextInt(evSahibiGuc + deplasmanGuc + toplamGolGuc + 50);
+				
+				if (nextStatus < 50) yield EMacStatu.ORTASAHA_DEPLASMAN;
+				else if (nextStatus < 50 + toplamGolGuc) yield status;
+				else if (nextStatus < 50 + toplamGolGuc + evSahibiGuc) yield EMacStatu.KALE_DEPLASMAN;
+				else yield EMacStatu.DEFANS_EVSAHIBI;}
+			
+			case DEFANS_EVSAHIBI -> {Integer evSahibiGuc = (int)(evSahibiMevkiPuanlari.get(EMevki.DEFANS)*EV_SAHIPLIGI_GUC_ORANI*TOP_SAHIPLIGI_GUC_ORANI);
+				Integer deplasmanGuc = (int)(deplasmanMevkiPuanlari.get(EMevki.FORVET));
+				int nextStatus = random.nextInt(evSahibiGuc + deplasmanGuc + toplamGolGuc + 50);
+				
+				if (nextStatus < 50) yield EMacStatu.KALE_EVSAHIBI;
+				else if (nextStatus < 50 + toplamGolGuc) yield status;
+				else if (nextStatus < 50 + toplamGolGuc + evSahibiGuc) yield EMacStatu.ORTASAHA_EVSAHIBI;
+				else yield EMacStatu.DEFANS_DEPLASMAN;}
+			
+			case ORTASAHA_DEPLASMAN -> {Integer evSahibiGuc = (int)(evSahibiMevkiPuanlari.get(EMevki.ORTASAHA)*EV_SAHIPLIGI_GUC_ORANI);
+				Integer deplasmanGuc = (int)(deplasmanMevkiPuanlari.get(EMevki.ORTASAHA)*TOP_SAHIPLIGI_GUC_ORANI);
+				int nextStatus = random.nextInt(evSahibiGuc + deplasmanGuc + toplamGolGuc + 50);
+				
+				if (nextStatus < 50) yield EMacStatu.FORVET_DEPLASMAN;
+				else if (nextStatus < 50 + toplamGolGuc) yield status;
+				else if (nextStatus < 50 + toplamGolGuc + evSahibiGuc) yield EMacStatu.DEFANS_DEPLASMAN;
+				else yield EMacStatu.ORTASAHA_EVSAHIBI;}
+			
+			case ORTASAHA_EVSAHIBI -> {
+				Integer evSahibiGuc = (int)(evSahibiMevkiPuanlari.get(EMevki.ORTASAHA)*EV_SAHIPLIGI_GUC_ORANI*TOP_SAHIPLIGI_GUC_ORANI);
+				Integer deplasmanGuc = deplasmanMevkiPuanlari.get(EMevki.ORTASAHA);
+				int nextStatus = random.nextInt(evSahibiGuc + deplasmanGuc + toplamGolGuc + 50);
+				
+				if (nextStatus < 50) yield EMacStatu.DEFANS_EVSAHIBI;
+				else if (nextStatus < 50 + toplamGolGuc) yield status;
+				else if (nextStatus < 50 + toplamGolGuc + evSahibiGuc) yield EMacStatu.FORVET_EVSAHIBI;
+				else yield EMacStatu.ORTASAHA_DEPLASMAN;
+			}
+			case FORVET_DEPLASMAN -> {Integer evSahibiGuc = (int)(evSahibiMevkiPuanlari.get(EMevki.FORVET)*EV_SAHIPLIGI_GUC_ORANI);
+				Integer deplasmanGuc = (int)(deplasmanMevkiPuanlari.get(EMevki.DEFANS)*TOP_SAHIPLIGI_GUC_ORANI);
+				int nextStatus = random.nextInt(evSahibiGuc + deplasmanGuc + toplamGolGuc + 50);
+				
+				if (nextStatus < 50) yield EMacStatu.DEPKALE_DEPLASMAN;
+				else if (nextStatus < 50 + toplamGolGuc) yield status;
+				else if (nextStatus < 50 + toplamGolGuc + evSahibiGuc) yield EMacStatu.ORTASAHA_DEPLASMAN;
+				else yield EMacStatu.FORVET_EVSAHIBI;}
+			
+			case FORVET_EVSAHIBI -> {Integer evSahibiGuc = (int)(evSahibiMevkiPuanlari.get(EMevki.FORVET)*EV_SAHIPLIGI_GUC_ORANI*TOP_SAHIPLIGI_GUC_ORANI);
+				Integer deplasmanGuc = (int)(deplasmanMevkiPuanlari.get(EMevki.DEFANS));
+				int nextStatus = random.nextInt(evSahibiGuc + deplasmanGuc + toplamGolGuc + 50);
+				
+				if (nextStatus < 50) yield EMacStatu.ORTASAHA_EVSAHIBI;
+				else if (nextStatus < 50 + toplamGolGuc) yield status;
+				else if (nextStatus < 50 + toplamGolGuc + evSahibiGuc) yield EMacStatu.DEPKALE_EVSAHIBI;
+				else yield EMacStatu.FORVET_DEPLASMAN;}
+			
+			case DEPKALE_DEPLASMAN -> {
+				Integer deplasmanDefGuc =  (int)(deplasmanMevkiPuanlari.get(EMevki.DEFANS)*TOP_SAHIPLIGI_GUC_ORANI*KALECI_ISABET_KATSAYISI);
+				Integer deplasmanOrtGuc =  (int)(deplasmanMevkiPuanlari.get(EMevki.ORTASAHA)*TOP_SAHIPLIGI_GUC_ORANI*KALECI_ISABET_KATSAYISI);
+				Integer evSahibiForvetGuc = (int)(evSahibiMevkiPuanlari.get(EMevki.FORVET)*RAKIP_FORVET_GUC_KATSAYISI*EV_SAHIPLIGI_GUC_ORANI);
+				Integer evSahibiOrtGuc = (int)(evSahibiMevkiPuanlari.get(EMevki.ORTASAHA)*EV_SAHIPLIGI_GUC_ORANI);
+				int nextStatus = random.nextInt(deplasmanDefGuc + evSahibiOrtGuc + deplasmanOrtGuc + evSahibiForvetGuc);
+				if (nextStatus < deplasmanDefGuc) yield EMacStatu.DEFANS_EVSAHIBI;
+				else if (nextStatus < deplasmanDefGuc + evSahibiOrtGuc) yield EMacStatu.ORTASAHA_EVSAHIBI;
+				else if (nextStatus < deplasmanDefGuc + evSahibiOrtGuc + evSahibiForvetGuc) yield EMacStatu.DEFANS_DEPLASMAN;
+				else yield EMacStatu.ORTASAHA_DEPLASMAN;
+			}
+			
+			case DEPKALE_EVSAHIBI -> {
+				Integer evSahibiGuc = (int)(evSahibiMevkiPuanlari.get(EMevki.FORVET)*EV_SAHIPLIGI_GUC_ORANI*TOP_SAHIPLIGI_GUC_ORANI);
+				Integer deplasmanGuc = (deplasmanMevkiPuanlari.get(EMevki.KALECI)+toplamGolGuc)*3;
+				int nextStatus = random.nextInt(evSahibiGuc + deplasmanGuc + toplamGolGuc + 50);
+				
+				System.out.println(evSahibiKadroIlkOnBir.get(EMevki.FORVET).get(random.nextInt(evSahibiKadroIlkOnBir.get(EMevki.FORVET).size())).getSoyad()  + " 'den şut");
+				
+				if (nextStatus < 50) yield EMacStatu.FORVET_EVSAHIBI;
+				else if (nextStatus < 50 + toplamGolGuc) yield status;
+				else if (nextStatus < 50 + toplamGolGuc + evSahibiGuc) {
+					gol("nefis bir gol!", EGolAtan.EV_SAHIBI, musabaka, lig);
+					yield EMacStatu.ORTASAHA_DEPLASMAN;
+				}
+				else{
+					System.out.println(evSahibiKadroIlkOnBir.get(EMevki.KALECI).get(0).getSoyad()  + " kurtardı.");
+					yield EMacStatu.DEPKALE_DEPLASMAN;
+				}
+			}
+		};
+	}
+	
 	
 	@Deprecated
 	public void macOyna(Musabaka musabaka, Lig lig) throws InterruptedException {
@@ -215,9 +405,10 @@ public class MusabakaMod {
 		
 		
 		Istatistik evSahibiIst = databaseModel.istatistikDataBase.alKulupAlLigGetirIstatistik(evSahibiID, lig.getId());
-		evSahibiIst.artirBeraberlik();
 		Istatistik deplasmanIst = databaseModel.istatistikDataBase.alKulupAlLigGetirIstatistik(deplasmanID, lig.getId());
+		
 		deplasmanIst.artirBeraberlik();
+		evSahibiIst.artirBeraberlik();
 		playWavFile("src/SoccerApp/sounds/MacBaslangicDudugu.wav");
 		
 		boolean oyunDevam = true;

@@ -70,7 +70,10 @@ public void yazdirFikstur(Lig lig) {
 	});
 }
 	public void goruntulePuanTablosu(Lig lig){
-		String format = "%-2s. %20s %4s %4s %4s %4s %4s %4s %4s \033[1m %4s \033[0m \n";
+		Integer maksIsimUzunlugu = lig.getTakimlarIDList().stream()
+		                           .map(kulup -> databaseModel.kulupDataBase.findByID(kulup).get().getAd().length())
+		                           .max(Integer::compareTo).get();
+		String format = "%-2s. %" + maksIsimUzunlugu + "s %4s %4s %4s %4s %4s %4s %4s \033[1m %4s \033[0m \n";
 		System.out.printf(format, "", "Siralama","O", "G", "B", "M", "A", "Y", "AV", "P");
 		System.out.println("  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -");
 		lig.getPuanTablosu().forEach((siralama, istatistikId) -> {
