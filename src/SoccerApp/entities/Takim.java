@@ -1,12 +1,17 @@
 package SoccerApp.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Takim implements Serializable {
 	private String kulupId;
 	private List<String> kadro;
 	private Integer skor=0;
+	
+	{
+		kadro = new ArrayList<>();
+	}
 	
 	public String getKulupId() {
 		return kulupId;
